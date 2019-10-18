@@ -1,0 +1,47 @@
+#@segment()
+
+#define main()
+<div id="content"></div>
+<button id="loadContent">显示</button>
+<button id="loadJson">Json</button>
+
+<a href="/downloadFile">下载</a>
+
+#end
+
+#define js()
+<script>
+    $(document).ready(function(){
+        $("#loadContent").on("click", btnHandler);
+        $("#loadJson").on("click", jsonBtnHandler);
+
+    });
+
+    function btnHandler() {
+        $.ajax({
+            async: true,
+            url : "/index",
+            type : "GET",   //规定请求的类型（GET 或 POST）
+            cache : false,  //表示浏览器是否缓存被请求页面
+            dataType : "html",  //预期的服务器响应的数据类型
+            success : function(data){
+                $("#content").html(data)
+            }
+        })
+    }
+
+    function jsonBtnHandler() {
+        $.ajax({
+            async: true,
+            url : "/jsonData",
+            type : "GET",   //规定请求的类型（GET 或 POST）
+            cache : false,  //表示浏览器是否缓存被请求页面
+            dataType : "json",  //预期的服务器响应的数据类型
+            success : function(data){
+                console.log(data);
+            }
+        })
+    }
+
+</script>
+#end

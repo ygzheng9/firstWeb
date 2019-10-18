@@ -1,0 +1,100 @@
+#@layopen()
+
+
+#define css()
+<style>
+    .layui-table-cell{
+        display:table-cell;
+        vertical-align: middle;
+    }
+</style>
+#end
+
+#define main()
+<div class="layui-content" style="width: 90%;margin-left: 20px">
+    <div class="layui-row" style="margin-top: 20px">
+        <button type="button" class="layui-btn layui-btn-normal"><a onclick="add()" style="color: #ffffff">新增用户</a></button>
+    </div>
+    <table id="demo" lay-filter="test" ></table>
+</div>
+#end
+
+#define js()
+<script type="text/html" id="operate">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-normal layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+    var tableIns;
+    layui.use('table', function () {
+        var table = layui.table,
+            form = layui.form;
+
+        //第一个实例
+        tableIns = table.render({
+            elem: '#demo'
+            , url: '/getList' //数据接口
+            ,limit: 10
+            , page: true //开启分页
+            , cols: [[
+                {field: 'id', title: 'id',width:100}
+                ,{field: 'title', title: '标题',width:100}
+                ,{field: 'content', title: '内容',width:100}
+                ,{fixed: 'right', title: '操作',align:'center',toolbar:'#operate'}
+            ]]
+            , parseData: function (res) {
+                return {
+                    "code": 0,
+                    "msg": "",
+                    "count": res.totalRow,
+                    "data": res.list
+                }
+            }
+        });
+
+        table.on('tool(test)', function (obj) {
+            //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data, //获得当前行数据
+                layEvent = obj.event; //获得 lay-event 对应的值
+
+            if (layEvent === 'del') {
+                layer.confirm('确定要删除吗', {
+                    btn: ['确定', '取消']
+                }, function(index, layero){
+                    //按钮【按钮一】的回调
+                    $.post("/del/"+data.id,function (result) {
+                        layer.msg("删除成功", {offset: '300px', shade: [0.8, '#393D49']});
+                        layer.close(index)
+                        tableIns.reload({
+                            page:{
+                                curr:1
+                            }
+                        })
+                    });
+                }, function(index){
+                    layer.close(index)
+                });
+            } else if (layEvent === 'edit') {
+                layer.open({
+                    type:2,
+                    title:"修改",
+                    shade: 0.8,
+                    area: ['500px', '300px'],
+                    content: "/edit/"+data.id,//请求路径跳转edit页面
+                })
+
+            }
+        });
+    });
+
+    function add(){
+        layer.open({
+            type:2,  //iframe嵌套
+            title:"添加",
+            shade: 0.8,
+            area: ['500px', '300px'],
+            content: "/form",  //请求路径跳转add页面
+        })
+    }
+</script>
+#end

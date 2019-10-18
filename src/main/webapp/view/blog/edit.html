@@ -1,0 +1,45 @@
+#@layopen()
+
+#define main()
+<form id="add" class="layui-form" style="margin-top: 20px">
+    <input type="hidden" name="blog.id"value="#(blog.id)" autocomplete="off" class="layui-input">
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="blog.title" value="#(blog.title)" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">内容</label>
+        <div class="layui-input-block">
+            <input type="text" name="blog.content" value="#(blog.content)"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+        </div>
+    </div>
+</form>
+#end
+
+#define js()
+<script>
+    layui.use('form', function () {
+        var table = layui.table,
+            form = layui.form;
+
+        form.on('submit(formDemo)', function(data){
+            $.ajax({
+                url: "/update",
+                data: data.field,
+                success: function (data) {
+                    layer.msg("修改成功");
+                    window.parent.location.reload();
+                },
+            })
+            return false;
+        })
+    })
+</script>
+#end

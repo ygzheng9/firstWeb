@@ -1,0 +1,24 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<!--
+    使用 jfinal-undertow 开发时可以删掉此 web.xml 文件以及 WEB-INF 目录
+    保留此文件仅为习惯于 jetty-server 开发和 tomcat 部署的同学
+-->
+
+<web-app>
+    <display-name>jfinal-demo</display-name>
+    <filter>
+        <filter-name>jfinal</filter-name>
+        <filter-class>com.jfinal.core.JFinalFilter</filter-class>  //是jfinal 封装好的一个过滤器，
+        <init-param>
+            <param-name>configClass</param-name>
+            <param-value>com.demo.config.BaseConfig</param-value>   //BaseConfig文件在项目中的位置
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>jfinal</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+</web-app>
