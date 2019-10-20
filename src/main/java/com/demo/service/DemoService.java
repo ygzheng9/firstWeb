@@ -238,5 +238,4 @@ public class DemoService {
         List<Integer> listInteger = listStr.stream().map(s -> Integer.valueOf(s)).collect(Collectors.toList());
         System.out.println(listInteger);
     }
-
- }
+}

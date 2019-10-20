@@ -2,6 +2,7 @@ package com.demo.config;
 
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
+import com.demo.controller.APIController;
 import com.demo.controller.BlogController;
 import com.demo.model._MappingKit;
 import com.jfinal.config.*;
@@ -62,11 +63,8 @@ public class BaseConfig extends JFinalConfig {
     public void configRoute(Routes me) {
         me.setBaseViewPath("/view");
 
-        /// 如果 url 中增加 /blog，那么程序中使用到的地方都需要增加
-        // me.add("/blog", BlogController.class, "/blog");
-
         me.add("/", BlogController.class, "/blog");
-
+        me.add("/api", APIController.class, "/api");
     }
 
     /**
@@ -109,7 +107,7 @@ public class BaseConfig extends JFinalConfig {
         arp.setShowSql(defaultConfig.getBoolean("devMode", false));
 
         arp.getEngine().setToClassPathSourceFactory();
-        arp.addSqlTemplate("/sql/_all_sqls.sql");
+        // arp.addSqlTemplate("/sql/_all_sqls.sql");
     }
 
     @Override

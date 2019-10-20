@@ -46,6 +46,11 @@ public class BlogController extends Controller {
 
     }
 
+    public void wordcloud() {
+        render("wordcloud.html");
+    }
+
+
     public void qrCode() {
         // 二维码携带的数据
         String data = "It's barCode from jFinal";
