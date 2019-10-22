@@ -2,9 +2,10 @@ package com.demo.config;
 
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
-import com.demo.controller.APIController;
-import com.demo.controller.BlogController;
 import com.demo.model._MappingKit;
+import com.demo.xstart.APIRoutes;
+import com.demo.xstart.BlogController;
+import com.demo.xstart.OKAdminController;
 import com.jfinal.config.*;
 import com.jfinal.json.MixedJsonFactory;
 import com.jfinal.kit.Prop;
@@ -28,7 +29,7 @@ public class BaseConfig extends JFinalConfig {
     }
 
 
-    static void loadConfig() {
+    public static void loadConfig() {
         if (defaultConfig == null) {
             defaultConfig = PropKit.useFirstFound("production.properties", "default.properties");
         }
@@ -41,12 +42,14 @@ public class BaseConfig extends JFinalConfig {
     @Override
     public void configConstant(Constants me) {
         /// 设置 devMode 之下的 action report 是否在 invocation 之后，默认值为 true
-        // me.setReportAfterInvocation(false);
+        me.setReportAfterInvocation(false);
         defaultConfig = PropKit.use("default.properties");
 
         me.setDevMode(defaultConfig.getBoolean("devMode", false));
 
-        me.setJsonFactory(MixedJsonFactory.me());
+        /// me.setJsonFactory(MixedJsonFactory.me());
+        me.setJsonFactory(new MixedJsonFactory());
+
 
         // 支持 Controller、Interceptor、Validator 之中使用 @Inject 注入业务层，并且自动实现 AOP
         me.setInjectDependency(true);
@@ -62,9 +65,10 @@ public class BaseConfig extends JFinalConfig {
     @Override
     public void configRoute(Routes me) {
         me.setBaseViewPath("/view");
+        me.add("/blog", BlogController.class, "/blog");
+        me.add("/", OKAdminController.class, "/okAdmin");
 
-        me.add("/", BlogController.class, "/blog");
-        me.add("/api", APIController.class, "/api");
+        me.add(new APIRoutes());
     }
 
     /**
@@ -76,6 +80,11 @@ public class BaseConfig extends JFinalConfig {
         //设置共享页面，在页面上通过#define layopen()定义模板，#@layopen()引用
         me.addSharedFunction("/view/common/_layopen.html");
         me.addSharedFunction("/view/common/_segment.html");
+        me.addSharedFunction("/view/common/_pjax.html");
+        me.addSharedFunction("/view/common/_turbolinks.html");
+        me.addSharedFunction("/view/common/_okadmin.html");
+        me.addSharedFunction("/view/common/_okfull.html");
+
 
     }
 
@@ -112,6 +121,8 @@ public class BaseConfig extends JFinalConfig {
 
     @Override
     public void configInterceptor(Interceptors me) {
+        // 全局pjax拦截器
+        // me.add(new PjaxInterceptor());
     }
 
     @Override

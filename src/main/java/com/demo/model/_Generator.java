@@ -61,7 +61,8 @@ public class _Generator {
 		// 创建生成器
 		Generator gen = new Generator(getDataSource(), baseModelPackageName, baseModelOutputDir, modelPackageName, modelOutputDir);
 
-		gen.setMetaBuilder(new _MetaBuilder(getDataSource()));
+		// 这里可以指定生成某些张表，而不是全部生成
+		// gen.setMetaBuilder(new _MetaBuilder(getDataSource()));
 
 		// 设置数据库方言
 		gen.setDialect(new MysqlDialect());

@@ -1,0 +1,59 @@
+#define turbolinks()
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+    <link rel="stylesheet" type="text/css" href="/assets/layui/css/layui.css" data-turbolinks-track="true">
+    <link rel="stylesheet" href="/assets/turbolinks/animate.min.css" data-turbolinks-track="true">
+
+    #@css?()
+
+    <script type="text/javascript" src="/assets/jquery-3.4.1.min.js" data-turbolinks-track="true"></script>
+    <script defer type="text/javascript" src="/assets/layui/layui.all.js" data-turbolinks-track="true"></script>
+
+    <script defer src="/assets/lodash-4.17.4.min.js" data-turbolinks-track="true"></script>
+    <script defer src="/assets/g2.min.js" data-turbolinks-track="true"></script>
+    <script defer src="/assets/data-set.min.js" data-turbolinks-track="true"></script>
+
+    <script type="text/javascript" src="/assets/turbolinks/turbolinks.js"></script>
+
+    <script type="text/javascript">
+        Turbolinks.start();
+        Turbolinks.setProgressBarDelay(100);
+    </script>
+</head>
+
+#--
+0. 所有的 js 都放到 head 中，可以使用 defer 延迟；
+
+1. turbolinks load, render, before_render 都是针对 全局变量 Turbolinks 而言的，也即，每次点击都会触发，和具体的页面没关系；
+1.1 load 每次 visit 都会执行，也即：如果多个文件中都定义了 load，那么，这些函数都会被执行，而不仅仅是当前页面；
+1.2 render 也是一样的逻辑；
+
+2. 在具体页面中，body 中的 js 是会被执行 两次 ：从 cache 中取出时执行一次；再从 ajax 取得时第二次；
+2.1 如果 js 中操作了 dom，那么 preview 时效果会重复（重复添加了两次），然后页面刷新后变成了一次，很诡异；（通过 meta content="no-preview" 可以显示预览，只显示最终的状态；）
+2.2 turbolinks 要求 body 中的 js 是无副作用的（等幂的），但是 js 的作用就是为了改变 dom，不理解设计者的思路；
+2.3 只适合用与很少 js 的情况，或 js 很少操作 dom 的情况；
+
+--#
+
+<body class="layui-layout-body">
+<div class="turbolinks-progress-bar"></div>
+
+<!-- 菜单demo -->
+<ul>
+    <li><a href="turbolinks_one">one</a></li>
+    <li><a href="turbolinks_two">two</a></li>
+    <li><a href="wordcloud">关键词</a></li>
+</ul>
+
+#@main()
+
+#@js?()
+
+</body>
+
+</html>
+#end

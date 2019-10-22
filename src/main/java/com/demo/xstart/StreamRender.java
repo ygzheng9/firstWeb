@@ -1,4 +1,4 @@
-package com.demo.controller;
+package com.demo.xstart;
 
 import com.google.common.io.ByteStreams;
 import com.jfinal.render.Render;

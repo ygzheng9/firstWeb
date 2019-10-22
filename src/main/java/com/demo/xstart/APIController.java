@@ -1,19 +1,23 @@
-package com.demo.controller;
+package com.demo.xstart;
 
 import com.demo.model.Hotword;
-import com.demo.service.WordcloudService;
+import com.jfinal.aop.Clear;
 import com.jfinal.aop.Inject;
 import com.jfinal.core.Controller;
+import com.jfinal.kit.Kv;
 
 import java.util.List;
 
 /**
  * @author ygzheng
  */
+@Clear(PjaxInterceptor.class)
 public class APIController extends Controller {
     @Inject
     private
     WordcloudService cloudSvc;
+
+    private static String okStatus = "1000";
 
     public void wordcloud() {
         String force = get("force");
@@ -26,5 +30,13 @@ public class APIController extends Controller {
         List<Hotword> words = cloudSvc.getCloud(isForce);
 
         renderJson(words);
+    }
+
+    public void login() {
+        Kv data = new Kv();
+        data.set("msg", "欢迎回来");
+        data.set("status", okStatus);
+
+        renderJson(data);
     }
 }

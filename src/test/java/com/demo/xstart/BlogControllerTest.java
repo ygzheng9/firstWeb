@@ -1,4 +1,4 @@
-package com.demo.controller;
+package com.demo.xstart;
 
 
 import com.demo.model.Person;

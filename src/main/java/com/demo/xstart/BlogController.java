@@ -1,13 +1,13 @@
-package com.demo.controller;
+package com.demo.xstart;
 
 
 // import com.demo.model.Blog;
 
 import com.demo.model.Blog;
-import com.demo.service.DemoService;
 import com.demo.service.SimpleKt;
 import com.google.common.io.ByteStreams;
 import com.jfinal.aop.Inject;
+import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * BlogController class
@@ -28,28 +29,59 @@ import java.util.Map;
  * @author demo
  * @date 2019/10/01
  */
+
 public class BlogController extends Controller {
     @Inject
     private
-    DemoService demoSvc;
+    BlogService blogSvc;
+
+    @Inject
+    private UserService userSvc;
 
     public void index(){
         System.out.println("index render.....");
 
-        demoSvc.showlog();
+        blogSvc.showlog();
 
-        demoSvc.dumpInof();
+        blogSvc.dumpInof();
 
-        demoSvc.localFile();
+        blogSvc.localFile();
+
+        userSvc.loadFile();
 
         render("list.html");
 
+    }
+
+    @ActionKey("/pjax_one")
+    public void page1() {
+        render("page1.html");
+    }
+
+    @ActionKey("/pjax_two")
+    public void page2() {
+        render("page2.html");
     }
 
     public void wordcloud() {
         render("wordcloud.html");
     }
 
+    @ActionKey("/turbolinks_one")
+    public void one() {
+        render("one.html");
+    }
+
+    @ActionKey("/turbolinks_two")
+    public void two() {
+        try {
+            TimeUnit.SECONDS.sleep(1);
+
+            render("two.html");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void qrCode() {
         // 二维码携带的数据
@@ -67,7 +99,7 @@ public class BlogController extends Controller {
     public void getList(){
         Integer pageNum = getParaToInt("page");
         Integer pageSize = getParaToInt("limit");
-        Page<Blog> blogs = demoSvc.blogDao.paginate(pageNum,pageSize,"select * ","from blog");
+        Page<Blog> blogs = blogSvc.blogDao.paginate(pageNum, pageSize, "select * ", "from blog");
         renderJson(blogs);
     }
 
@@ -106,7 +138,7 @@ public class BlogController extends Controller {
     public void edit(){
         Integer id = getInt(0);
         if(id!=null&&id>0){
-            set("blog", demoSvc.blogDao.findById(id));
+            set("blog", blogSvc.blogDao.findById(id));
         }
         render("edit.html");
     }
@@ -114,7 +146,7 @@ public class BlogController extends Controller {
      * 删除方法
      */
     public void del(){
-        demoSvc.blogDao.deleteById(getPara(0));
+        blogSvc.blogDao.deleteById(getPara(0));
         redirect("/");
     }
     /**

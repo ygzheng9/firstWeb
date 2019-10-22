@@ -1,4 +1,4 @@
-package com.demo.service;
+package com.demo.xstart;
 
 import cn.hutool.core.lang.Validator;
 import com.google.common.collect.ImmutableList;

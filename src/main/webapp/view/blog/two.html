@@ -1,0 +1,26 @@
+#@turbolinks()
+
+#define css()
+<meta name="turbolinks-cache-control" content="no-preview">
+#end
+
+#define main()
+<div>
+    这个是 two 页面
+    <p id='el'>hello world</p>
+</div>
+#end
+
+#define js()
+<script type="text/javascript">
+    var i = 1;
+
+    $(function () {
+        console.log("Want to specified for TWO. ", i++);
+
+        // 第二次访问页面时，会先看到连续的两个(从 cache 中取出时，也会执行，所以是增加了两个)，然后再刷新（变成一个）
+        $('#el').append("++XXXX--");
+    });
+
+</script>
+#end

@@ -1,9 +1,9 @@
-package com.demo.service;
+package com.demo.xstart;
 
 import org.junit.jupiter.api.Test;
 
-class DemoServiceTest {
-    private final DemoService svc = new DemoService();
+class BlogServiceTest {
+    private final BlogService svc = new BlogService();
 
     @Test
     void preconditionTest() {

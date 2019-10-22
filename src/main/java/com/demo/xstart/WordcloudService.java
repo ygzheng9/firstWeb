@@ -1,7 +1,6 @@
-package com.demo.service;
+package com.demo.xstart;
 
 import com.beust.jcommander.internal.Sets;
-import com.demo.kit.RecordKit;
 import com.demo.model.Hotword;
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;

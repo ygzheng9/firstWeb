@@ -1,4 +1,4 @@
-package com.demo.service;
+package com.demo.xstart;
 
 import com.demo.model.Blog;
 import com.google.common.base.CharMatcher;
@@ -25,8 +25,8 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.*;
 
 
-public class DemoService {
-    static Log log = Log.getLog(DemoService.class);
+public class BlogService {
+    static Log log = Log.getLog(BlogService.class);
 
     public Blog blogDao = new Blog().dao();
 

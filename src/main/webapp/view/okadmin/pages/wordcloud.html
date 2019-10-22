@@ -1,8 +1,13 @@
-#@pjaxLayout()
+#@okLayout()
 
 #define main()
 
-<div id="mountNode">玩命处理中......</div>
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+        <div id="mountNode">玩命处理中......</div>
+    </div>
+</div>
+
 
 <style>
     ::-webkit-scrollbar {
@@ -16,6 +21,14 @@
         margin: 0;
     }
 </style>
+
+#end
+
+
+#define js()
+<script defer src="/assets/lodash-4.17.4.min.js" data-turbolinks-track="true"></script>
+<script defer src="/assets/g2/g2.min.js" data-turbolinks-track="true"></script>
+<script defer src="/assets/g2/data-set.min.js" data-turbolinks-track="true"></script>
 
 <script type="text/javascript">
     $(function () {
