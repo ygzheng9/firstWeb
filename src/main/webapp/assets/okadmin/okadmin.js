@@ -187,12 +187,6 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer"], function () {
      * 系统公告
      */
     $(document).on("click", "#notice", noticeFun);
-    !function () {
-        var notice = sessionStorage.getItem("notice");
-        if (notice != "true") {
-            noticeFun();
-        }
-    }();
 
     function noticeFun() {
         var srcWidth = okUtils.getBodyWidth();
@@ -220,54 +214,7 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer"], function () {
     }
 
     function getContent() {
-        let dateStr = okUtils.dateFormat(new Date(), "yyyy-MM-dd");
-        let content = "";
-        if (dateStr == "2018-12-30" || dateStr == "2018-12-31" || dateStr == "2019-01-01") {
-            content = "元旦，一年之始也。元，初，始也；旦，太阳微露地平一线，是为一日之始。值此新年之际，祝诸君快乐安康，如意吉祥！<br/>" +
-                "ok-admin v2.0 祝您元旦节快乐！(^し^)";
-        } else if (dateStr == "2019-02-04" || dateStr == "2019-02-05" || dateStr == "2019-02-06" || dateStr == "2019-02-07" || dateStr == "2019-02-08" || dateStr == "2019-02-09" || dateStr == "2019-02-10") {
-            content = "鞭炮声声迎新年，妙联横生贴门前。<br/>" +
-                "笑声处处传入耳，美味佳肴上餐桌。<br/>" +
-                "谈天论地成一片，灯光通明照残夜。<br/>" +
-                "稚童新衣相夸耀，旧去新来气象清。<br/>" +
-                "ok-admin v2.0 祝您春节快乐！(^し^)";
-        } else if (dateStr == "2019-04-05" || dateStr == "2019-04-06" || dateStr == "2019-04-07") {
-            content = "清明时节雨纷纷，路上行人欲断魂。<br/>" +
-                "借问酒家何处有，牧童遥指杏花村。<br/>" +
-                "ok-admin v2.0 祝您清明节快乐！(^し^)";
-        } else if (dateStr == "2019-05-01" || dateStr == "2019-05-02" || dateStr == "2019-05-03" || dateStr == "2019-05-04") {
-            content = "锄禾日当午，汗滴禾下土。<br/>" +
-                "谁知盘中餐，粒粒皆辛苦。<br/>" +
-                "ok-admin v2.0 祝您劳动节快乐！(^し^)";
-        } else if (dateStr == "2019-06-07" || dateStr == "2019-06-08" || dateStr == "2019-06-09") {
-            content = "少年佳节倍多情，老去谁知感慨生。<br>" +
-                "不效艾符趋习俗，但祈蒲酒话升平。<br>" +
-                "鬓丝日日添白头，榴锦年年照眼明。<br>" +
-                "千载贤愚同瞬息，几人湮没几垂名。<br>" +
-                "ok-admin v2.0 祝您端午节安康！(^し^)";
-        } else if (dateStr == "2019-09-13" || dateStr == "2019-09-14" || dateStr == "2019-09-15") {
-            content = "中庭地白树栖鸦，冷露无声湿桂花。<br/>" +
-                "今夜月明人尽望，不知秋思落谁家。<br/>" +
-                "ok-admin v2.0 祝您中秋节快乐！(^し^)";
-        } else if (dateStr == "2019-09-18") {
-            content = "铭记九一八，让历史的风云鞭策我们奋进的脚步，让先烈的忠魂聆听我们自强的怒吼;<br/>" +
-                "不忘九一八，让未来的发展见证华夏的崛起，让世界的目光聚焦中国的奇迹。<br/>" +
-                "勿忘国耻，爱我中华，吾辈当自强！";
-        } else if (dateStr == "2019-10-01" || dateStr == "2019-10-02" || dateStr == "2019-10-03" || dateStr == "2019-10-04" || dateStr == "2019-10-05" || dateStr == "2019-10-06" || dateStr == "2019-10-07") {
-            content = "龙跃甲子，鸽翱晴空，凤舞九天。<br/>" +
-                "昔关河黍离，列强逐鹿；神州放眼，一鹤冲天。<br/>" +
-                "重振社稷，举中流誓，今看东方盛世还。<br/>" +
-                "黄河血，慨仁人志士，魂祭新篇。<br/>" +
-                "华夏意气峥嵘，傲五湖四海锦绣满。<br/>" +
-                "壮三山五岳，叠古风姿；九经三史，彰现华韵。<br/>" +
-                "豪客泼墨，贤士铺卷，放歌九州富丽妍。<br/>" +
-                "泰山脊，领风骚环宇，有谁堪比？<br/>" +
-                "ok-admin v2.0 祝您国庆节快乐！<br/>祝福伟大的祖国，越来越强大。<br/>祖国强大的祖国，一直屹立于世界东方！(^し^)";
-        } else {
-            content = "ok-admin v2.0上线啦(^し^)<br/>" +
-                "在此郑重承诺该模板<span style='color:#5cb85c'>永久免费</span>为大家提供<br/>" +
-                "若有更好的建议欢迎<span id='noticeQQ'>加入QQ群</span>一起聊";
-        }
+        content = '你想看什么？';
         return content;
     }
 
@@ -331,17 +278,4 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer"], function () {
             });
         });
     });
-
-    console.log("       _                     _       _       \n" +
-        "      | |                   | |     (_)      \n" +
-        "  ___ | |  _ _____ _____  __| |____  _ ____  \n" +
-        " / _ \\| |_/ |_____|____ |/ _  |    \\| |  _ \\ \n" +
-        "| |_| |  _ (      / ___ ( (_| | | | | | | | |\n" +
-        " \\___/|_| \\_)     \\_____|\\____|_|_|_|_|_| |_|\n" +
-        "                                             \n" +
-        "版本：v2.0\n" +
-        "作者：bobi\n" +
-        "邮箱：bobi1234@foxmail.com\n" +
-        "企鹅：964222534\n" +
-        "描述：一个很赞的，扁平化风格的，响应式布局的后台管理模版，旨为后端程序员减压！");
 });

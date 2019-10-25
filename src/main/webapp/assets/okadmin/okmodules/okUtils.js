@@ -52,13 +52,13 @@ layui.define(["layer"], function (exprots) {
                     }
                 },
                 success: function (data) {
-                    if (data.status == 1000) {
+                    if (data.state === 'ok') {
                         // 业务正常
                         deferred.resolve(data)
                     } else {
                         // 业务异常
                         layer.msg(data.msg, {icon: 7, time: 2000});
-                        deferred.reject("okUtils.ajax warn: " + data.msg);
+                        deferred.reject("okUtils.ajax-->failed from server: " + data.msg);
                     }
                 },
                 complete: function () {
@@ -133,6 +133,21 @@ layui.define(["layer"], function (exprots) {
                 if (new RegExp("(" + k + ")").test(fmt))
                     fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             return fmt;
+        },
+
+        beanfy: function (beanName, input) {
+            // layerui form 和 jfinal 的 getBean 不一致，需要前缀；
+            var obj = Object.assign({}, input);
+
+            for (var key in obj) {
+                //是否是billList自己身上的key
+                if (obj.hasOwnProperty(key)) {
+                    obj = Object.defineProperty(obj, beanName + '.' + key, Object.getOwnPropertyDescriptor(obj, key))
+                    delete obj[key]
+                }
+            }
+
+            return obj;
         }
     };
     exprots("okUtils", okUtils);

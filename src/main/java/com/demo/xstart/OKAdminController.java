@@ -64,4 +64,10 @@ public class OKAdminController extends Controller {
     }
 
 
+    @ActionKey("pages/member/user_edit")
+    public void userEdit() {
+        render("pages/member/user-edit.html");
+    }
+
+
 }

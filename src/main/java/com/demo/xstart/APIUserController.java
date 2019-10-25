@@ -31,5 +31,17 @@ public class APIUserController extends Controller {
         renderJson(ret);
     }
 
+    public void delete() {
+        String id = get("id");
+        Ret ret = userSvc.delete(id);
+        renderJson(ret);
+    }
+
+    public void edit() {
+        User user = getBean(User.class);
+        Ret ret = userSvc.update(user);
+        renderJson(ret);
+    }
+
 
 }

@@ -38,16 +38,21 @@ public class BlogController extends Controller {
     @Inject
     private UserService userSvc;
 
+    @Inject
+    private BomService bomSvc;
+
     public void index(){
         System.out.println("index render.....");
 
-        blogSvc.showlog();
+        // blogSvc.showlog();
+        //
+        // blogSvc.dumpInof();
+        //
+        // blogSvc.localFile();
+        //
+        // userSvc.loadFile();
 
-        blogSvc.dumpInof();
-
-        blogSvc.localFile();
-
-        userSvc.loadFile();
+        bomSvc.loadMapping();
 
         render("list.html");
 

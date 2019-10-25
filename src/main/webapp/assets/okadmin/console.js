@@ -118,7 +118,7 @@ layui.use(["okUtils", "table", "countUp", "okMock"], function () {
 
     statText();
     userSource();
-    userList();
+    // userList();
     userLocation();
 });
 

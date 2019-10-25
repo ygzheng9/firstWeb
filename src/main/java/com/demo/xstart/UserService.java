@@ -43,7 +43,6 @@ public class UserService {
     public Ret save(User u) {
         u.setId(IdUtil.simpleUUID());
 
-
         boolean ok = u.save();
 
         if (!ok) {
@@ -69,7 +68,7 @@ public class UserService {
         return userDAO.findById(id);
     }
 
-    public Ret delete(int userId) {
+    public Ret delete(String userId) {
         boolean ok = userDAO.deleteById(userId);
 
         if (!ok) {

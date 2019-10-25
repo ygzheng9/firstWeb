@@ -108,8 +108,6 @@
 <script type="text/javascript" src="/assets/layui/layui.js"></script>
 <script type="text/javascript" src="/assets/okadmin/okmount.js"></script>
 
-<script type="text/javascript" src="/assets/jquery-3.4.1.min.js"></script>
-
 
 <script>
     layui.use(["element", "form", "laydate", "okLayer", "okUtils"], function () {
@@ -127,32 +125,32 @@
         form.on("submit(add)", function (data) {
             // console.log(data);
 
-            // okUtils.ajax("/api/user/add", "post", data.field).done(function (response) {
-            //     console.log(response);
-            //     okLayer.msg.greenTick("添加成功", function () {
-            //         parent.layer.close(parent.layer.getFrameIndex(window.name));
-            //     });
-            // }).fail(function (error) {
-            //     console.log(error)
-            // });
-
-            var url = "/api/user/add";
-
-            $.ajax(url, {
-                type: "POST"
-                , cache: false
-                , dataType: "json"
-                , data: data.field
-                , success: function(ret) {
-                    console.log(ret);
-                    okLayer.msg.greenTick("添加成功", function () {
-                        parent.layer.close(parent.layer.getFrameIndex(window.name));
-                    });
-                }
-                , error: function (err) {
-                    console.log(err);
-                }
+            okUtils.ajax("/api/user/add", "post", data.field).done(function (response) {
+                console.log(response);
+                okLayer.msg.greenTick("添加成功", function () {
+                    parent.layer.close(parent.layer.getFrameIndex(window.name));
+                });
+            }).fail(function (error) {
+                console.log(error)
             });
+
+            // var url = "/api/user/add";
+            //
+            // $.ajax(url, {
+            //     type: "POST"
+            //     , cache: false
+            //     , dataType: "json"
+            //     , data: data.field
+            //     , success: function(ret) {
+            //         console.log(ret);
+            //         okLayer.msg.greenTick("添加成功", function () {
+            //             parent.layer.close(parent.layer.getFrameIndex(window.name));
+            //         });
+            //     }
+            //     , error: function (err) {
+            //         console.log(err);
+            //     }
+            // });
 
 
 
