@@ -3,6 +3,7 @@ package com.demo.xstart;
 import com.google.common.collect.Maps;
 import com.jfinal.log.Log;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -42,11 +43,34 @@ public class RecordKit {
 
         Integer idx = getIndex(col);
 
+        if (idx >= fields.size()) {
+            log.warn("not enough field: " + col);
+            return "";
+        }
+
         return fields.get(idx);
     }
 
     public Integer getInteger(String col) {
         return toInteger(getString(col));
+    }
+
+    public BigDecimal getDecimal(String col) {
+        String s = getString(col);
+
+        BigDecimal d = new BigDecimal(0.0);
+
+        try {
+            if (s.length() > 0) {
+                s = s.replace(",", "");
+                d = new BigDecimal(s);
+            }
+        } catch (NumberFormatException e) {
+            log.warn("parse BigDecimal failed: " + col + " = " + s);
+            e.printStackTrace();
+        }
+
+        return d;
     }
 
     private Integer getIndex(String col) {

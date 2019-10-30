@@ -29,6 +29,26 @@ public class BaseConfig extends JFinalConfig {
     }
 
 
+    public static void setupEnv() {
+        // 在不启动 web 服务下，使用 AR 建立与数据库的连接；
+        loadConfig();
+
+        DruidPlugin druidPlugin = getDruidPlugin();
+
+        ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
+        arp.setTransactionLevel(Connection.TRANSACTION_READ_COMMITTED);
+        _MappingKit.mapping(arp);
+
+        /// arp.setShowSql(defaultConfig.getBoolean("devMode", false));
+        arp.setShowSql(false);
+
+        arp.getEngine().setToClassPathSourceFactory();
+
+        // 与 jfinal web 环境唯一的不同是要手动调用一次相关插件的start()方法
+        druidPlugin.start();
+        arp.start();
+    }
+
     public static void loadConfig() {
         if (defaultConfig == null) {
             defaultConfig = PropKit.useFirstFound("production.properties", "default.properties");
@@ -47,15 +67,16 @@ public class BaseConfig extends JFinalConfig {
 
         me.setDevMode(defaultConfig.getBoolean("devMode", false));
 
-        /// me.setJsonFactory(MixedJsonFactory.me());
-        me.setJsonFactory(new MixedJsonFactory());
-
-
         // 支持 Controller、Interceptor、Validator 之中使用 @Inject 注入业务层，并且自动实现 AOP
         me.setInjectDependency(true);
 
         // 是否对超类中的属性进行注入
         me.setInjectSuperClass(true);
+
+        /// me.setJsonFactory(MixedJsonFactory.me());
+        me.setJsonFactory(new MixedJsonFactory());
+        // me.setLogFactory(new Slf4jLogFactory());
+        me.setRenderFactory(new ExceptionRenderFactory());
     }
 
     /**
@@ -84,8 +105,6 @@ public class BaseConfig extends JFinalConfig {
         me.addSharedFunction("/view/common/_turbolinks.html");
         me.addSharedFunction("/view/common/_okadmin.html");
         me.addSharedFunction("/view/common/_okfull.html");
-
-
     }
 
     public static DruidPlugin getDruidPlugin() {
@@ -130,3 +149,4 @@ public class BaseConfig extends JFinalConfig {
 
     }
 }
+

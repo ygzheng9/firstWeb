@@ -19,6 +19,8 @@ public class _MappingKit {
 		arp.addMapping("blog", "id", Blog.class);
 		arp.addMapping("bom_item", "idbom_items", BomItem.class);
 		arp.addMapping("bom_project_mapping", "id", BomProjectMapping.class);
+		arp.addMapping("po_head", "id", PoHead.class);
+		arp.addMapping("po_item", "id", PoItem.class);
 		arp.addMapping("user", "id", User.class);
 	}
 }
