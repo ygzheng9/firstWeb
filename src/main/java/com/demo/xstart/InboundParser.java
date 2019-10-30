@@ -48,6 +48,7 @@ public class InboundParser {
         // 初始是 0，在使用前，需要 nextToken()
         p.setPos(-1);
 
+
         return p;
     }
 
@@ -64,69 +65,27 @@ public class InboundParser {
         return pos < maxPos;
     }
 
-    public boolean nextToken() {
-        if (hasNext()) {
-            pos += 1;
-            skipBlank();
 
-            // skipPageBreak();
-
-            return true;
-        } else {
-            log.warn("Already reached end.");
-
-            return false;
-        }
-    }
-
-    public boolean shouldIgnore(String line) {
-        // 进度订单后，如果出现了分页
-        ImmutableList<String> l = ImmutableList.of("采购收货报表", "收货单");
-        for (String a : l) {
-            if (line.contains(a) && this.getState() == State.HEAD) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public void skipBlank() {
-        // 这里直接操作 pos，没有使用 nextToken，否则是嵌套的递归调用
-
-        // 跳过所有的空行，最后停留在第一个非空行
-        String l = current();
-
-        if (l.trim().length() == 0) {
-            moveDown(1);
+    public void nextTokenBody() {
+        if (pos >= maxPos) {
+            log.info("Body Already reached end.");
             return;
         }
 
-        // if (state == State.HEAD) {
-        if (l.contains("采购收货报表")) {
+        moveDown(1);
+
+        // 分页时出现
+        if (current().contains("采购收货报表")) {
             moveDown(2);
-        } else if (l.contains("收货单")) {
+        }
+
+        if (current().contains("采购订单")) {
             moveDown(3);
-            }
-        // }
+        }
 
-
-        // while (l.trim().length() == 0 || shouldIgnore(l)) {
-        //     if (hasNext()) {
-        //         if (l.trim().length() == 0) {
-        //             moveDown(1);
-        //         } else if (l.contains("采购收货报表")) {
-        //             moveDown(2);
-        //         } else if (l.contains("收货单")) {
-        //             moveDown(3);
-        //         }
-        //
-        //         l = current();
-        //
-        //     } else {
-        //         break;
-        //     }
-        // }
+        if (current().contains("收货单")) {
+            moveDown(3);
+        }
     }
 
     public void moveDown(int n) {
@@ -137,10 +96,24 @@ public class InboundParser {
                 break;
             }
 
-            String s = current();
-            if (s.trim().length() > 0) {
+            if (current().trim().length() > 0) {
                 c += 1;
             }
+        }
+    }
+
+    public String peekNext() {
+        int p = pos + 1;
+        while (true) {
+            if (p >= maxPos) {
+                return "EOFEOF";
+            }
+
+            String s = lines.get(p).trim();
+            if (s.length() != 0) {
+                return s;
+            }
+            p += 1;
         }
     }
 
@@ -151,8 +124,8 @@ public class InboundParser {
         if (l.trim().startsWith("兑换率")) {
             result = splitExchangeRate(l);
 
-            // 跳过汇率行
-            nextToken();
+            // 移动到下一有效行
+            nextTokenBody();
         }
 
         return result;
@@ -182,49 +155,12 @@ public class InboundParser {
         return false;
     }
 
-    public boolean isOrderStart() {
-        String l = current();
-        if (l.trim().startsWith("采购订单")) {
-            state = State.HEAD;
-            return true;
-        }
-
-        return false;
-    }
-    //
-    // public void skipPageBreak() {
-    //     String c = current();
-    //     String p1 = "采购收货报表";
-    //     if (c.contains(p1)) {
-    //         // nextToken();
-    //         // nextToken();
-    //
-    //         pos += 1;
-    //         skipBlank();
-    //
-    //         pos += 1;
-    //         skipBlank();
-    //
-    //         c = current();
-    //         String p2 = "收货单";
-    //         if (c.trim().startsWith(p2)) {
-    //             for (int i = 1; i <= 3; i++) {
-    //                 // nextToken();
-    //
-    //                 pos += 1;
-    //                 skipBlank();
-    //             }
-    //         }
-    //     }
-    // }
-
-
     public List<String> parseHead() {
         List<String> result = Lists.newArrayList();
 
-        while (!isOrderStart()) {
+        while (!current().trim().startsWith("采购订单")) {
             if (hasNext()) {
-                nextToken();
+                pos += 1;
             } else {
                 log.info("no head found.");
                 return result;
@@ -234,11 +170,8 @@ public class InboundParser {
         // pos 指向：采购订单 交货       供应商
         // 移动到下一行：  -------------
         // 再移动到下一行： IP9339DJ            IP9339D  埃意(廊坊)电子工程有限
-        nextToken();
-        nextToken();
-        String l = current();
-
-        result = splitHead(l);
+        moveDown(2);
+        result = splitHead(current());
 
         setState(State.HEAD);
 
@@ -249,16 +182,14 @@ public class InboundParser {
         List<List<String>> orderItems = Lists.newArrayList();
 
         // 在表头也会有分页，所以直接通过字符查找；
-        String c = current();
-        while (!c.startsWith("装箱单号")) {
-            nextToken();
-            c = current();
+        while (!current().trim().startsWith("收货单")) {
+            pos += 1;
         }
-        moveDown(2);
+        moveDown(3);
 
         setState(State.BODY);
 
-        int maxItem = 100000;
+        int maxItem = 10000;
         int idx = 0;
 
         while (true) {
@@ -267,13 +198,26 @@ public class InboundParser {
             String l = current();
             List<String> l1 = splitLineOne(l);
 
-            nextToken();
+            nextTokenBody();
             l = current();
             // 行项目第二行，
             List<String> l2 = splitLineTwo(l);
 
+            // 没有出现汇率行，也没有出现结尾标记，但是重新开始了新的订单
+            if (peekNext().startsWith("采购订单")) {
+                List<String> joins = Lists.newArrayList();
+                joins.addAll(l1);
+                joins.addAll(l2);
+                joins.addAll(Lists.newArrayList("", "", "", ""));
+                orderItems.add(joins);
+
+                pos -= 1;
+                setState(State.NA);
+                break;
+            }
+
             // 跳过汇率行
-            nextToken();
+            nextTokenBody();
             List<String> l3 = skipExchangeRate();
 
             // 两行合并成一行
@@ -398,6 +342,8 @@ public class InboundParser {
         h.setVendorName(record.getString("vendorName"));
         h.setProject(record.getString("project"));
 
+        h.setBatch("1812");
+
         return h;
     }
 
@@ -435,17 +381,18 @@ public class InboundParser {
             record.wrap(l);
             PoItem i = new PoItem();
 
-            String s = record.getString("pickupQuantity");
+            String s = record.getString("totalAmt20");
             try {
                 if (s.length() > 0) {
                     s = s.replace(",", "");
                     BigDecimal d = new BigDecimal(s);
                 }
             } catch (NumberFormatException e) {
-                log.warn("parse BigDecimal failed: " + orderNum + " : " + k + " " + l);
+                log.warn("parse BigDecimal failed: " + orderNum + " : " + k);
+                System.out.println(lines.get(k - 1));
                 System.out.println(lines.get(k));
-                System.out.println(lines.get(k + 1));
-                System.out.println(lines.get(k + 2));
+                // System.out.println(lines.get(k + 1));
+                // System.out.println(lines.get(k + 2));
 
                 e.printStackTrace();
 
@@ -485,6 +432,8 @@ public class InboundParser {
             i.setFromAmt(record.getDecimal("fromAmt"));
             i.setToCurrency(record.getString("toCurrency"));
             i.setToAmt(record.getDecimal("toAmt"));
+
+            i.setBatch("1812");
 
             items.add(i);
 

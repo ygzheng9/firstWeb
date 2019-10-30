@@ -49,4 +49,12 @@ public abstract class BasePoHead<M extends BasePoHead<M>> extends Model<M> imple
 		return getStr("project");
 	}
 
+	public void setBatch(java.lang.String batch) {
+		set("batch", batch);
+	}
+	
+	public java.lang.String getBatch() {
+		return getStr("batch");
+	}
+
 }

@@ -23,7 +23,7 @@ public class InboundService {
 
 
     public void loadData() {
-        String fileName = PropKit.get("baseFolder") + "/zdata/ib_test2.txt";
+        String fileName = PropKit.get("baseFolder") + "/zdata/1812.txt";
 
         List<List<String>> headList = Lists.newArrayList();
         Map<String, List<List<String>>> items = Maps.newHashMap();
@@ -37,14 +37,13 @@ public class InboundService {
             InboundParser p = InboundParser.build(lines);
 
             while (p.hasNext()) {
-                p.nextToken();
+                p.moveDown(1);
 
                 List<String> fields = p.parseHead();
                 if (!p.hasNext()) {
                     break;
                 }
 
-                p.nextToken();
                 List<List<String>> orderItems = p.parseItems();
 
                 headList.add(fields);
@@ -73,19 +72,19 @@ public class InboundService {
 
             log.info("2===total order: " + poHeads.size() + " with lines: " + poItems.size());
 
-            // for (PoHead h : poHeads) {
-            //     boolean rtn = h.save();
-            //     if (!rtn) {
-            //         log.error("save po head failed: " + h.toString());
-            //     }
-            // }
-            //
-            // for (PoItem i : poItems) {
-            //     boolean rtn = i.save();
-            //     if (!rtn) {
-            //         log.error("save po items failed: " + i.toString());
-            //     }
-            // }
+            for (PoHead h : poHeads) {
+                boolean rtn = h.save();
+                if (!rtn) {
+                    log.error("save po head failed: " + h.toString());
+                }
+            }
+
+            for (PoItem i : poItems) {
+                boolean rtn = i.save();
+                if (!rtn) {
+                    log.error("save po items failed: " + i.toString());
+                }
+            }
         } catch (
             IOException e) {
             e.printStackTrace();

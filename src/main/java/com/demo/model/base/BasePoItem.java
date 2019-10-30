@@ -199,4 +199,12 @@ public abstract class BasePoItem<M extends BasePoItem<M>> extends Model<M> imple
 		return get("toAmt");
 	}
 
+	public void setBatch(java.lang.String batch) {
+		set("batch", batch);
+	}
+	
+	public java.lang.String getBatch() {
+		return getStr("batch");
+	}
+
 }
