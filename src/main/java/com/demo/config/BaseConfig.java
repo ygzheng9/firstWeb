@@ -87,7 +87,7 @@ public class BaseConfig extends JFinalConfig {
     public void configRoute(Routes me) {
         me.setBaseViewPath("/view");
         me.add("/blog", BlogController.class, "/blog");
-        me.add("/", OKAdminController.class, "/okAdmin");
+        me.add("/", OKAdminController.class, "/okadmin");
 
         me.add(new APIRoutes());
     }

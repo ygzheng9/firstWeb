@@ -1,5 +1,6 @@
 package com.demo.xstart;
 
+import com.demo.config.LayerTable;
 import com.demo.model.User;
 import com.jfinal.aop.Inject;
 import com.jfinal.core.Controller;

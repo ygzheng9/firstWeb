@@ -1,7 +1,7 @@
-package com.demo.xstart;
+package com.demo.dataviz;
 
 import com.beust.jcommander.internal.Sets;
-import com.demo.model.Hotword;
+import com.demo.config.RecordKit;
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;

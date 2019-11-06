@@ -1,10 +1,13 @@
-package com.demo.controller;
+package com.demo.config;
 
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author ygzheng
+ */
 public class CorsInterceptor implements Interceptor {
 
     @Override

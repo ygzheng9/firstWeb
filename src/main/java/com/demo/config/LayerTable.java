@@ -1,4 +1,4 @@
-package com.demo.xstart;
+package com.demo.config;
 
 import com.jfinal.plugin.activerecord.Page;
 import lombok.Data;

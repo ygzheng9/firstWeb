@@ -1,5 +1,9 @@
 package com.demo.model;
 
+import com.demo.matanalysis.BomItem;
+import com.demo.matanalysis.BomProjectMapping;
+import com.demo.matanalysis.PoHead;
+import com.demo.matanalysis.PoItem;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 
 /**

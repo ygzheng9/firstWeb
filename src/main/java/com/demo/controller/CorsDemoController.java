@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 
+import com.demo.config.CorsInterceptor;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.HttpKit;
@@ -8,6 +9,9 @@ import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
 
+/**
+ * @author ygzheng
+ */
 @Before(CorsInterceptor.class)
 public class CorsDemoController extends Controller {
     private static final String OPTIONS = "OPTIONS";

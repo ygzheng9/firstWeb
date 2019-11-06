@@ -1,4 +1,4 @@
-package com.demo.xstart;
+package com.demo.config;
 
 import com.google.common.collect.Maps;
 import com.jfinal.log.Log;

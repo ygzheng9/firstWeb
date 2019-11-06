@@ -3,6 +3,8 @@ package com.demo.xstart;
 
 // import com.demo.model.Blog;
 
+import com.demo.config.StreamRender;
+import com.demo.matanalysis.BomService;
 import com.demo.model.Blog;
 import com.demo.service.SimpleKt;
 import com.google.common.io.ByteStreams;
@@ -52,7 +54,7 @@ public class BlogController extends Controller {
         //
         // userSvc.loadFile();
 
-        bomSvc.loadMapping();
+        // bomSvc.loadMapping();
 
         render("list.html");
 

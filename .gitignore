@@ -32,4 +32,6 @@ log/
 src/main/resources/default.properties
 src/main/webapp/download/*.*
 src/main/webapp/zdata/*.*
+src/main/webapp/zdata/raw_input/*.*
+
 

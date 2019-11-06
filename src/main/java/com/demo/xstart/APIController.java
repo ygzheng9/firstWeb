@@ -1,6 +1,8 @@
 package com.demo.xstart;
 
-import com.demo.model.Hotword;
+import com.demo.config.PjaxInterceptor;
+import com.demo.dataviz.Hotword;
+import com.demo.dataviz.WordcloudService;
 import com.jfinal.aop.Clear;
 import com.jfinal.aop.Inject;
 import com.jfinal.core.Controller;

@@ -1,4 +1,4 @@
-package com.demo.xstart;
+package com.demo.config;
 
 import com.google.common.io.ByteStreams;
 import com.jfinal.render.Render;
@@ -15,7 +15,7 @@ public class StreamRender extends Render {
     private final InputStream input;
     private final String filename;
 
-    StreamRender(InputStream input, String filename) {
+    public StreamRender(InputStream input, String filename) {
         this.input = input;
         this.filename = filename;
     }
