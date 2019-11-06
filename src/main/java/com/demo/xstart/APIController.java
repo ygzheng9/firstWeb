@@ -1,8 +1,8 @@
 package com.demo.xstart;
 
 import com.demo.config.PjaxInterceptor;
+import com.demo.dataviz.CloudService;
 import com.demo.dataviz.Hotword;
-import com.demo.dataviz.WordcloudService;
 import com.jfinal.aop.Clear;
 import com.jfinal.aop.Inject;
 import com.jfinal.core.Controller;
@@ -17,7 +17,7 @@ import java.util.List;
 public class APIController extends Controller {
     @Inject
     private
-    WordcloudService cloudSvc;
+    CloudService cloudSvc;
 
     private static String okStatus = "1000";
 

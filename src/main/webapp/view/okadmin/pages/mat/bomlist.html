@@ -1,0 +1,33 @@
+<div>
+    <div style="text-align:center;font-size: 24px;">#(client)@#(plant)</div>
+    <table lay-size="sm" class="layui-table">
+        <colgroup>
+            <col width="20%">
+            <col width="20%">
+            <col width="20%">
+            <col width="20%">
+            <col width="20%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>客户</th>
+            <th>工厂</th>
+            <th>项目</th>
+            <th>BOM</th>
+            <th>零件数</th>
+        </tr>
+        </thead>
+        <tbody>
+        #for(x : items)
+        <tr>
+            <td>#(x.client)</td>
+            <td>#(x.plant)</td>
+            <td>#(x.project)</td>
+            <td><a href="mat/getBomItems?bomid=#(x.bomID)&client=#(x.client)&plant=#(x.plant)" target="_blank">#(x.bomID)</a>
+            </td>
+            <td>#(x.partCount)</td>
+        </tr>
+        #end
+        </tbody>
+    </table>
+</div>

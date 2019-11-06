@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * @author ygzheng
  */
-public class DataService {
-    private static Log log = Log.getLog(DataService.class);
+public class VizService {
+    private static Log log = Log.getLog(VizService.class);
     private static String NULL = "NULL";
 
     public List<PoHead> loadPoHeads() {
@@ -293,7 +293,7 @@ public class DataService {
     public static void main(String[] args) {
         BaseConfig.setupEnv();
 
-        DataService svc = new DataService();
+        VizService svc = new VizService();
         List<PoHead> heads = svc.loadPoHeads();
 
         int i = 0;

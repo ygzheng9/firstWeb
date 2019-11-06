@@ -11,11 +11,11 @@ import java.util.List;
 /**
  * @author ygzheng
  */
-public class DataController extends Controller {
+public class VizController extends Controller {
     @Inject
-    private DataService dataSvc;
+    private VizService dataSvc;
 
-    private int StatusOK = 200;
+    private static int StatusOK = 200;
 
     public void poHeads() {
         List<PoHead> items = dataSvc.loadPoHeads();

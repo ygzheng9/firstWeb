@@ -4,7 +4,7 @@ package com.demo.xstart;
 // import com.demo.model.Blog;
 
 import com.demo.config.StreamRender;
-import com.demo.matanalysis.BomService;
+import com.demo.matanalysis.MatService;
 import com.demo.model.Blog;
 import com.demo.service.SimpleKt;
 import com.google.common.io.ByteStreams;
@@ -41,14 +41,14 @@ public class BlogController extends Controller {
     private UserService userSvc;
 
     @Inject
-    private BomService bomSvc;
+    private MatService bomSvc;
 
     public void index(){
         System.out.println("index render.....");
 
         // blogSvc.showlog();
         //
-        // blogSvc.dumpInof();
+        blogSvc.dumpInof();
         //
         // blogSvc.localFile();
         //

@@ -15,6 +15,12 @@ import java.util.Map;
 
 /**
  * @author ygzheng
+ * 将 QAD 系统导出的入库记录，导入到 db；
+ * 入库记录：
+ * 1. 固定长度分割；
+ * 2. 有分页，分页的位置有多个：头，两行之间，一行内部；
+ * 3. 连续的两行表示一条入库记录，并且还可能有额外的汇率行(紧接着的第三行)；
+ * 4. 订单行项目结束有多种情况：固定符号；没有任何符号，直接开始新订单；
  */
 public class InboundService {
     private static Log log = Log.getLog(InboundService.class);

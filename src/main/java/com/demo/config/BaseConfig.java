@@ -3,13 +3,14 @@ package com.demo.config;
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
 import com.demo.model._MappingKit;
+import com.demo.okadmin.OkAdminRoutes;
 import com.demo.xstart.APIRoutes;
 import com.demo.xstart.BlogController;
-import com.demo.xstart.OKAdminController;
 import com.jfinal.config.*;
 import com.jfinal.json.MixedJsonFactory;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
+import com.jfinal.log.Log;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.server.undertow.UndertowServer;
@@ -20,6 +21,7 @@ import java.sql.Connection;
 public class BaseConfig extends JFinalConfig {
     private static Prop defaultConfig;
     private WallFilter wallFilter;
+    private static Log log = Log.getLog(BaseConfig.class);
 
     /**
      * 启动入口，运行此 main 方法可以启动项目，此 main 方法可以放置在任意的 Class 类定义中，不一定要放于此
@@ -39,17 +41,17 @@ public class BaseConfig extends JFinalConfig {
         arp.setTransactionLevel(Connection.TRANSACTION_READ_COMMITTED);
         _MappingKit.mapping(arp);
 
-        /// arp.setShowSql(defaultConfig.getBoolean("devMode", false));
-        arp.setShowSql(false);
+        arp.setShowSql(true);
 
         arp.getEngine().setToClassPathSourceFactory();
+        arp.addSqlTemplate("/sql/_all.sql");
 
         // 与 jfinal web 环境唯一的不同是要手动调用一次相关插件的start()方法
         druidPlugin.start();
         arp.start();
     }
 
-    public static void loadConfig() {
+    private static void loadConfig() {
         if (defaultConfig == null) {
             defaultConfig = PropKit.useFirstFound("production.properties", "default.properties");
         }
@@ -73,9 +75,7 @@ public class BaseConfig extends JFinalConfig {
         // 是否对超类中的属性进行注入
         me.setInjectSuperClass(true);
 
-        /// me.setJsonFactory(MixedJsonFactory.me());
         me.setJsonFactory(new MixedJsonFactory());
-        // me.setLogFactory(new Slf4jLogFactory());
         me.setRenderFactory(new ExceptionRenderFactory());
     }
 
@@ -86,9 +86,10 @@ public class BaseConfig extends JFinalConfig {
     @Override
     public void configRoute(Routes me) {
         me.setBaseViewPath("/view");
-        me.add("/blog", BlogController.class, "/blog");
-        me.add("/", OKAdminController.class, "/okadmin");
 
+        me.add("/blog", BlogController.class, "/blog");
+
+        me.add(new OkAdminRoutes());
         me.add(new APIRoutes());
     }
 
@@ -135,7 +136,7 @@ public class BaseConfig extends JFinalConfig {
         arp.setShowSql(defaultConfig.getBoolean("devMode", false));
 
         arp.getEngine().setToClassPathSourceFactory();
-        // arp.addSqlTemplate("/sql/_all_sqls.sql");
+        arp.addSqlTemplate("/sql/_all.sql");
     }
 
     @Override

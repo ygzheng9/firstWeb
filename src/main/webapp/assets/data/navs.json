@@ -8,6 +8,24 @@
         "isCheck": true
     },
     {
+        "title": "物料分析",
+        "href": "",
+        "fontFamily": "ok-icon",
+        "icon": "&#xe6b8;",
+        "children": [
+            {
+                "title": "客户 BOM",
+                "href": "pages/mat",
+                "icon": "&#xe6b1;"
+            },
+            {
+                "title": "料号复用 BOM",
+                "href": "pages/mat/reuseByBom",
+                "icon": "&#xe6b1;"
+            }
+        ]
+    },
+    {
         "title": "基本功能",
         "href": "",
         "fontFamily": "ok-icon",

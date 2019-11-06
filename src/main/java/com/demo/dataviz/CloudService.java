@@ -18,8 +18,8 @@ import java.util.Set;
 /**
  * @author ygzheng
  */
-public class WordcloudService {
-    private static Log log = Log.getLog(WordcloudService.class);
+public class CloudService {
+    private static Log log = Log.getLog(CloudService.class);
     private static List<Hotword> words = null;
 
     public List<Hotword> getCloud(boolean isForce) {

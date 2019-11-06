@@ -1,0 +1,35 @@
+#@okFull()
+
+#define main()
+<div>
+    <div style="text-align:center;font-size: 24px;">#(client)@#(plant)-#(bomid)</div>
+    <table lay-size="sm" class="layui-table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th style="width: 100px;">层级</th>
+            <th>件号</th>
+            <th>版本</th>
+            <th>品名</th>
+            <th>类别</th>
+        </tr>
+        </thead>
+        <tbody>
+        #for(x : items)
+        <tr>
+            <td>#(x.seqNum)</td>
+            <td align="right">
+                <div style="background-color: gray; width: #(x.levelRate)%;height: 3px;">
+                    #(x.level)
+                </div>
+            </td>
+            <td>#(x.partNum)</td>
+            <td>#(x.partVersion)</td>
+            <td>#(x.partName) #(x.partNameZh)</td>
+            <td>#(x.partFamily)</td>
+        </tr>
+        #end
+        </tbody>
+    </table>
+</div>
+#end

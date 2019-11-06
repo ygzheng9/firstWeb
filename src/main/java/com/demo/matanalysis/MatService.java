@@ -1,0 +1,144 @@
+package com.demo.matanalysis;
+
+import com.beust.jcommander.internal.Sets;
+import com.demo.config.BaseConfig;
+import com.demo.config.RecordKit;
+import com.google.common.base.Charsets;
+import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import com.google.common.io.Files;
+import com.jfinal.kit.PropKit;
+import com.jfinal.log.Log;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+/**
+ * @author ygzheng
+ */
+public class MatService {
+    private static Log log = Log.getLog(MatService.class);
+
+    public void loadMapping() {
+        // 从指定文件，加载 bom-项目-工厂-客户 的对应关系
+        List<BomProjectMapping> results = Lists.newArrayList();
+
+        String fname = PropKit.get("baseFolder") + "/zdata/bom_projct_mapping.csv";
+        List<String> columnNames = ImmutableList.of("bomId", "partCount", "project", "client", "plant", "city");
+        RecordKit record = RecordKit.build(columnNames);
+
+        try {
+            File infile = new File(fname);
+            List<String> lines = Files.readLines(infile, Charsets.UTF_8);
+
+            Splitter splter = Splitter.on(",");
+            boolean isHeader = true;
+            for (String line : lines) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue;
+                }
+
+                List<String> fields = splter.splitToList(line);
+                record.wrap(fields);
+
+                BomProjectMapping entry = new BomProjectMapping();
+                entry.setBomID(record.getString("bomId"));
+                entry.setPartCount(record.getInteger("partCount"));
+                entry.setProject(record.getString("project"));
+                entry.setClient(record.getString("client"));
+                entry.setPlant(record.getString("plant"));
+                entry.setCity(record.getString("city"));
+
+                results.add(entry);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (BomProjectMapping i : results) {
+            boolean r = i.save();
+            if (!r) {
+                log.warn("save failed: " + i.toString());
+            }
+        }
+    }
+
+    public List<Record> getClientProjectMapping() {
+        // 获取 客户-项目-bom 对应关系
+        List<Record> mappings = Db.template("mat.getProjectCustomerMapping").find();
+
+        return mappings;
+    }
+
+    public List<Record> getBomList(String client, String plant) {
+        // 根据 （客户，工厂） 获取 bom 列表
+        List<Record> list = Db.template("mat.getBomList", client, plant).find();
+
+        return list;
+    }
+
+    public List<BomItem> getBomItems(String bomid) {
+        BomItem dao = new BomItem().dao();
+        List<BomItem> items = dao.template("mat.getBomItems", bomid).find();
+
+        Set<Integer> list = Sets.newHashSet();
+        for (BomItem i : items) {
+            String s = i.getLevel();
+            Integer a = 0;
+            try {
+                a = Integer.parseInt(s);
+            } catch (NumberFormatException e) {
+                log.info("level convert failed: " + i.getLevel());
+            }
+
+            if (a == 99) {
+                a = 1;
+            }
+
+            list.add(a);
+        }
+
+        Integer max = Collections.max(list);
+        Integer min = Collections.min(list);
+        Double range = (max - min + 1) * 1.0;
+
+        for (BomItem i : items) {
+            Integer a = 0;
+            try {
+                a = Integer.parseInt(i.getLevel());
+            } catch (NumberFormatException e) {
+                log.info("level convert failed: " + i.getLevel());
+            }
+            if (a == 99) {
+                a = 1;
+            }
+
+            Double d = (1.0 - (a - min) / range) * 100;
+
+            i.setLevelRate(d);
+        }
+
+        return items;
+    }
+
+
+    public List<Record> reuseByBom() {
+        // 料号复用：bom 级别
+        List<Record> list = Db.template("mat.reuseByBom").find();
+
+        return list;
+    }
+
+    public static void main(String[] args) {
+        BaseConfig.setupEnv();
+        MatService svc = new MatService();
+    }
+
+}
