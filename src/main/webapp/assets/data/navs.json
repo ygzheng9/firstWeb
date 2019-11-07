@@ -1,50 +1,27 @@
 [
     {
-        "title": "控制台",
-        "href": "pages/console",
+        "title": "共用性",
+        "href": "pages/mat/reuseByBom",
         "fontFamily": "ok-icon",
         "icon": "&#xe654;",
         "spread": true,
         "isCheck": true
     },
     {
-        "title": "物料分析",
-        "href": "",
+        "title": "客户项目",
+        "href": "pages/mat",
         "fontFamily": "ok-icon",
         "icon": "&#xe6b8;",
-        "children": [
-            {
-                "title": "客户 BOM",
-                "href": "pages/mat",
-                "icon": "&#xe6b1;"
-            },
-            {
-                "title": "料号复用 BOM",
-                "href": "pages/mat/reuseByBom",
-                "icon": "&#xe6b1;"
-            }
-        ]
+        "spread": true
     },
     {
-        "title": "基本功能",
-        "href": "",
-        "fontFamily": "ok-icon",
-        "icon": "&#xe6b8;",
-        "children": [
-            {
-                "title": "演示 1",
-                "href": "pages/console1",
-                "icon": "&#xe68e;"
-            },
-            {
-                "title": "关键词",
-                "href": "pages/wordcloud",
-                "icon": "&#xe6b1;"
-            }
-        ]
+        "title": "纪要分析",
+        "href": "pages/wordcloud",
+        "icon": "&#xe656;",
+        "spread": true
     },
     {
-        "title": "用户管理",
+        "title": "演示",
         "href": "",
         "icon": "&#xe66f;",
         "spread": false,
@@ -67,6 +44,16 @@
                 "href": "pages/member/permission",
                 "icon": "&#xe62e;",
                 "spread": false
+            },
+            {
+                "title": "演示 0",
+                "href": "pages/console",
+                "icon": "&#xe68e;"
+            },
+            {
+                "title": "演示 1",
+                "href": "pages/console1",
+                "icon": "&#xe68e;"
             }
         ]
     }

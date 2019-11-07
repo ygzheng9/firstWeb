@@ -1,9 +1,7 @@
 $(function () {
         var myChart = echarts.init(document.getElementById("reuse1"));
-
-
         $.get("/pages/mat/reuseByBomData", function (res) {
-            console.log(res);
+            // console.log(res);
             var items = res.items;
 
             var levels = items.map(function (i) {
@@ -21,9 +19,6 @@ $(function () {
                 }
                 return Math.log10(j);
             });
-
-            console.log(levels);
-
 
             option = {
                 title: {
@@ -75,20 +70,25 @@ $(function () {
                         tooltip: {
                             trigger: 'item',
                             formatter: function (param) {
-                                return ['复用次数：' + param.name + '<br/>',
+                                return ['使用次数：' + param.name + '<br/>',
                                     '料号数量：' + levelSizeRaw[param.dataIndex]
                                 ].join('');
                             }
                         }
                     }
                 ]
-            }
-            ;
+            };
 
             myChart.setOption(option, true);
+            myChart.on('click', 'series', onClickChart);
+
+            function onClickChart(params) {
+                var count = params.name;
+                $.get("/pages/mat/getMatByReuseCount?count=" + count).then(function (res) {
+                    $("#matlist").html(res);
+                })
+            }
 
         });
-
-
     }
 );

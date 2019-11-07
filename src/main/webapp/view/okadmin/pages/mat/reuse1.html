@@ -4,7 +4,62 @@
 <div class="console console1 ok-body-scroll">
     <div class="ok-body home">
         <div class="layui-row layui-col-space15">
+            <div class="layui-col-xs6 layui-col-md3">
+                <div class="layui-card">
+                    <div class="ok-card-body">
+                        <div class="img-box" ok-pc-in-show>
+                            <img src="/assets/images/home-01.png" alt="none"/>
+                        </div>
+                        <div class="cart-r">
+                            <div class="stat-text incomes-num">#(info.bomCount)</div>
+                            <div class="stat-heading">BOM数量</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="layui-col-xs6 layui-col-md3">
+                <div class="layui-card ">
+                    <div class="ok-card-body">
+                        <div class="img-box" ok-pc-in-show>
+                            <img src="/assets/images/home-02.png" alt="none"/>
+                        </div>
+                        <div class="cart-r">
+                            <div class="stat-text goods-num">#(info.partCount)</div>
+                            <div class="stat-heading">料号数量</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-xs6 layui-col-md3">
+                <div class="layui-card">
+                    <div class="ok-card-body">
+                        <div class="img-box" ok-pc-in-show>
+                            <img src="/assets/images/home-03.png" alt="none"/>
+                        </div>
+                        <div class="cart-r">
+                            <div class="stat-text blogs-num">#(info.reuseCount)</div>
+                            <div class="stat-heading">复用料号数量</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-xs6 layui-col-md3">
+                <div class="layui-card">
+                    <div class="ok-card-body">
+                        <div class="img-box" ok-pc-in-show>
+                            <img src="/assets/images/home-04.png" alt="none"/>
+                        </div>
+                        <div class="cart-r">
+                            <div class="stat-text fans-num"><a href="/pages/mat/getBomReuse" target="_blank">#(info.reuseRate)</a>
+                            </div>
+                            <div class="stat-heading">复用率</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="layui-col-md12">
                 <div class="layui-card">
                     <div class="ok-card-body">
@@ -15,7 +70,9 @@
             <div class="layui-col-md12">
                 <div class="layui-card">
                     <div class="ok-card-body clearfix">
-                        <div style="margin: 0 auto;width:80%" id="bomList"></div>
+                        <div style="margin: 0 auto;width:80%">
+                            <div id="matlist"></div>
+                        </div>
                     </div>
                 </div>
             </div>

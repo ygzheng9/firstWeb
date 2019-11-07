@@ -1,6 +1,8 @@
 package com.demo.matanalysis;
 
 import com.demo.config.BaseConfig;
+import com.demo.model.BomItem;
+import com.demo.model.MatInfo;
 import com.jfinal.kit.JsonKit;
 import com.jfinal.log.Log;
 import com.jfinal.plugin.activerecord.Record;
@@ -89,4 +91,46 @@ public class MatServiceTest {
             idx++;
         }
     }
+
+    @Test
+    public void getInfoTest() {
+        svc.getInfo();
+
+    }
+
+    @Test
+    public void getBomReuseTest() {
+        List<Record> list = svc.getBomReuse();
+
+        assertNotNull(list);
+
+        int idx = 0;
+        for (Record i : list) {
+            log.info(JsonKit.toJson(i));
+
+            if (idx > 10) {
+                break;
+            }
+            idx++;
+        }
+    }
+
+
+    @Test
+    public void getMatByReuseCountTest() {
+        List<MatInfo> list = svc.getMatByReuseCount(10);
+
+        assertNotNull(list);
+
+        int idx = 0;
+        for (MatInfo i : list) {
+            log.info(JsonKit.toJson(i));
+
+            if (idx > 10) {
+                break;
+            }
+            idx++;
+        }
+    }
+
 }

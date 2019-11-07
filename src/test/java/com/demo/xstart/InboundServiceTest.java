@@ -2,7 +2,7 @@ package com.demo.xstart;
 
 import cn.hutool.core.util.ReUtil;
 import com.demo.config.BaseConfig;
-import com.demo.matanalysis.BomProjectMapping;
+import com.demo.model.BomProjectMapping;
 import com.demo.matanalysis.InboundParser;
 import com.demo.matanalysis.InboundService;
 import com.google.common.base.CharMatcher;

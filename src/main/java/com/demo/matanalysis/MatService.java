@@ -1,13 +1,18 @@
 package com.demo.matanalysis;
 
+import cn.hutool.core.util.NumberUtil;
 import com.beust.jcommander.internal.Sets;
 import com.demo.config.BaseConfig;
 import com.demo.config.RecordKit;
+import com.demo.model.BomItem;
+import com.demo.model.BomProjectMapping;
+import com.demo.model.MatInfo;
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
+import com.jfinal.kit.Kv;
 import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
 import com.jfinal.plugin.activerecord.Db;
@@ -134,6 +139,44 @@ public class MatService {
         List<Record> list = Db.template("mat.reuseByBom").find();
 
         return list;
+    }
+
+    public Kv getInfo() {
+        Integer bomCount = Db.template("mat.getBomCount").queryInt();
+        Integer partCount = Db.template("mat.getMatCount").queryInt();
+        Integer reuseCount = Db.template("mat.getMatReuseCount").queryInt();
+
+        Integer reuseBomCount = Db.template("mat.getMatBomReuseCount").queryInt();
+        Integer bomPartCount = Db.template("mat.getBomPartCnt").queryInt();
+        double reuseRate = reuseBomCount * 1.0 / bomPartCount;
+        String reuseStr = NumberUtil.decimalFormat("#.##%", reuseRate);
+
+        Kv kv = new Kv();
+        kv.set("bomCount", bomCount);
+        kv.set("partCount", partCount);
+        kv.set("reuseCount", reuseCount);
+        kv.set("reuseBomCount", reuseBomCount);
+        kv.set("reuseRate", reuseStr);
+
+        return kv;
+    }
+
+    public List<Record> getBomReuse() {
+        List<Record> items = Db.template("mat.getBomReuse").find();
+        for (Record r : items) {
+            double reuseRate = r.getInt("repeatCnt") * 1.0 / r.getInt("partCount");
+            String reuseStr = NumberUtil.decimalFormat("#.##%", reuseRate);
+            r.set("reuseStr", reuseStr);
+            r.set("reuseRate", reuseRate);
+        }
+
+        return items;
+    }
+
+    public List<MatInfo> getMatByReuseCount(int count) {
+        MatInfo dao = new MatInfo().dao();
+        List<MatInfo> items = dao.template("mat.getMatByReuseCount", count).find();
+        return items;
     }
 
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.demo.matanalysis;
+package com.demo.model;
 
 import com.demo.model.base.BaseBomItem;
 
@@ -7,6 +7,10 @@ import com.demo.model.base.BaseBomItem;
  */
 public class BomItem extends BaseBomItem<BomItem> {
     private static final long serialVersionUID = 7181603680123735430L;
+
+    /**
+     * 非数据库字段，手工增加出的字段，用以记录层级比例；
+     */
     private Double levelRate;
 
     public Double getLevelRate() {

@@ -1,6 +1,8 @@
 package com.demo.matanalysis;
 
 import com.demo.config.BaseConfig;
+import com.demo.model.PoHead;
+import com.demo.model.PoItem;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

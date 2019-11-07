@@ -1,5 +1,7 @@
 package com.demo.matanalysis;
 
+import com.demo.model.BomItem;
+import com.demo.model.MatInfo;
 import com.jfinal.aop.Inject;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.Kv;
@@ -58,6 +60,9 @@ public class MatController extends Controller {
     }
 
     public void reuseByBom() {
+        Kv kv = bomSvc.getInfo();
+        set("info", kv);
+
         render("reuse1.html");
     }
 
@@ -70,5 +75,30 @@ public class MatController extends Controller {
         data.set("items", items);
 
         renderJson(data);
+    }
+
+    public void getBomReuse() {
+        render("bomreuse.html");
+    }
+
+    public void getBomReuseData() {
+        List<Record> items = bomSvc.getBomReuse();
+
+        Kv data = new Kv();
+        data.set("status", StatusOK);
+        data.set("rtnCode", 0);
+        data.set("items", items);
+
+        renderJson(data);
+    }
+
+    public void getMatByReuseCount() {
+        int count = getInt("count");
+        List<MatInfo> items = bomSvc.getMatByReuseCount(count);
+
+        set("items", items);
+        keepPara();
+
+        render("matlist.html");
     }
 }
