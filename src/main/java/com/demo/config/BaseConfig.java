@@ -41,7 +41,7 @@ public class BaseConfig extends JFinalConfig {
         arp.setTransactionLevel(Connection.TRANSACTION_READ_COMMITTED);
         _MappingKit.mapping(arp);
 
-        arp.setShowSql(true);
+        arp.setShowSql(false);
 
         arp.getEngine().setToClassPathSourceFactory();
         arp.addSqlTemplate("/sql/_all.sql");

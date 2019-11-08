@@ -29,4 +29,8 @@ public class OKPagesController extends Controller {
     public void forget() {
         render("login/forget.html");
     }
+
+    public void plantEnv() {
+        render("plantenv.html");
+    }
 }

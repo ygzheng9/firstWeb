@@ -1,4 +1,4 @@
-@import "../layui/css/layui.css";
+@import "../lib/layui/css/layui.css";
 @import "../fonts/iconfont.css";
 
 #navBar .layui-nav-child{overflow:hidden;padding:0!important}

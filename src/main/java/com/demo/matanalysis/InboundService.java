@@ -27,9 +27,8 @@ import java.util.Map;
 public class InboundService {
     private static Log log = Log.getLog(InboundService.class);
 
-
-    public void loadData() {
-        String fileName = PropKit.get("baseFolder") + "/zdata/1812.txt";
+    public void loadData(String batchID, boolean save) {
+        String fileName = PropKit.get("baseFolder") + "/zdata/" + batchID + ".txt";
 
         List<List<String>> headList = Lists.newArrayList();
         Map<String, List<List<String>>> items = Maps.newHashMap();
@@ -41,6 +40,7 @@ public class InboundService {
             File infile = new File(fileName);
             List<String> lines = Files.readLines(infile, Charsets.UTF_8);
             InboundParser p = InboundParser.build(lines);
+            p.setBatchID(batchID);
 
             while (p.hasNext()) {
                 p.moveDown(1);
@@ -78,17 +78,19 @@ public class InboundService {
 
             log.info("2===total order: " + poHeads.size() + " with lines: " + poItems.size());
 
-            for (PoHead h : poHeads) {
-                boolean rtn = h.save();
-                if (!rtn) {
-                    log.error("save po head failed: " + h.toString());
+            if (save) {
+                for (PoHead h : poHeads) {
+                    boolean rtn = h.save();
+                    if (!rtn) {
+                        log.error("save po head failed: " + h.toString());
+                    }
                 }
-            }
 
-            for (PoItem i : poItems) {
-                boolean rtn = i.save();
-                if (!rtn) {
-                    log.error("save po items failed: " + i.toString());
+                for (PoItem i : poItems) {
+                    boolean rtn = i.save();
+                    if (!rtn) {
+                        log.error("save po items failed: " + i.toString());
+                    }
                 }
             }
         } catch (
@@ -100,7 +102,13 @@ public class InboundService {
     public static void main(String[] args) {
         BaseConfig.setupEnv();
 
+        long startTime = System.currentTimeMillis();
+
         InboundService svc = new InboundService();
-        svc.loadData();
+        svc.loadData("1812", true);
+
+        long endTime = System.currentTimeMillis();
+
+        log.info("程序运行时间：" + (endTime - startTime) + "ms");
     }
 }

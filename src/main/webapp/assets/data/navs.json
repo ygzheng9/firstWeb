@@ -27,6 +27,13 @@
         "spread": false,
         "children": [
             {
+                "title": "现场环境",
+                "href": "pages/plantEnv",
+                "fontFamily": "layui-icon",
+                "icon": "&#xe62e;",
+                "spread": false
+            },
+            {
                 "title": "用户列表",
                 "href": "pages/member/user",
                 "fontFamily": "layui-icon",

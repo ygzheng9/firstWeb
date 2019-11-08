@@ -22,6 +22,7 @@ import java.util.List;
 public class InboundParser {
     private static Log log = Log.getLog(InboundParser.class);
 
+
     public enum State {
         // 未进入订单
         NA,
@@ -35,6 +36,7 @@ public class InboundParser {
     private int maxPos;
     private State state;
     private List<String> lines = Lists.newArrayList();
+    private String batchID;
 
     private InboundParser() {
     }
@@ -76,15 +78,18 @@ public class InboundParser {
         moveDown(1);
 
         // 分页时出现
-        if (current().contains("采购收货报表")) {
+        if (current().contains("采购收货报表") ||
+            current().contains("Purchase Receipt Report")) {
             moveDown(2);
         }
 
-        if (current().contains("采购订单")) {
+        if (current().contains("采购订单") ||
+            current().contains("Order")) {
             moveDown(3);
         }
 
-        if (current().contains("收货单")) {
+        if (current().contains("收货单") ||
+            current().contains("Receiver")) {
             moveDown(3);
         }
     }
@@ -122,7 +127,8 @@ public class InboundParser {
         List<String> result = Lists.newArrayList("", "", "", "");
 
         String l = current();
-        if (l.trim().startsWith("兑换率")) {
+        if (l.trim().startsWith("兑换率") ||
+            l.trim().startsWith("Exch Rate")) {
             result = splitExchangeRate(l);
 
             // 移动到下一有效行
@@ -141,7 +147,7 @@ public class InboundParser {
         }
 
         // 原始文件中，订单行结束，有多种格式
-        ImmutableList<String> stops = ImmutableList.of("---------", "基本PO合计", "采购订单");
+        ImmutableList<String> stops = ImmutableList.of("---------", "基本PO合计", "采购订单", "Base PO Total", "Order");
 
         // 当前行（之前是汇率行，会向前进一行）或下一行（之前不是汇率行，没有向前进），
         String l = lines.get(pos + 1);
@@ -159,7 +165,8 @@ public class InboundParser {
     public List<String> parseHead() {
         List<String> result = Lists.newArrayList();
 
-        while (!current().trim().startsWith("采购订单")) {
+        while (!current().trim().startsWith("采购订单") &&
+            !current().trim().startsWith("Order")) {
             if (hasNext()) {
                 pos += 1;
             } else {
@@ -183,7 +190,8 @@ public class InboundParser {
         List<List<String>> orderItems = Lists.newArrayList();
 
         // 在表头也会有分页，所以直接通过字符查找；
-        while (!current().trim().startsWith("收货单")) {
+        while (!current().trim().startsWith("收货单") &&
+            !current().trim().startsWith("Receiver")) {
             pos += 1;
         }
         moveDown(3);
@@ -205,7 +213,7 @@ public class InboundParser {
             List<String> l2 = splitLineTwo(l);
 
             // 没有出现汇率行，也没有出现结尾标记，但是重新开始了新的订单
-            if (peekNext().startsWith("采购订单")) {
+            if (peekNext().startsWith("采购订单") || peekNext().startsWith("Order")) {
                 List<String> joins = Lists.newArrayList();
                 joins.addAll(l1);
                 joins.addAll(l2);
@@ -343,7 +351,7 @@ public class InboundParser {
         h.setVendorName(record.getString("vendorName"));
         h.setProject(record.getString("project"));
 
-        h.setBatch("1812");
+        h.setBatch(batchID);
 
         return h;
     }
@@ -434,7 +442,7 @@ public class InboundParser {
             i.setToCurrency(record.getString("toCurrency"));
             i.setToAmt(record.getDecimal("toAmt"));
 
-            i.setBatch("1812");
+            i.setBatch(batchID);
 
             items.add(i);
 
