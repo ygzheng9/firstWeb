@@ -43,7 +43,7 @@ function build() {
 }
 
 gulp.task('clean', function() {
-  return del(['./dist/**/*', '!./dist'], { force: true });
+  return del(['../js/**/*', '!../js'], { force: true });
 });
 
 gulp.task('watch', function() {

@@ -79,12 +79,10 @@ layui.use(['zzUtils'], () => {
     };
 
     myChart.setOption(option, true);
-    myChart.on('click', 'series', onClickChart);
-
-    function onClickChart(params) {
+    myChart.on('click', 'series', params => {
       const count = params.name;
       const url = '/pages/mat/getMatByReuseCount?count=' + count;
       zzUtils.setHtml(url, 'matlist');
-    }
+    });
   });
 });
