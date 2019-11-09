@@ -1,11 +1,17 @@
-"use strict";
-
 var bgGreen = '#57dba2';
 var bgBlue = '#0385b8';
 var yellow = '#ecdf6c';
 var blue = '#0c87eb';
 var orange = '#ff5722';
-var oranges = ['#fff5f2', '#ffddd3', '#ffbca7', '#ff9a7b', '#ff7850', '#ff4107', '#e93600'];
+var oranges = [
+  '#fff5f2',
+  '#ffddd3',
+  '#ffbca7',
+  '#ff9a7b',
+  '#ff7850',
+  '#ff4107',
+  '#e93600'
+];
 var COLOR = {
   lightGreen: '#00d7af',
   lightWhite: '#F8F8FF',
@@ -30,7 +36,7 @@ var heartbeat = new zeu.Heartbeat('heartbeat', {
   maxQueueCapacity: 50
 });
 heartbeat.scaleByHeight(150);
-setInterval(function () {
+setInterval(function() {
   heartbeat.beat({
     color: oranges[getRandomInt(0, oranges.length - 1)],
     space: getRandomInt(0, 10)
@@ -41,8 +47,8 @@ var digitalClock = new zeu.DigitalClock('digital-clock', {
   dashColor: COLOR.transparent
 });
 digitalClock.scaleByHeight(50);
-var barMeters = [];
 
+var barMeters = [];
 for (var i = 1; i <= 4; i++) {
   var barMeter = new zeu.BarMeter('bar-meter-' + i, {
     viewWidth: 65,
@@ -54,14 +60,11 @@ for (var i = 1; i <= 4; i++) {
   });
   barMeters.push(barMeter);
 }
-
-setInterval(function () {
+setInterval(function() {
   for (var i = 0; i < 6; i++) {
     var value = getRandomInt(50, 100);
-
     if (barMeters[i] !== undefined) {
       barMeters[i].value = value;
-
       if (value > 75) {
         barMeters[i].barColor = orange;
       } else {
@@ -71,7 +74,6 @@ setInterval(function () {
   }
 }, 1000);
 var volumeMeters = [];
-
 for (var i = 1; i <= 4; i++) {
   var volumeMeter = new zeu.VolumeMeter('volume-meter-' + i, {
     viewHeight: 180,
@@ -99,9 +101,8 @@ for (var i = 1; i <= 4; i++) {
   volumeMeter.scaleTo(0.8, 0.8);
   volumeMeters.push(volumeMeter);
 }
-
 updateVolumeMeters();
-setInterval(function () {
+setInterval(function() {
   updateVolumeMeters();
 }, 3000);
 
@@ -112,7 +113,6 @@ function updateVolumeMeters() {
 }
 
 var roundFans = [];
-
 for (var i = 1; i <= 8; i++) {
   var roundFan = new zeu.RoundFan('round-fan-' + i, {
     fanColor: orange,
@@ -125,9 +125,8 @@ for (var i = 1; i <= 8; i++) {
   roundFan.scaleByHeight(80);
   roundFans.push(roundFan);
 }
-
 updateFanSpeed();
-setInterval(function () {
+setInterval(function() {
   updateFanSpeed();
 }, 3000);
 
@@ -136,7 +135,6 @@ function updateFanSpeed() {
     var speed = getRandomInt(2, 7);
     roundFans[i].speed = speed;
     var color = bgGreen;
-
     if (speed <= 2) {
       color = bgGreen;
     } else if (speed <= 5) {
@@ -144,17 +142,15 @@ function updateFanSpeed() {
     } else {
       color = orange;
     }
-
     roundFans[i].fanColor = color;
     roundFans[i].centerBgColor = color;
     var fanRpm = document.getElementById('fan-rpm-' + (i + 1));
-    fanRpm.innerHTML = Math.floor(speed * 120 / 60);
+    fanRpm.innerHTML = Math.floor((speed * 120) / 60);
     fanRpm.style.color = color;
   }
 }
 
 var textBoxes = [];
-
 for (var i = 1; i <= 4; i++) {
   var textBox = new zeu.TextBox('text-box-' + i, {
     text: {
@@ -168,9 +164,7 @@ for (var i = 1; i <= 4; i++) {
   textBox.scaleByHeight(40);
   textBoxes.push(textBox);
 }
-
 var messageQueues = [];
-
 for (var i = 1; i <= 4; i++) {
   var messageQueue = new zeu.MessageQueue('message-queue-' + i, {
     viewWidth: 80,
@@ -182,17 +176,14 @@ for (var i = 1; i <= 4; i++) {
   });
   messageQueues.push(messageQueue);
 }
-
-setInterval(function () {
+setInterval(function() {
   for (var i = 0; i < 4; i++) {
     var mq = messageQueues[i];
     var n = getRandomInt(0, 2);
-
     if (n == 0) {
       mq.pop();
     } else {
       var color = getRandomInt(0, 2);
-
       if (color == 0) {
         color = bgGreen;
       } else if (color == 1) {
@@ -208,12 +199,10 @@ setInterval(function () {
         space: getRandomInt(4, 10)
       });
     }
-
     textBoxes[i].value = mq.queueSize;
   }
 }, 300);
 var speedCircles = [];
-
 for (var i = 1; i <= 2; i++) {
   var speedCircle = new zeu.SpeedCircle('speed-circle-' + i, {
     text: {
@@ -240,7 +229,6 @@ for (var i = 1; i <= 2; i++) {
   speedCircle.scaleByHeight(170);
   speedCircles.push(speedCircle);
 }
-
 for (var i = 3; i <= 4; i++) {
   var speedCircle = new zeu.SpeedCircle('speed-circle-' + i, {
     text: {
@@ -267,8 +255,7 @@ for (var i = 3; i <= 4; i++) {
   speedCircle.scaleByHeight(170);
   speedCircles.push(speedCircle);
 }
-
-setInterval(function () {
+setInterval(function() {
   for (var i = 0; i < speedCircles.length; i++) {
     speedCircles[i].speed1 = 1 * getRandomInt(1, 3);
     speedCircles[i].speed2 = -2 * getRandomInt(1, 3);
@@ -277,7 +264,6 @@ setInterval(function () {
   }
 }, 3000);
 var textMeters = [];
-
 for (var i = 1; i <= 2; i++) {
   var textMeter = new zeu.TextMeter('text-meter-' + i, {
     viewWidth: 400,
@@ -297,9 +283,8 @@ for (var i = 1; i <= 2; i++) {
   textMeter.scaleByHeight(60);
   textMeters.push(textMeter);
 }
-
 updateTextMeters();
-setInterval(function () {
+setInterval(function() {
   updateTextMeters();
 }, 3000);
 
@@ -307,7 +292,6 @@ function updateTextMeters() {
   for (var i = 0; i < textMeters.length; i++) {
     var value = getRandomInt(45, 75);
     textMeters[i].value = value;
-
     if (value < 45) {
       textMeters[i].displayValue = 'LOW';
       textMeters[i].fillColor = bgGreen;
@@ -328,7 +312,7 @@ function updateTextMeters() {
 }
 
 function getRandomColor() {
-  return '#' + ((1 << 24) * Math.random() | 0).toString(16);
+  return '#' + (((1 << 24) * Math.random()) | 0).toString(16);
 }
 
 function getRandomInt(min, max) {
@@ -338,14 +322,11 @@ function getRandomInt(min, max) {
 function shuffleArray(a) {
   var j = 0;
   var temp = 0;
-
   for (var i = a.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1));
     temp = a[i];
     a[i] = a[j];
     a[j] = temp;
   }
-
   return a;
 }
-//# sourceMappingURL=plantenv.js.map

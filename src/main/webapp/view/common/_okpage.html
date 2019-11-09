@@ -1,4 +1,4 @@
-#define okFull()
+#define okpage()
 
 <!DOCTYPE html>
 <html lang="en" class="page-fill">
@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon"/>
 
-    <link rel="stylesheet" href="/assets/okadmin/oksub.css" media="all"/>
+    <link rel="stylesheet" href="/assets/css/oksub.css" media="all"/>
 
     #@css?()
 </head>
@@ -19,14 +19,22 @@
 <script type="text/javascript" src="/assets/lib/lodash-4.17.4.min.js"></script>
 
 <script type=" text/javascript" src="/assets/lib/layui/layui.js"></script>
-<script type="text/javascript" src="/assets/okadmin/okmount.js"></script>
-
-<script type="text/javascript" src="/assets/lib/echarts/echarts.min.js"></script>
-<script type="text/javascript" src="/assets/lib/echarts/echarts.theme.js"></script>
-<script type="text/javascript" src="/assets/lib/echarts/world/js/china.js"></script>
+<script type="text/javascript" src="/assets/js/laymount.js"></script>
 
 #@js?()
 </body>
 </html>
 
+#end
+
+#define echart()
+<script type="text/javascript" src="/assets/lib/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="/assets/lib/echarts/echarts.theme.js"></script>
+<script type="text/javascript" src="/assets/lib/echarts/world/js/china.js"></script>
+#end
+
+
+#define g2()
+<script defer src="/assets/lib/g2/g2.min.js" data-turbolinks-track="true"></script>
+<script defer src="/assets/lib/g2/data-set.min.js" data-turbolinks-track="true"></script>
 #end

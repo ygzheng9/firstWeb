@@ -99,13 +99,12 @@ public class BaseConfig extends JFinalConfig {
      */
     @Override
     public void configEngine(Engine me) {
-        //设置共享页面，在页面上通过#define layopen()定义模板，#@layopen()引用
-        me.addSharedFunction("/view/common/_layopen.html");
+        //设置共享页面
+        me.addSharedFunction("/view/common/_okpage.html");
+
         me.addSharedFunction("/view/common/_segment.html");
         me.addSharedFunction("/view/common/_pjax.html");
         me.addSharedFunction("/view/common/_turbolinks.html");
-        me.addSharedFunction("/view/common/_okadmin.html");
-        me.addSharedFunction("/view/common/_okfull.html");
     }
 
     public static DruidPlugin getDruidPlugin() {
