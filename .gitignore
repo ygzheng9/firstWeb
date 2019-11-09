@@ -35,6 +35,7 @@ src/main/webapp/download/*.*
 src/main/webapp/zdata/*.*
 src/main/webapp/zdata/raw_input/*.*
 
-src/main/webapp/assets/js
-src/main/webapp/assets/lib
+src/main/webapp/assets/js/
+src/main/webapp/assets/lib/
 
+  
