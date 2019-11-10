@@ -1,0 +1,46 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+*.iml
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# folders and some key files
+target/
+log/
+.idea/
+
+src/main/resources/default.properties
+
+src/main/webapp/assets/lib
+
+src/main/webapp/download/*.*
+src/main/webapp/zdata/*.*
+src/main/webapp/zdata/raw_input/*.*
+
+
+.vscode
+node_modules
+package-lock.json
+dist
+
+

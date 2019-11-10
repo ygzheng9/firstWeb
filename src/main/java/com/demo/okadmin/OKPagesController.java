@@ -33,4 +33,8 @@ public class OKPagesController extends Controller {
     public void plantEnv() {
         render("plantenv.html");
     }
+
+    public void hello() {
+        render("hello.html");
+    }
 }
