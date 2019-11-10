@@ -4,6 +4,7 @@ import lombok.Data;
 
 /**
  * @author ygzheng
+ * BOM 的层级关系：子件号，父件号
  */
 @Data
 public class BomComponent {

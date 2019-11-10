@@ -1,5 +1,6 @@
 package com.demo.dataviz;
 
+import com.alibaba.excel.EasyExcel;
 import com.demo.config.BaseConfig;
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
@@ -16,6 +17,8 @@ import java.util.List;
 
 /**
  * @author ygzheng
+ * 1. 从本地文件读取 *.dt，然后以 json 格式返回给前端
+ * 2. 从本地文件读取 sales.xlsx 保存入数据库，然后从数据库中返回 json 给前台
  */
 public class VizService {
     private static Log log = Log.getLog(VizService.class);
@@ -290,9 +293,7 @@ public class VizService {
         return s;
     }
 
-    public static void main(String[] args) {
-        BaseConfig.setupEnv();
-
+    private static void testBatch1() {
         VizService svc = new VizService();
         List<PoHead> heads = svc.loadPoHeads();
 
@@ -350,6 +351,21 @@ public class VizService {
             }
             i++;
         }
+    }
+
+    private void loadSales() {
+        String fileName = PropKit.get("baseFolder") + "/zdata/pd_sales.xlsx";
+        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
+        EasyExcel.read(fileName, RegionSalesRaw.class, new RegionSalesRawListener()).sheet().doRead();
+    }
+
+    public static void main(String[] args) {
+        BaseConfig.setupEnv();
+        // testBatch1();
+
+        VizService svc = new VizService();
+        svc.loadSales();
+
     }
 
 }
