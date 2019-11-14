@@ -1,6 +1,5 @@
 package com.demo.dataviz;
 
-import com.alibaba.excel.EasyExcel;
 import com.demo.config.BaseConfig;
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
@@ -24,8 +23,8 @@ public class VizService {
     private static Log log = Log.getLog(VizService.class);
     private static String NULL = "NULL";
 
-    public List<PoHead> loadPoHeads() {
-        List<PoHead> results = Lists.newArrayList();
+    public List<VizPoHead> loadPoHeads() {
+        List<VizPoHead> results = Lists.newArrayList();
 
         String fname = PropKit.get("baseFolder") + "/zdata/raw_input/1.dt";
 
@@ -49,7 +48,7 @@ public class VizService {
                     poDate = poDate.substring(0, 10);
                 }
 
-                PoHead entry = new PoHead();
+                VizPoHead entry = new VizPoHead();
                 entry.setPoID(fields.get(0));
                 entry.setPoCode(fields.get(1));
                 entry.setPoDate(poDate);
@@ -65,8 +64,8 @@ public class VizService {
         return results;
     }
 
-    public List<PoItem> loadPoItems() {
-        List<PoItem> results = Lists.newArrayList();
+    public List<VizPoItem> loadPoItems() {
+        List<VizPoItem> results = Lists.newArrayList();
 
         String fname = PropKit.get("baseFolder") + "/zdata/raw_input/3.dt";
 
@@ -89,7 +88,7 @@ public class VizService {
                     poDate = poDate.substring(0, 10);
                 }
 
-                PoItem entry = new PoItem();
+                VizPoItem entry = new VizPoItem();
                 entry.setItemID(fields.get(0));
                 entry.setPoID(fields.get(1));
                 entry.setInvCode(fields.get(2));
@@ -117,14 +116,14 @@ public class VizService {
         return results;
     }
 
-    public List<PoItem> findPOItemsByDate(List<PoItem> items, String start, String end) {
-        List<PoItem> results = Lists.newArrayList();
+    public List<VizPoItem> findPOItemsByDate(List<VizPoItem> items, String start, String end) {
+        List<VizPoItem> results = Lists.newArrayList();
 
         if (items == null || start == null || end == null) {
             return results;
         }
 
-        for (PoItem i : items) {
+        for (VizPoItem i : items) {
             if (i.getPoDate().compareToIgnoreCase(start) >= 0 &&
                 i.getPoDate().compareToIgnoreCase(end) <= 0) {
                 results.add(i);
@@ -134,8 +133,8 @@ public class VizService {
         return results;
     }
 
-    public List<MatByMonth> loadMatByMonth() {
-        List<MatByMonth> results = Lists.newArrayList();
+    public List<VizMatByMonth> loadMatByMonth() {
+        List<VizMatByMonth> results = Lists.newArrayList();
 
         String fname = PropKit.get("baseFolder") + "/zdata/raw_input/4.dt";
 
@@ -153,7 +152,7 @@ public class VizService {
 
                 List<String> fields = splter.splitToList(line);
 
-                MatByMonth entry = new MatByMonth();
+                VizMatByMonth entry = new VizMatByMonth();
                 entry.setBizMonth(fields.get(0));
                 entry.setInvCode(fields.get(1));
 
@@ -204,8 +203,8 @@ public class VizService {
     }
 
 
-    public List<MatInfo> loadMatInfos() {
-        List<MatInfo> results = Lists.newArrayList();
+    public List<VizMatInfo> loadMatInfos() {
+        List<VizMatInfo> results = Lists.newArrayList();
 
         String fname = PropKit.get("baseFolder") + "/zdata/raw_input/6.dt";
 
@@ -223,7 +222,7 @@ public class VizService {
 
                 List<String> fields = splter.splitToList(line);
 
-                MatInfo entry = new MatInfo();
+                VizMatInfo entry = new VizMatInfo();
 
                 entry.setInvCode(normalizeStr(fields.get(0)));
                 entry.setInvName(normalizeStr(fields.get(1)));
@@ -295,10 +294,10 @@ public class VizService {
 
     private static void testBatch1() {
         VizService svc = new VizService();
-        List<PoHead> heads = svc.loadPoHeads();
+        List<VizPoHead> heads = svc.loadPoHeads();
 
         int i = 0;
-        for (PoHead h : heads) {
+        for (VizPoHead h : heads) {
             log.info(JsonKit.toJson(h));
 
             if (i >= 10) {
@@ -307,9 +306,9 @@ public class VizService {
             i++;
         }
 
-        List<PoItem> items = svc.loadPoItems();
+        List<VizPoItem> items = svc.loadPoItems();
         i = 0;
-        for (PoItem entry : items) {
+        for (VizPoItem entry : items) {
             log.info(JsonKit.toJson(entry));
 
             if (i >= 10) {
@@ -319,9 +318,9 @@ public class VizService {
         }
 
 
-        List<MatByMonth> mats = svc.loadMatByMonth();
+        List<VizMatByMonth> mats = svc.loadMatByMonth();
         i = 0;
-        for (MatByMonth entry : mats) {
+        for (VizMatByMonth entry : mats) {
             log.info(JsonKit.toJson(entry));
 
             if (i >= 10) {
@@ -341,9 +340,9 @@ public class VizService {
             i++;
         }
 
-        List<MatInfo> infos = svc.loadMatInfos();
+        List<VizMatInfo> infos = svc.loadMatInfos();
         i = 0;
-        for (MatInfo entry : infos) {
+        for (VizMatInfo entry : infos) {
             log.info(JsonKit.toJson(entry));
 
             if (i >= 10) {
@@ -353,19 +352,12 @@ public class VizService {
         }
     }
 
-    private void loadSales() {
-        String fileName = PropKit.get("baseFolder") + "/zdata/pd_sales.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
-        EasyExcel.read(fileName, RegionSalesRaw.class, new RegionSalesRawListener()).sheet().doRead();
-    }
 
     public static void main(String[] args) {
         BaseConfig.setupEnv();
         // testBatch1();
 
         VizService svc = new VizService();
-        svc.loadSales();
-
     }
 
 }

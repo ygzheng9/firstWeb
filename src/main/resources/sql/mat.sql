@@ -134,3 +134,12 @@ from (
          inner join mat_info m on rep.part_num = m.part_num
 order by m.part_family, m.part_num;
 #end
+
+
+### 根据年份，取得区域销售量
+#sql("getRegionSales")
+select *
+from region_sales_stats
+where year = #para(0)
+order by quantity2 desc;
+#end

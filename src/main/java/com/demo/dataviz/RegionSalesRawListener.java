@@ -89,8 +89,12 @@ public class RegionSalesRawListener extends AnalysisEventListener<RegionSalesRaw
             s.setYear(fields.get(0));
             s.setRegion(fields.get(1));
 
-            s.setQuantity1(sum(v));
-            s.setQuantity2(ratio(v, 2));
+            // 区域内经销商数量
+            s.setQuantity1(BigDecimal.valueOf(v.size()));
+            // 区域的总销量
+            s.setQuantity2(sum(v));
+            // 区域内第一名和后面第 n 名的销量比例
+            s.setQuantity3(ratio(v, 2));
 
             results.add(s);
         }

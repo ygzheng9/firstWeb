@@ -5,7 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class PoItem {
+public class VizPoItem {
     private String itemID;
     private String poID;
     private String invCode;

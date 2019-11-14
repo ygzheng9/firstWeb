@@ -20,15 +20,15 @@ import java.util.Set;
  */
 public class CloudService {
     private static Log log = Log.getLog(CloudService.class);
-    private static List<Hotword> words = null;
+    private static List<Cloudword> words = null;
 
-    public List<Hotword> getCloud(boolean isForce) {
+    public List<Cloudword> getCloud(boolean isForce) {
         Set<String> ignores = this.loadIgnores();
-        List<Hotword> words = this.loadCloud(isForce);
+        List<Cloudword> words = this.loadCloud(isForce);
 
-        List<Hotword> results = Lists.newArrayList();
+        List<Cloudword> results = Lists.newArrayList();
 
-        for (Hotword w : words) {
+        for (Cloudword w : words) {
             if (!ignores.contains(w.getName())) {
                 results.add(w);
             }
@@ -37,7 +37,7 @@ public class CloudService {
         return results;
     }
 
-    private List<Hotword> loadCloud(boolean isForce) {
+    private List<Cloudword> loadCloud(boolean isForce) {
         if (!isForce && words != null) {
             log.info("use cache. isForce: " + isForce);
             return words;
@@ -66,7 +66,7 @@ public class CloudService {
                 List<String> fields = splter.splitToList(line);
                 record.wrap(fields);
 
-                Hotword word = new Hotword();
+                Cloudword word = new Cloudword();
                 word.setName(record.getString("name"));
                 word.setCount(record.getInteger("count"));
 

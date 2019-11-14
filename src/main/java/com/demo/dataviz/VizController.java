@@ -18,7 +18,7 @@ public class VizController extends Controller {
     private static int StatusOK = 200;
 
     public void poHeads() {
-        List<PoHead> items = dataSvc.loadPoHeads();
+        List<VizPoHead> items = dataSvc.loadPoHeads();
 
         Kv data = new Kv();
         data.set("status", StatusOK);
@@ -36,8 +36,8 @@ public class VizController extends Controller {
         String end = para.getStr("end");
 
 
-        List<PoItem> items = dataSvc.loadPoItems();
-        List<PoItem> remains = dataSvc.findPOItemsByDate(items, start, end);
+        List<VizPoItem> items = dataSvc.loadPoItems();
+        List<VizPoItem> remains = dataSvc.findPOItemsByDate(items, start, end);
 
         Kv data = new Kv();
         data.set("status", StatusOK);
@@ -48,7 +48,7 @@ public class VizController extends Controller {
     }
 
     public void matByMonth() {
-        List<MatByMonth> items = dataSvc.loadMatByMonth();
+        List<VizMatByMonth> items = dataSvc.loadMatByMonth();
 
         Kv data = new Kv();
         data.set("status", StatusOK);
@@ -70,7 +70,7 @@ public class VizController extends Controller {
     }
 
     public void loadMatInfo() {
-        List<MatInfo> items = dataSvc.loadMatInfos();
+        List<VizMatInfo> items = dataSvc.loadMatInfos();
 
         Kv data = new Kv();
         data.set("status", StatusOK);
@@ -88,4 +88,5 @@ public class VizController extends Controller {
 
         renderJson(data);
     }
+
 }

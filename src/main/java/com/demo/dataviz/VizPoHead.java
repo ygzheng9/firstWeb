@@ -6,7 +6,7 @@ import lombok.Data;
  * @author ygzheng
  */
 @Data
-public class PoHead {
+public class VizPoHead {
     private String poID;
     private String poCode;
     private String poDate;

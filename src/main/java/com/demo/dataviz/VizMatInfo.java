@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  * @author ygzheng
  */
 @Data
-public class MatInfo {
+public class VizMatInfo {
     private String invCode;
     private String invName;
     private String invStd;

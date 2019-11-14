@@ -1,6 +1,7 @@
 package com.demo.okadmin;
 
 import com.demo.matanalysis.MatController;
+import com.demo.matanalysis.RegionSalesController;
 import com.jfinal.config.Routes;
 
 /**
@@ -17,6 +18,8 @@ public class OkAdminRoutes extends Routes {
         add("/pages/member", MemberController.class, "/pages/member");
 
         add("/pages/mat", MatController.class, "/pages/mat");
+        add("/pages/sales", RegionSalesController.class, "/pages/mat");
+
 
     }
 }

@@ -7,7 +7,7 @@ import lombok.Data;
  * 访谈纪要中的词频分析：词，提及的次数；
  */
 @Data
-public class Hotword {
+public class Cloudword {
     private String name;
     private Integer count;
 }

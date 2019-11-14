@@ -2,7 +2,7 @@ package com.demo.xstart;
 
 import com.demo.config.PjaxInterceptor;
 import com.demo.dataviz.CloudService;
-import com.demo.dataviz.Hotword;
+import com.demo.dataviz.Cloudword;
 import com.jfinal.aop.Clear;
 import com.jfinal.aop.Inject;
 import com.jfinal.core.Controller;
@@ -29,7 +29,7 @@ public class APIController extends Controller {
             isForce = true;
         }
 
-        List<Hotword> words = cloudSvc.getCloud(isForce);
+        List<Cloudword> words = cloudSvc.getCloud(isForce);
 
         renderJson(words);
     }
