@@ -1,0 +1,47 @@
+#@okpage()
+
+#define main()
+<div>
+    <div style="text-align:center;">
+        <h2>
+            使用到的 BOM
+        </h2>
+        <h5>
+            #(mat.partNum) #(mat.partName) #(mat.partNameZh)
+        </h5>
+    </div>
+
+    <table lay-size="sm" class="layui-table">
+        <colgroup>
+            <col width="20%">
+            <col width="10%">
+            <col width="30%">
+            <col width="20%">
+            <col width="20%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>客户</th>
+            <th>项目</th>
+            <th>工厂</th>
+            <th>BOM
+            </th>
+            <th>次数</th>
+        </tr>
+        </thead>
+        <tbody>
+        #for(x : items)
+        <tr>
+            <td>#(x.client)</td>
+            <td>#(x.project)</td>
+            <td>#(x.plant)</td>
+            <td><a href="getBomItems?bomid=#(x.bomID)&client=#(x.client)&plant=#(x.plant)"
+                   target="_blank" class="layui-table-link">#(x.bomID)</a>
+            </td>
+            <td>#(x.repeatCount)</td>
+        </tr>
+        #end
+        </tbody>
+    </table>
+</div>
+#end

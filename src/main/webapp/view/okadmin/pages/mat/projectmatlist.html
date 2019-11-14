@@ -1,0 +1,41 @@
+#@okpage()
+
+#define main()
+<div>
+    <div style="text-align:center;">
+        <h2>
+            #(p.client) #(p.project)
+        </h2>
+    </div>
+
+    <table lay-size="sm" class="layui-table">
+        <colgroup>
+            <col width="5%">
+            <col width="20%">
+            <col width="10%">
+            <col width="50%">
+            <col width="20%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>料号</th>
+            <th>复用次数</th>
+            <th>品名</th>
+            <th>品类</th>
+        </tr>
+        </thead>
+        <tbody>
+        #for(x : items)
+        <tr>
+            <td>#(for.index + 1)</td>
+            <td>#(x.partNum)</td>
+            <td><a href="/pages/mat/getProjectByMat?m=#(x.partNum)" target="_blank">#(x.reused)</a></td>
+            <td>#(x.partName) #(partNameZh)</td>
+            <td>#(x.partFamily)</td>
+        </tr>
+        #end
+        </tbody>
+    </table>
+</div>
+#end

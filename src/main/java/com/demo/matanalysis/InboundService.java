@@ -105,7 +105,7 @@ public class InboundService {
         long startTime = System.currentTimeMillis();
 
         InboundService svc = new InboundService();
-        svc.loadData("1812", true);
+        svc.loadData("190105", true);
 
         long endTime = System.currentTimeMillis();
 

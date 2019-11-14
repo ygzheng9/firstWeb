@@ -22,6 +22,8 @@ public class _MappingKit {
 		arp.addMapping("mat_info", "id", MatInfo.class);
 		arp.addMapping("po_head", "id", PoHead.class);
 		arp.addMapping("po_item", "id", PoItem.class);
+		arp.addMapping("project_info", "id", ProjectInfo.class);
+		arp.addMapping("project_mat", "id", ProjectMat.class);
 		arp.addMapping("region_sales", "id", RegionSales.class);
 		arp.addMapping("region_sales_stats", "id", RegionSalesStats.class);
 		arp.addMapping("user", "id", User.class);

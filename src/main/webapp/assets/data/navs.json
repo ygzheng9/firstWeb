@@ -1,11 +1,18 @@
 [
     {
-        "title": "共用性",
+        "title": "共用性-BOM",
         "href": "pages/mat/reuseByBom",
         "fontFamily": "ok-icon",
         "icon": "&#xe654;",
         "spread": true,
         "isCheck": true
+    },
+    {
+        "title": "共用性-项目",
+        "href": "pages/mat/reuseByProject",
+        "fontFamily": "ok-icon",
+        "icon": "&#xe654;",
+        "spread": true
     },
     {
         "title": "客户项目",

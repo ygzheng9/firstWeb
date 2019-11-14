@@ -94,7 +94,7 @@ public class MatServiceTest {
 
     @Test
     public void getInfoTest() {
-        svc.getInfo();
+        svc.getInfoByBom();
 
     }
 

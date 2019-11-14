@@ -2,6 +2,7 @@ package com.demo.matanalysis;
 
 import com.demo.model.BomItem;
 import com.demo.model.MatInfo;
+import com.demo.model.ProjectInfo;
 import com.jfinal.aop.Inject;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.Kv;
@@ -60,10 +61,10 @@ public class MatController extends Controller {
     }
 
     public void reuseByBom() {
-        Kv kv = bomSvc.getInfo();
+        Kv kv = bomSvc.getInfoByBom();
         set("info", kv);
 
-        render("reuse1.html");
+        render("reusebybom.html");
     }
 
     public void reuseByBomData() {
@@ -100,5 +101,61 @@ public class MatController extends Controller {
         keepPara();
 
         render("matlist.html");
+    }
+
+    public void getBomByMat() {
+        String mat = get("mat");
+
+        List<Record> items = bomSvc.getBomByMat(mat);
+        MatInfo info = bomSvc.getMatInfo(mat);
+
+        set("items", items);
+        set("mat", info);
+
+        render("bombymat.html");
+    }
+
+    public void reuseByProject() {
+        Kv kv = bomSvc.getInfoByProject();
+        set("info", kv);
+
+        render("reusebyproject.html");
+    }
+
+    public void getProjectReuse() {
+        String avg = get("avg");
+
+        int a = (int) Double.parseDouble(avg);
+
+        List<ProjectInfo> items = bomSvc.getProjectReuse();
+
+        set("items", items);
+        set("avg", a);
+        set("title", "项目零件复用度");
+        render("projectreuse.html");
+    }
+
+    public void getProjectMatList() {
+        // 根据 project，取得所有的料号
+        String p = get("p");
+
+        List<Record> items = bomSvc.getProjectMatList(p);
+        ProjectInfo project = bomSvc.getProjectInfoByName(p);
+
+        set("items", items);
+        set("p", project);
+
+        render("projectmatlist.html");
+    }
+
+    public void getProjectByMat() {
+        String m = get("m");
+
+        List<ProjectInfo> items = bomSvc.getprojectByMat(m);
+
+        set("items", items);
+        set("avg", 0);
+        set("title", "使用到 " + m + " 的项目");
+        render("projectreuse.html");
     }
 }

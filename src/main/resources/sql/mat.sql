@@ -135,6 +135,125 @@ from (
 order by m.part_family, m.part_num;
 #end
 
+### 根据料号，取得使用的 BOM
+#sql("getBOMByMat")
+select m.bomID, m.project, m.client, m.plant, a.repeatCount
+from bom_project_mapping m
+         inner join (
+    select bom_id, count(1) repeatCount
+    from bom_item a
+    where a.part_num = #para(0)
+    group by bom_id
+) a on a.bom_id = m.bomID
+order by m.client, m.project, m.bomID;
+#end
+
+### 根据料号，取得物料信息
+#sql("getMatInfo")
+select *
+from mat_info a
+where a.part_num = #para(0)
+order by a.id desc;
+#end
+
+
+### 项目级别的物料复用
+#sql("projectCount")
+select count(1)
+from (
+         select m.project
+         from bom_project_mapping m
+         group by m.project
+     ) a;
+#end
+
+### 统计在不同项目间复用的零件号数量
+#sql("projectReuseMat")
+select count(1)
+from (
+         select c.partNum, count(1) repeatCnt
+         from (
+                  select b.project, a.part_num partNum
+                  from bom_item a
+                           inner join bom_project_mapping b on a.bom_id = b.bomID
+                  group by b.project, a.part_num
+              ) c
+         group by c.partNum
+     ) d
+where d.repeatCnt > 1;
+#end
+
+### （项目，料号）对的数量
+#sql("projectMatPair")
+select count(1)
+from (
+         select b.project, a.part_num partNum
+         from bom_item a
+                  inner join bom_project_mapping b on a.bom_id = b.bomID
+         group by b.project, a.part_num
+     ) c;
+#end
+
+### 复用料号的(项目，料号)对的数量
+#sql("projectMatPairReuse")
+select count(1)
+from (select b.project, a.part_num partNum
+      from bom_item a
+               inner join bom_project_mapping b on a.bom_id = b.bomID
+      group by b.project, a.part_num) e
+         inner join (
+    select d.partNum
+    from (
+             select c.partNum, count(1) repeatCnt
+             from (
+                      select b.project, a.part_num partNum
+                      from bom_item a
+                               inner join bom_project_mapping b on a.bom_id = b.bomID
+                      group by b.project, a.part_num
+                  ) c
+             group by c.partNum
+         ) d
+    where d.repeatCnt > 1) f
+                    on e.partNum = f.partNum
+;
+#end
+
+### 每个项目的物料复用率：项目中复用的物料数量 / 项目中使用的所有物料的数量
+### 在数据库中生成对应的数据，存入表中，这里直接从 table 读取；
+#sql("projectInfo")
+select *
+from project_info a
+order by a.client, a.reuseRate desc;
+#end
+
+### 取得项目下所有零件
+#sql("projectMatList")
+select a.project, a.partNum, a.reused, b.part_family partFamily, b.part_name partName, b.part_name_zh partNameZh
+from project_mat a
+         inner join mat_info b on a.partNum = b.part_num
+where a.project = #para(0)
+order by a.reused desc, a.partNum;
+#end
+
+#sql("projectInfobyName")
+select *
+from project_info a
+where a.project = #para(0)
+;
+#end
+
+### 根据料号，查看使用到的项目信息
+#sql("projectByMat")
+select *
+from project_info a
+         inner join (
+    select m.project
+    from project_mat m
+    where m.partNum = #para(0)
+    group by m.project
+) b on a.project = b.project
+order by a.client, a.reuseRate desc;
+#end
 
 ### 根据年份，取得区域销售量
 #sql("getRegionSales")

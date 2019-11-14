@@ -38,6 +38,8 @@ public class InboundParser {
     private List<String> lines = Lists.newArrayList();
     private String batchID;
 
+    private String currHead;
+
     private InboundParser() {
     }
 
@@ -179,6 +181,10 @@ public class InboundParser {
         // 移动到下一行：  -------------
         // 再移动到下一行： IP9339DJ            IP9339D  埃意(廊坊)电子工程有限
         moveDown(2);
+
+        // 设置当前头，用以
+        currHead = current();
+
         result = splitHead(current());
 
         setState(State.HEAD);
@@ -198,7 +204,7 @@ public class InboundParser {
 
         setState(State.BODY);
 
-        int maxItem = 10000;
+        int maxItem = 50000;
         int idx = 0;
 
         while (true) {
@@ -244,7 +250,7 @@ public class InboundParser {
 
             idx += 1;
             if (idx >= maxItem) {
-                log.warn("item count exceeds max");
+                log.warn("item count exceeds max: " + currHead);
                 break;
             }
         }

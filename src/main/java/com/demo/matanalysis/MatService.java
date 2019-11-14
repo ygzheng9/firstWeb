@@ -2,11 +2,11 @@ package com.demo.matanalysis;
 
 import cn.hutool.core.util.NumberUtil;
 import com.beust.jcommander.internal.Sets;
-import com.demo.config.BaseConfig;
 import com.demo.config.RecordKit;
 import com.demo.model.BomItem;
 import com.demo.model.BomProjectMapping;
 import com.demo.model.MatInfo;
+import com.demo.model.ProjectInfo;
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
@@ -141,7 +141,8 @@ public class MatService {
         return list;
     }
 
-    public Kv getInfo() {
+    public Kv getInfoByBom() {
+        // 基于 bom 的复用率计算
         Integer bomCount = Db.template("mat.getBomCount").queryInt();
         Integer partCount = Db.template("mat.getMatCount").queryInt();
         Integer reuseCount = Db.template("mat.getMatReuseCount").queryInt();
@@ -161,7 +162,30 @@ public class MatService {
         return kv;
     }
 
+    public Kv getInfoByProject() {
+        // 基于 project 的复用率计算
+        Integer projectCount = Db.template("mat.projectCount").queryInt();
+        Integer partCount = Db.template("mat.getMatCount").queryInt();
+        Integer reuseCount = Db.template("mat.projectReuseMat").queryInt();
+
+        Integer a = Db.template("mat.projectMatPairReuse").queryInt();
+        Integer b = Db.template("mat.projectMatPair").queryInt();
+        double reuseRate = a * 1.0 / b;
+        String reuseStr = NumberUtil.decimalFormat("#.##%", reuseRate);
+
+        Kv kv = new Kv();
+        kv.set("projectCount", projectCount);
+        kv.set("partCount", partCount);
+        kv.set("reuseCount", reuseCount);
+        kv.set("reuseRateStr", reuseStr);
+        kv.set("reuseRate", reuseRate * 100);
+
+
+        return kv;
+    }
+
     public List<Record> getBomReuse() {
+        // 计算每个 bom 的零件复用率： bom 复用的零件数量 / bom 使用到的所有零件数量
         List<Record> items = Db.template("mat.getBomReuse").find();
         for (Record r : items) {
             double reuseRate = r.getInt("repeatCnt") * 1.0 / r.getInt("partCount");
@@ -173,15 +197,41 @@ public class MatService {
         return items;
     }
 
+    public List<ProjectInfo> getProjectReuse() {
+        // 计算每个 project 的零件复用率： 复用的零件数量 /  使用到的所有零件数量
+        // 在 table 中已经预先生成，这里直接读取即可
+        ProjectInfo dao = new ProjectInfo().dao();
+        return dao.template("mat.projectInfo").find();
+    }
+
     public List<MatInfo> getMatByReuseCount(int count) {
         MatInfo dao = new MatInfo().dao();
         List<MatInfo> items = dao.template("mat.getMatByReuseCount", count).find();
         return items;
     }
 
-    public static void main(String[] args) {
-        BaseConfig.setupEnv();
-        MatService svc = new MatService();
+    public List<Record> getBomByMat(String mat) {
+        return Db.template("mat.getBOMByMat", mat).find();
+    }
+
+    public MatInfo getMatInfo(String mat) {
+        MatInfo matDao = new MatInfo().dao();
+        return matDao.template("mat.getMatInfo", mat).findFirst();
+    }
+
+    public List<Record> getProjectMatList(String project) {
+        return Db.template("mat.projectMatList", project).find();
+    }
+
+    public ProjectInfo getProjectInfoByName(String project) {
+        ProjectInfo dao = new ProjectInfo().dao();
+        return dao.template("mat.projectInfobyName", project)
+            .findFirst();
+    }
+
+    public List<ProjectInfo> getprojectByMat(String mat) {
+        ProjectInfo dao = new ProjectInfo().dao();
+        return dao.template("mat.projectByMat", mat).find();
     }
 
 }
