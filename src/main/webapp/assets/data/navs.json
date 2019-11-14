@@ -27,6 +27,13 @@
         "spread": false,
         "children": [
             {
+                "title": "销售分析",
+                "href": "pages/sales/regions",
+                "fontFamily": "layui-icon",
+                "icon": "&#xe62e;",
+                "spread": false
+            },
+            {
                 "title": "现场环境",
                 "href": "pages/plantEnv",
                 "fontFamily": "layui-icon",

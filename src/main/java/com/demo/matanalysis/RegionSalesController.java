@@ -1,5 +1,6 @@
 package com.demo.matanalysis;
 
+import com.demo.model.RegionSales;
 import com.demo.model.RegionSalesStats;
 import com.google.common.collect.ImmutableList;
 import com.jfinal.aop.Inject;
@@ -31,19 +32,23 @@ public class RegionSalesController extends Controller {
         }
 
         ImmutableList<String> fields = ImmutableList.of("id", "year", "region", "quantity1", "quantity2", "quantity3");
-        List<List<Object>> source = svc.toDataset(items, fields);
 
-        Kv data = new Kv();
-        data.set("status", StatusOK);
-        data.set("rtnCode", 0);
-        data.set("source", source);
-        data.set("dims", fields);
-        data.set("total", total);
-
+        Kv data = svc.toDataset(items, fields, false);
         renderJson(data);
     }
 
     public void regions() {
         render("regionsales.html");
+    }
+
+    public void cityData() {
+        String year = get("year");
+        String region = get("region");
+
+        List<RegionSales> items = svc.getCitySales(year, region);
+        ImmutableList<String> fields = ImmutableList.of("id", "year", "region", "city", "quantity");
+
+        Kv data = svc.toDataset(items, fields, true);
+        renderJson(data);
     }
 }

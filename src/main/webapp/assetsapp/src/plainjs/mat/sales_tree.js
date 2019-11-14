@@ -3,6 +3,8 @@
   const year = '2016';
   const url = `/pages/sales/regionData?year=${year}`;
 
+  const cityChart = echarts.init(document.getElementById('citySales'));
+
   const toTree = source => {
     const result = source.map(s => {
       const region = s[2];
@@ -11,7 +13,6 @@
       return { name: region, value: [total, s[3], s[5]] };
     });
 
-    // console.log('toTree: ', result);
     return result;
   };
 
@@ -28,24 +29,29 @@
   let byWhat = byRatio;
 
   $.get(url, res => {
-    // console.log(res);
     const { dims, source, total } = res;
 
-    const treeData = toTree(source);
-    // console.log(treeData);
+    // 如果 ratio > 15，则设置成 15
+    const source2 = source.map(i => {
+      if (i[5] > 15) {
+        i[5] = 15;
+      }
 
-    const range = getRange(source, byWhat);
-    // console.log(range);
+      return i;
+    });
+
+    const treeData = toTree(source2);
+
+    const range = getRange(source2, byWhat);
 
     const option = {
       title: {
         top: 'top',
         left: 'center',
-        text: '销售分析',
-        subtext: 'By Region'
+        text: '区域销售分析'
       },
-      //   color: ['#3398DB'],
       tooltip: {
+        // 只有这里设置了，才能显示 tooltip
         trigger: 'axis',
         axisPointer: {
           // 坐标轴指示器，坐标轴触发有效
@@ -57,6 +63,14 @@
           type: 'treemap',
           name: '全国',
           data: treeData,
+          // 距离顶部的距离
+          //   top: 40,
+          // 显示的字颜色
+          label: {
+            color: '#000',
+            // fontWeight: 'bold'
+            fontSize: 12
+          },
           tooltip: {
             trigger: 'item',
             formatter: function(param) {
@@ -83,5 +97,54 @@
     };
 
     myChart.setOption(option, true);
+
+    myChart.on('click', 'series', params => {
+      if (params.data === undefined) {
+        return;
+      }
+
+      const { name } = params.data;
+
+      const url = `/pages/sales/cityData?year=${2016}&region=${name}`;
+
+      $.get(url, res => {
+        const { dims, source } = res;
+        const option = {
+          title: {
+            top: 'top',
+            left: 'center',
+            text: `区域销量：${name}`
+          },
+          dataset: {
+            dimension: dims,
+            source: source
+          },
+          xAxis: {
+            type: 'value',
+            position: 'top'
+          },
+          yAxis: {
+            type: 'category',
+            axisLabel: {
+              // 显示所有的 label
+              interval: 0,
+              fontSize: 8
+            }
+          },
+          series: [
+            {
+              encode: { x: 'quantity', y: 'city' },
+              type: 'bar',
+              itemStyle: {
+                // 柱状图颜色
+                color: '#4ad2ff'
+              }
+            }
+          ]
+        };
+
+        cityChart.setOption(option);
+      });
+    });
   });
 })();

@@ -143,3 +143,12 @@ from region_sales_stats
 where year = #para(0)
 order by quantity2 desc;
 #end
+
+### 根据年份，区域，取得下面城市的销量
+#sql("getCitySales")
+select *
+from region_sales
+where year =   #para(0)
+  and region = #para(1)
+order by quantity asc;
+#end

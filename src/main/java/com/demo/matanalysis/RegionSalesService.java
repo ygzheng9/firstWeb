@@ -4,9 +4,12 @@ import cn.hutool.core.util.ReflectUtil;
 import com.alibaba.excel.EasyExcel;
 import com.demo.dataviz.RegionSalesRaw;
 import com.demo.dataviz.RegionSalesRawListener;
+import com.demo.model.RegionSales;
 import com.demo.model.RegionSalesStats;
 import com.google.common.collect.Lists;
+import com.jfinal.kit.Kv;
 import com.jfinal.kit.PropKit;
+import com.jfinal.log.Log;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -15,6 +18,8 @@ import java.util.List;
  * @author ygzheng
  */
 public class RegionSalesService {
+    private static Log log = Log.getLog(RegionSalesService.class);
+
     private void loadSales() {
         // 从 excel 中读取区域销售记录，逐行解析，最后再保存到数据库中；
         String fileName = PropKit.get("baseFolder") + "/zdata/pd_sales.xlsx";
@@ -27,11 +32,29 @@ public class RegionSalesService {
         return dao.template("mat.getRegionSales", year).find();
     }
 
-    protected <T> List<List<Object>> toDataset(List<T> items, List<String> fields) {
+    protected List<RegionSales> getCitySales(String year, String region) {
+        RegionSales dao = new RegionSales().dao();
+
+        return dao.template("mat.getCitySales", year, region).find();
+    }
+
+    protected <T> Kv toDataset(List<T> items, List<String> fields, boolean needHead) {
         // echart.dataset 的数据格式是 db 中的 table，每列对应一个属性；
         // 把 java 的对象的属性，转变成数组，数组内元素类型可以不同；
 
         List<List<Object>> source = Lists.newArrayList();
+
+        if (needHead) {
+            // 第一行为表头
+            List<Object> head = Lists.newArrayList();
+            for (String s : fields) {
+
+                head.add(s);
+            }
+            source.add(head);
+        }
+
+        // 真正数据开始
         for (T s : items) {
             List<Object> line = Lists.newArrayList();
 
@@ -53,7 +76,15 @@ public class RegionSalesService {
             source.add(line);
         }
 
-        return source;
+
+        Kv data = new Kv();
+        data.set("status", 200);
+        data.set("rtnCode", 0);
+        data.set("source", source);
+        data.set("dims", fields);
+        data.set("total", source.size());
+
+        return data;
     }
 
 }

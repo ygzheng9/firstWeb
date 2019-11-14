@@ -17,7 +17,10 @@ public class OkAdminRoutes extends Routes {
 
         add("/pages/member", MemberController.class, "/pages/member");
 
+        // bom 共用性分析
         add("/pages/mat", MatController.class, "/pages/mat");
+
+        // 区域销售分析
         add("/pages/sales", RegionSalesController.class, "/pages/mat");
 
 
