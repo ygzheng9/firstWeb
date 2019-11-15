@@ -105,7 +105,7 @@ layui.use(['zzUtils'], () => {
     const plant = plants[data[0]];
     const client = clients[[data[1]]];
 
-    const url = '/pages/mat/getBomList?client=' + client + '&plant=' + plant;
+    const url = '/pages/mat/bomList?client=' + client + '&plant=' + plant;
     zzUtils.setHtml(url, 'bomList');
   }
 });

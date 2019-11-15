@@ -38,7 +38,7 @@ public class RegionSalesController extends Controller {
     }
 
     public void regions() {
-        render("regionsales.html");
+        render("region_sales.html");
     }
 
     public void cityData() {

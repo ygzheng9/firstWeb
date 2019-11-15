@@ -172,49 +172,23 @@ from (
 select count(1)
 from (
          select c.partNum, count(1) repeatCnt
-         from (
-                  select b.project, a.part_num partNum
-                  from bom_item a
-                           inner join bom_project_mapping b on a.bom_id = b.bomID
-                  group by b.project, a.part_num
-              ) c
+         from project_mat c
          group by c.partNum
      ) d
 where d.repeatCnt > 1;
 #end
 
-### （项目，料号）对的数量
+### （项目，料号）对的数量，project_mat 是预处理过的，颗粒度是（项目，料号）
 #sql("projectMatPair")
 select count(1)
-from (
-         select b.project, a.part_num partNum
-         from bom_item a
-                  inner join bom_project_mapping b on a.bom_id = b.bomID
-         group by b.project, a.part_num
-     ) c;
+from project_mat;
 #end
 
 ### 复用料号的(项目，料号)对的数量
 #sql("projectMatPairReuse")
 select count(1)
-from (select b.project, a.part_num partNum
-      from bom_item a
-               inner join bom_project_mapping b on a.bom_id = b.bomID
-      group by b.project, a.part_num) e
-         inner join (
-    select d.partNum
-    from (
-             select c.partNum, count(1) repeatCnt
-             from (
-                      select b.project, a.part_num partNum
-                      from bom_item a
-                               inner join bom_project_mapping b on a.bom_id = b.bomID
-                      group by b.project, a.part_num
-                  ) c
-             group by c.partNum
-         ) d
-    where d.repeatCnt > 1) f
-                    on e.partNum = f.partNum
+from project_mat a
+where a.reused > 1
 ;
 #end
 
@@ -253,6 +227,29 @@ from project_info a
     group by m.project
 ) b on a.project = b.project
 order by a.client, a.reuseRate desc;
+#end
+
+### part 在 project 之间的共用次数统计
+#sql("projectMatReuseStats")
+select b.reuseCount, count(1) size
+from (
+         select a.partNum, count(1) reuseCount
+         from project_mat a
+         group by a.partNum) b
+group by b.reuseCount;
+#end
+
+### 根据 part 的共用次数，查询 part 清单
+#sql("projectMatByReuseCount")
+select m.*
+from (
+         select a.partNum, count(1) reuseCount
+         from project_mat a
+         group by a.partNum
+         having count(1) = #para(0)
+     ) rep
+         inner join mat_info m on rep.partNum = m.part_num
+order by m.part_family, m.part_num;
 #end
 
 ### 根据年份，取得区域销售量

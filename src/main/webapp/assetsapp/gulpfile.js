@@ -14,7 +14,7 @@ const dist = '../assets/js';
 // 2. 使用 layui 的 模块机制；在 laymount.js 中配置模块的目录；
 // 3. 如果要打包，使用 webpack；
 
-gulp.task('compilejs', function(done) {
+gulp.task('compile', function(done) {
   return gulp
     .src(jsSrc)
     .pipe(sourcemaps.init())
@@ -28,7 +28,7 @@ gulp.task('compilejs', function(done) {
     .on('end', done);
 });
 
-gulp.task('buildjs', function(done) {
+gulp.task('build', function(done) {
   return gulp
     .src(jsSrc)
     .pipe(
@@ -45,6 +45,6 @@ gulp.task('clean', function() {
   return del(['../assets/js/**/*', '!../assets/js'], { force: true });
 });
 
-gulp.task('watchjs', function() {
-  return gulp.watch(jsSrc, { delay: 500 }, gulp.series('compilejs'));
+gulp.task('dev', function() {
+  return gulp.watch(jsSrc, { delay: 500 }, gulp.series('compile'));
 });

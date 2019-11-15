@@ -180,7 +180,6 @@ public class MatService {
         kv.set("reuseRateStr", reuseStr);
         kv.set("reuseRate", reuseRate * 100);
 
-
         return kv;
     }
 
@@ -232,6 +231,16 @@ public class MatService {
     public List<ProjectInfo> getprojectByMat(String mat) {
         ProjectInfo dao = new ProjectInfo().dao();
         return dao.template("mat.projectByMat", mat).find();
+    }
+
+    List<Record> projectMatReuseStats() {
+        return Db.template("mat.projectMatReuseStats").find();
+    }
+
+    public List<MatInfo> projectMatByReuseCount(int count) {
+        MatInfo dao = new MatInfo().dao();
+        List<MatInfo> items = dao.template("mat.projectMatByReuseCount", count).find();
+        return items;
     }
 
 }

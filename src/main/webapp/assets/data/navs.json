@@ -9,7 +9,7 @@
     },
     {
         "title": "共用性-项目",
-        "href": "pages/mat/reuseByProject",
+        "href": "pages/mat/projectMatReuse",
         "fontFamily": "ok-icon",
         "icon": "&#xe654;",
         "spread": true

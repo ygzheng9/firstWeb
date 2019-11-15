@@ -6,6 +6,7 @@
         <div style="text-align:center;font-size: 24px;">#(title)</div>
         <table lay-size="sm" class="layui-table">
             <colgroup>
+                <col width="5%">
                 <col width="20%">
                 <col width="20%">
                 <col width="10%">
@@ -15,6 +16,7 @@
             </colgroup>
             <thead>
             <tr>
+                <th>#</th>
                 <th>客户</th>
                 <th>项目</th>
                 <th>BOM 数量</th>
@@ -26,10 +28,11 @@
             <tbody>
             #for(x : items)
             <tr>
+                <td>#(for.index + 1)</td>
                 <td>#(x.client)</td>
                 <td>#(x.project)</td>
                 <td>#(x.bomCount)</td>
-                <td><a href="/pages/mat/getProjectMatList?p=#(x.project)" target="_blank">#(x.partCount)</a></td>
+                <td><a href="/pages/mat/projectMatList?p=#(x.project)" target="_blank">#(x.partCount)</a></td>
                 <td>
                     #(x.reusePartCount)
                 </td>

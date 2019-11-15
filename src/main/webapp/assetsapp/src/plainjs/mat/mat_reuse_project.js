@@ -3,11 +3,11 @@ layui.use(['zzUtils'], () => {
   //   tools.echo('called from mat_reuse1');
 
   const myChart = echarts.init(document.getElementById('reuse1'));
-  $.get('/pages/mat/reuseByBomData', res => {
+  $.get('/pages/mat/projectMatReuseStats', res => {
     // console.log(res);
     const items = res.items;
 
-    const levels = items.map(i => i.repeatedCnt);
+    const levels = items.map(i => i.reuseCount);
     const levelSizeRaw = items.map(i => i.size);
     const levelSize = levelSizeRaw.map(i => {
       let j = i;
@@ -21,8 +21,7 @@ layui.use(['zzUtils'], () => {
       title: {
         top: 'top',
         left: 'center',
-        text: '料号复用分析',
-        subtext: 'By BOM'
+        text: '项目-料号复用分析'
       },
       color: ['#3398DB'],
       tooltip: {
@@ -81,7 +80,7 @@ layui.use(['zzUtils'], () => {
     myChart.setOption(option, true);
     myChart.on('click', 'series', params => {
       const count = params.name;
-      const url = '/pages/mat/bomMatByReuse?count=' + count;
+      const url = '/pages/mat/projectMatByReuseCount?count=' + count;
       zzUtils.setHtml(url, 'matlist');
     });
   });

@@ -1,10 +1,11 @@
 #@okpage()
 
 #define main()
-<div>
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-md-offset2 layui-col-md8">
     <div style="text-align:center;">
         <h2>
-            #(p.client) #(p.project)
+            #(p.client) #(p.project) 项目下所有零件
         </h2>
     </div>
 
@@ -30,12 +31,13 @@
         <tr>
             <td>#(for.index + 1)</td>
             <td>#(x.partNum)</td>
-            <td><a href="/pages/mat/getProjectByMat?m=#(x.partNum)" target="_blank">#(x.reused)</a></td>
+            <td><a href="/pages/mat/projectByMat?m=#(x.partNum)" target="_blank">#(x.reused)</a></td>
             <td>#(x.partName) #(partNameZh)</td>
             <td>#(x.partFamily)</td>
         </tr>
         #end
         </tbody>
     </table>
+    </div>
 </div>
 #end

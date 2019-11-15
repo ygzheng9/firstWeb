@@ -41,6 +41,26 @@ getter.
     2. 选中一个项目，显示其下的所有 BOM 列表；
     3. 选中一个 BOM，显示 BOM 的层级列表；
 
+## 2019/11/15
+1. 根据预处理表，重构 项目-零件 共用性分析；
+    1. 原始表：bom_item, bom_project_mapping
+    3. 预处理表：project_mat 颗粒度: project + partNum; 
+        1. 计算：reused
+        2. 逻辑：颗粒度是 partNum，该 partNum 在多少个 project 下使用；
+        3. reused = 1 是只在一个 project 下使用的物料，也即，没有共用；
+        4. reused >1 是 project 间共用的物料；
+    2. 预处理表：project_info 颗粒度: project;
+        1. 计算：bomCount，逻辑：project 下的 bom 数量；
+        2. 计算：partCount，逻辑：project 下所有的 part 数量；
+        3. 计算：reusePartCount，逻辑：project 下复用的 part 数量；也即，project_mat.reused > 1 的数量；
+        4. 计算：reuseRate，逻辑：100 * 3 / 2  
+2. 命名规则
+    1. js/html: 文件名全部小写，使用下划线分割；
+    1. 目录尽量少，通过前缀区分不同领域；
+    1. action: 和文件名对应，采用 camelCase;    
+
+
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？
 2. table 中的 a link，怎么显示颜色？
+3. 如果执行一系列的 delete/insert/update?

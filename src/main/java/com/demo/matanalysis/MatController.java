@@ -37,7 +37,7 @@ public class MatController extends Controller {
         renderJson(data);
     }
 
-    public void getBomList() {
+    public void bomList() {
         String client = get("client");
         String plant = get("plant");
 
@@ -46,10 +46,10 @@ public class MatController extends Controller {
         set("items", items);
         keepPara();
 
-        render("bomlist.html");
+        render("bom_list.html");
     }
 
-    public void getBomItems() {
+    public void bomItems() {
         String bomid = get("bomid");
 
         List<BomItem> items = bomSvc.getBomItems(bomid);
@@ -57,14 +57,14 @@ public class MatController extends Controller {
         set("items", items);
         keepPara();
 
-        render("bomitems.html");
+        render("bom_items.html");
     }
 
-    public void reuseByBom() {
+    public void bomMatReuse() {
         Kv kv = bomSvc.getInfoByBom();
         set("info", kv);
 
-        render("reusebybom.html");
+        render("bom_mat_reuse.html");
     }
 
     public void reuseByBomData() {
@@ -78,8 +78,8 @@ public class MatController extends Controller {
         renderJson(data);
     }
 
-    public void getBomReuse() {
-        render("bomreuse.html");
+    public void bomReuse() {
+        render("bom_reuse.html");
     }
 
     public void getBomReuseData() {
@@ -93,17 +93,17 @@ public class MatController extends Controller {
         renderJson(data);
     }
 
-    public void getMatByReuseCount() {
+    public void bomMatByReuse() {
         int count = getInt("count");
         List<MatInfo> items = bomSvc.getMatByReuseCount(count);
 
         set("items", items);
         keepPara();
 
-        render("matlist.html");
+        render("bom_mat_by_reuse.html");
     }
 
-    public void getBomByMat() {
+    public void bomByMat() {
         String mat = get("mat");
 
         List<Record> items = bomSvc.getBomByMat(mat);
@@ -112,17 +112,17 @@ public class MatController extends Controller {
         set("items", items);
         set("mat", info);
 
-        render("bombymat.html");
+        render("bom_by_mat.html");
     }
 
-    public void reuseByProject() {
+    public void projectMatReuse() {
         Kv kv = bomSvc.getInfoByProject();
         set("info", kv);
 
-        render("reusebyproject.html");
+        render("project_mat_reuse.html");
     }
 
-    public void getProjectReuse() {
+    public void projectReuse() {
         String avg = get("avg");
 
         int a = (int) Double.parseDouble(avg);
@@ -132,10 +132,10 @@ public class MatController extends Controller {
         set("items", items);
         set("avg", a);
         set("title", "项目零件复用度");
-        render("projectreuse.html");
+        render("project_reuse.html");
     }
 
-    public void getProjectMatList() {
+    public void projectMatList() {
         // 根据 project，取得所有的料号
         String p = get("p");
 
@@ -145,17 +145,38 @@ public class MatController extends Controller {
         set("items", items);
         set("p", project);
 
-        render("projectmatlist.html");
+        render("project_mat_list.html");
     }
 
-    public void getProjectByMat() {
+    public void projectByMat() {
         String m = get("m");
 
         List<ProjectInfo> items = bomSvc.getprojectByMat(m);
 
         set("items", items);
         set("avg", 0);
-        set("title", "使用到 " + m + " 的项目");
-        render("projectreuse.html");
+        set("title", "使用零件 " + m + " 的项目");
+        render("project_reuse.html");
+    }
+
+    public void projectMatReuseStats() {
+        List<Record> items = bomSvc.projectMatReuseStats();
+
+        Kv data = new Kv();
+        data.set("status", StatusOK);
+        data.set("rtnCode", 0);
+        data.set("items", items);
+
+        renderJson(data);
+    }
+
+    public void projectMatByReuseCount() {
+        int count = getInt("count");
+        List<MatInfo> items = bomSvc.projectMatByReuseCount(count);
+
+        set("items", items);
+        keepPara();
+
+        render("project_mat_by_reuse.html");
     }
 }

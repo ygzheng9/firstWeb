@@ -11,8 +11,8 @@
                             <img src="/assets/images/home-01.png" alt="none"/>
                         </div>
                         <div class="cart-r">
-                            <div class="stat-text incomes-num">#(info.bomCount)</div>
-                            <div class="stat-heading">BOM数量</div>
+                            <div class="stat-text incomes-num">#(info.projectCount)</div>
+                            <div class="stat-heading">项目数量</div>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,8 @@
                             <img src="/assets/images/home-04.png" alt="none"/>
                         </div>
                         <div class="cart-r">
-                            <div class="stat-text fans-num"><a href="/pages/mat/getBomReuse" target="_blank">#(info.reuseRate)</a>
+                            <div class="stat-text fans-num"><a href="/pages/mat/projectReuse?avg=#(info.reuseRate)"
+                                                               target="_blank" class="layui-table-link">#(info.reuseRateStr)</a>
                             </div>
                             <div class="stat-heading">复用率</div>
                         </div>
@@ -83,5 +84,5 @@
 
 #define js()
 #@echart()
-<script type="text/javascript" src="/assets/js/mat/mat_reuse_bom.js"></script>
+<script type="text/javascript" src="/assets/js/mat/mat_reuse_project.js"></script>
 #end

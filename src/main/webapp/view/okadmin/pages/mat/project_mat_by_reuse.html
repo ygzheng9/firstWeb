@@ -1,0 +1,32 @@
+<div>
+    <div style="text-align:center;font-size: 24px;">同时在 #(count) 个项目中共用的物料</div>
+    <table lay-size="sm" class="layui-table">
+        <colgroup>
+            <col>
+            <col width="20%">
+            <col width="10%">
+            <col width="50%">
+            <col width="20%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>料号</th>
+            <th>版本</th>
+            <th>品名</th>
+            <th>类别</th>
+        </tr>
+        </thead>
+        <tbody>
+        #for(x : items)
+        <tr>
+            <td>#(for.index + 1)</td>
+            <td><a href="/pages/mat/projectByMat?m=#(x.partNum)" target="_blank" class="layui-table-link"> #(x.partNum)</a></td>
+            <td>#(x.partVersion)</td>
+            <td>#(x.partName) #(x.partNameZh)</td>
+            <td>#(x.partFamily)</td>
+        </tr>
+        #end
+        </tbody>
+    </table>
+</div>
