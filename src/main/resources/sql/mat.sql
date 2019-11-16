@@ -6,8 +6,7 @@ from (
          from bom_project_mapping a
          group by a.client, a.plant, a.project, a.bomID
      ) b
-group by b.client, b.plant
-;
+group by b.client, b.plant;
 #end
 
 
@@ -17,8 +16,7 @@ select a.client, a.plant, a.project, a.bomID, a.partCount
 from bom_project_mapping a
 where a.client = #para(0)
   and a.plant =  #para(1)
-order by a.project, a.bomID
-;
+order by a.project, a.bomID;
 #end
 
 ### 根据 bomid, 获取明细清单
@@ -26,125 +24,92 @@ order by a.project, a.bomID
 select *
 from bom_item a
 where a.bom_id = #para(0)
-;
+order by a.part_num;
 #end
 
 
 ### 料号复用：bom 级别
 #sql("reuseByBom")
 select repeatedCnt, count(1) as size
-from (select part_num, count(1) as repeatedCnt
-      from (select part_num, bom_id
-            from bom_item
-            group by part_num, bom_id) dist_bom_part
-      group by part_num) a
-group by repeatedCnt
-order by repeatedCnt;
+from (
+         select partNum, count(1) repeatedCnt
+         from bom_mat
+         group by partNum
+     ) a
+group by a.repeatedCnt
+order by a.repeatedCnt;
 #end
 
 
 ### BOM 数量
 #sql("getBomCount")
-select count(distinct bom_id) bomCnt
-from bom_item;
+select count(1) bomCnt
+from bom_info;
 #end
 
 ### 料号数量
 #sql("getMatCount")
-select count(distinct part_num) partCnt
-from bom_item;
+select count(1) partCnt
+from mat_info;
 #end
 
 ### 料号+BOM 的数量
 #sql("getBomPartCnt")
 select count(1)
-from (select part_num, bom_id
-      from bom_item
-      group by part_num, bom_id) a;
+from bom_mat;
 #end
-
 
 ### 在两个 BOM 中出现的 料号数量
 #sql("getMatReuseCount")
 select count(1) as matCnt
-from (select part_num, count(1) as repeatedCnt
-      from (select part_num, bom_id
-            from bom_item
-            group by part_num, bom_id) dist_bom_part
-      group by part_num) a
+from (
+         select partNum, count(1) repeatedCnt
+         from bom_mat
+         group by partNum
+     ) a
 where a.repeatedCnt > 1;
 #end
 
 ### 使用次数大于 1 次的物料，在 BOM 子件中的行数；
 #sql("getMatBomReuseCount")
 select count(1) as matCnt
-from (select part_num, count(1) as repeatedCnt
-      from (select part_num, bom_id
-            from bom_item
-            group by part_num, bom_id) dist_bom_part
-      group by part_num
-     ) a
-         inner join (select part_num, bom_id
-                     from bom_item
-                     group by part_num, bom_id) b
-                    on a.part_num = b.part_num
-                        and a.repeatedCnt > 1;
+from bom_mat a
+where a.reused > 1;
 #end
 
 
 ### BOM 子件数量，复用的子件数量
 #sql("getBomReuse")
-select aa.bomID, aa.partCount, ifnull(bb.repeatCnt, 0) repeatCnt, aa.project, aa.client
+select aa.bomID, aa.partCount, ifnull(bb.reusePartCount, 0) repeatCnt, aa.project, aa.client
 from bom_project_mapping aa
-         left join (
-    select b.bom_id, count(1) repeatCnt
-    from (select part_num, count(1) as repeatCnt
-          from (select part_num, bom_id
-                from bom_item
-                group by part_num, bom_id) dist_bom_part
-          group by part_num) a
-             inner join (select part_num, bom_id
-                         from bom_item
-                         group by part_num, bom_id) b
-                        on a.part_num = b.part_num
-                            and a.repeatCnt > 1
-    group by b.bom_id
-) bb on aa.bomID = bb.bom_id
+         left join bom_info bb on aa.bomID = bb.bomID
 order by aa.client, aa.project, aa.bomID;
 #end
 
 
-###  重复使用次数对应的料号
+###  根据重复使用的次数，查找料号清单
 #sql("getMatByReuseCount")
 select m.*
 from (
-         select a.part_num
-         from (select part_num, count(1) as repeatedCnt
-               from (select part_num, bom_id
-                     from bom_item
-                     group by part_num, bom_id) dist_bom_part
-               group by part_num
-              ) a
-                  inner join (select part_num, bom_id
-                              from bom_item
-                              group by part_num, bom_id) b
-                             on a.part_num = b.part_num
-                                 and a.repeatedCnt = #para(0)
-         group by a.part_num) rep
-         inner join mat_info m on rep.part_num = m.part_num
+         select a.partNum
+         from bom_mat a
+         group by a.partNum
+         having count(1) = #para(0)
+     ) rep
+         inner join mat_info m on rep.partNum = m.part_num
 order by m.part_family, m.part_num;
 #end
 
 ### 根据料号，取得使用的 BOM
 #sql("getBOMByMat")
-select m.bomID, m.project, m.client, m.plant, a.repeatCount
+select m.bomID, m.project, m.client, m.plant, bi.partCount, bi.reusePartCount, bi.reuseRate
 from bom_project_mapping m
          inner join (
-    select bom_id, count(1) repeatCount
-    from bom_item a
-    where a.part_num = #para(0)
-    group by bom_id
-) a on a.bom_id = m.bomID
+    select bomID
+    from bom_mat
+    where partNum = #para(0)
+) a on a.bomID = m.bomID
+         inner join bom_info bi on m.bomID = bi.bomID
 order by m.client, m.project, m.bomID;
 #end
 
@@ -188,8 +153,7 @@ from project_mat;
 #sql("projectMatPairReuse")
 select count(1)
 from project_mat a
-where a.reused > 1
-;
+where a.reused > 1;
 #end
 
 ### 每个项目的物料复用率：项目中复用的物料数量 / 项目中使用的所有物料的数量
@@ -213,7 +177,7 @@ order by a.reused desc, a.partNum;
 select *
 from project_info a
 where a.project = #para(0)
-;
+order by a.project;
 #end
 
 ### 根据料号，查看使用到的项目信息
@@ -243,7 +207,7 @@ group by b.reuseCount;
 #sql("projectMatByReuseCount")
 select m.*
 from (
-         select a.partNum, count(1) reuseCount
+         select a.partNum
          from project_mat a
          group by a.partNum
          having count(1) = #para(0)

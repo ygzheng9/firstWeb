@@ -2,6 +2,7 @@
     <div style="text-align:center;font-size: 24px;">#(client)@#(plant)</div>
     <table lay-size="sm" class="layui-table">
         <colgroup>
+            <col width="5%">
             <col width="20%">
             <col width="20%">
             <col width="20%">
@@ -10,6 +11,7 @@
         </colgroup>
         <thead>
         <tr>
+            <th>#</th>
             <th>客户</th>
             <th>工厂</th>
             <th>项目</th>
@@ -20,6 +22,7 @@
         <tbody>
         #for(x : items)
         <tr>
+            <td>#(for.index + 1)</td>
             <td>#(x.client)</td>
             <td>#(x.plant)</td>
             <td>#(x.project)</td>

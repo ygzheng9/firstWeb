@@ -14,10 +14,6 @@ public class OKPagesController extends Controller {
         render("console1.html");
     }
 
-    public void wordcloud() {
-        render("wordcloud.html");
-    }
-
     public void login() {
         render("login/login.html");
     }
@@ -30,9 +26,14 @@ public class OKPagesController extends Controller {
         render("login/forget.html");
     }
 
-    public void plantEnv() {
-        render("plantenv.html");
+    public void wordCloud() {
+        render("word_cloud.html");
     }
+
+    public void plantEnv() {
+        render("plant_env.html");
+    }
+
 
     public void hello() {
         render("hello.html");

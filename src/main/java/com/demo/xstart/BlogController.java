@@ -70,9 +70,6 @@ public class BlogController extends Controller {
         render("page2.html");
     }
 
-    public void wordcloud() {
-        render("wordcloud.html");
-    }
 
     @ActionKey("/turbolinks_one")
     public void one() {

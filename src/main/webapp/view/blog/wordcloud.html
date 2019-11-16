@@ -44,7 +44,7 @@
                 });
             }
         });
-        $.getJSON('/api/wordcloud', function (data) {
+        $.getJSON('/api/wordCloud', function (data) {
             $('#mountNode').text('');
 
             var dv = new DataSet.View().source(data);

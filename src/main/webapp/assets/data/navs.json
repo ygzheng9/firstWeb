@@ -23,7 +23,7 @@
     },
     {
         "title": "纪要分析",
-        "href": "pages/wordcloud",
+        "href": "pages/wordCloud",
         "icon": "&#xe656;",
         "spread": true
     },

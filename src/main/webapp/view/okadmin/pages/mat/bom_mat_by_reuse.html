@@ -1,7 +1,8 @@
 <div>
-    <div style="text-align:center;font-size: 24px;">使用#(count)次的物料</div>
+    <div style="text-align:center;font-size: 24px;">在 #(count) 个 BOM 中共用的物料</div>
     <table lay-size="sm" class="layui-table">
         <colgroup>
+            <col>
             <col width="20%">
             <col width="10%">
             <col width="50%">
@@ -9,6 +10,7 @@
         </colgroup>
         <thead>
         <tr>
+            <th>#</th>
             <th>料号</th>
             <th>版本</th>
             <th>品名</th>
@@ -18,7 +20,9 @@
         <tbody>
         #for(x : items)
         <tr>
-            <td><a href="/pages/mat/bom_by_mat?mat=#(x.partNum)" target="_blank" class="layui-table-link"> #(x.partNum)</a></td>
+            <td>#(for.index + 1)</td>
+            <td><a href="/pages/mat/bomByMat?mat=#(x.partNum)" target="_blank" class="layui-table-link">
+                #(x.partNum)</a></td>
             <td>#(x.partVersion)</td>
             <td>#(x.partName) #(x.partNameZh)</td>
             <td>#(x.partFamily)</td>
