@@ -29,6 +29,8 @@ target/
 log/
 .idea/
 
+.cache/
+
 src/main/resources/default.properties
 
 src/main/webapp/assets/lib

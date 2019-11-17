@@ -58,6 +58,23 @@ getter.
     1. js/html: 文件名全部小写，使用下划线分割；
     1. 目录尽量少，通过前缀区分不同领域；
     1. action: 和文件名对应，采用 camelCase;    
+    
+## 2019/11/16
+1. js router, 通过 `history.pushState` 记录历史，前进/后退 可改变 地址栏；
+2. 路由定义 path, render, 匹配传入的 targeturl 和 path；
+3. 匹配的方法是把 path 和 targeturl 都根据 / 拆分后，逐项比较；这样可以处理 path variables；
+4. 匹配上之后，调用 route.render(route.params) 取得内容，设置 domid.innerHTML；注意是 HTML，全部大写；  
+5. pushState 不触发 hashchange，前进/后退 触发；通过监听 hashchagne，可以改变当前页面显示内容；  
+
+
+## 2019/11/17
+1. seajs, layui 的模块机制，都是使用 url 访问模块，不是本地路径，因为他们都没有预处理的过程，只是动态加载机制；
+2. 对模块的 定义/注册/使用 相似：define, exports, use；
+3. parcel 最简单，指定：入口目录，output 目录；parcel 做剩下的所有事；
+```
+    "parcel_dev": "parcel watch ./src/parcel/*.* -d ../assets/js/parcel",
+    "parcel_build": "parcel build ./src/parcel/*.* -d ../assets/js/parcel"
+``` 
 
 
 ## TODO

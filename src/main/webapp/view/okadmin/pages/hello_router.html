@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Hello JS Router!</title>
+</head>
+<body>
+<h1>js 实现的 客户端 router </h1>
+
+<header>
+    <ul>
+        <li>
+            <button id="home" onclick="router.go('/');">Home</button>
+        </li>
+        <li>
+            <button id="about">About</button>
+        </li>
+        <li>
+            <button id="contact" onclick="router.go('/contact');">Contact</button>
+        </li>
+        <li>
+            <button id="products1" onclick="router.go('/products/1')">Product 1</button>
+        </li>
+        <li>
+            <button id="products2">Product 2</button>
+        </li>
+    </ul>
+</header>
+
+<div id="sea"></div>
+
+<div id="router-outlet"></div>
+
+### @jquery()
+
+#@seajs()
+
+<!-- Main -->
+<!--<script src="/assets/js/route/init.js"></script>-->
+
+<script src="/assets/js/route/hello_route.js"></script>
+
+</body>
+</html>

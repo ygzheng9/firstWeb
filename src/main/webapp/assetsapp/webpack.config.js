@@ -15,8 +15,10 @@ const webpack = require('webpack');
 
 // 所有的入口文件都放在这
 // 入口文件可以有多级目录，但是在 entry 的 key 中要体现相对路径，这样在 output 时，会创建相应的目录
-const entries = require('./entries');
-const output = __dirname + '/../assets/js';
+const entry = require('./entries');
+const entries = entry.getEntries('./src/bundle/');
+
+const output = __dirname + '/../assets/js/bundle';
 
 console.log('=====================');
 console.log('entries: ', entries);

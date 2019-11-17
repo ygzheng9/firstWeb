@@ -27,6 +27,24 @@
 
 #end
 
+#define jquery()
+<script type="text/javascript" src="/assets/lib/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/assets/lib/lodash-4.17.4.min.js"></script>
+#end
+
+#define seajs()
+#@jquery()
+<script type="text/javascript" src="/assets/lib/seajs/sea.js"></script>
+<script type="text/javascript" src="/assets/js/init_sea.js"></script>
+#end
+
+
+#define layui()
+#@jquery()
+<script type=" text/javascript" src="/assets/lib/layui/layui.js"></script>
+<script type="text/javascript" src="/assets/js/init_layui.js.js"></script>
+#end
+
 #define echart()
 <script type="text/javascript" src="/assets/lib/echarts/echarts.min.js"></script>
 <script type="text/javascript" src="/assets/lib/echarts/echarts.theme.js"></script>

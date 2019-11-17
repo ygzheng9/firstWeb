@@ -1,10 +1,12 @@
 //config的设置是全局的
 layui
   .config({
-    base: '/assets/js/layext/' //假设这是你存放拓展模块的根目录
+    // 这里是 url，不是本地路径
+    base: '/assets/js/lay_modules/'
   })
   .extend({
-    //设定模块别名
+    // 设定模块别名，在 use 时使用
+    // key 和 模块文件 exports 的名字保持一致
     okTab: 'okmodules/okTab',
     countUp: 'okmodules/countUp',
     okUtils: 'okmodules/okUtils',
