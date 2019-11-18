@@ -161,3 +161,16 @@ select * from po_vendor_project;
 # 3. 采购料号，和 BOM 料号 关联：采购品名数量， bom 品名数量，关联量 ，关联金额，采购总金额
 # 4. 基于关联量，分析： 供应商采购金额  ->  供应商对应项目列表  -> 供应商对该项目的供应物料 ->  该物料的价格走势、采购量 --> 到货记录 
 
+# 1.  外部供应商，对应的工厂数量  -->   选定供应商的工厂下的采购金额（列表，从高到低）、品类数量 -->  每月的采购金额  
+# 2. 工厂，对应的外部供应商数量  --> 和上面的可以统一；
+
+select a.toPlant, count(1)
+  from po_vendor_stats a
+where a.external = 'Y'
+group by a.toPlant; 
+
+select a.vendorCode, a.vendorName, count(1) plantCount
+  from po_vendor_stats a 
+where a.external = 'Y'
+group by a.vendorCode, a.vendorName; 
+
