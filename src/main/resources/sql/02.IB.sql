@@ -164,13 +164,48 @@ select * from po_vendor_project;
 # 1.  外部供应商，对应的工厂数量  -->   选定供应商的工厂下的采购金额（列表，从高到低）、品类数量 -->  每月的采购金额  
 # 2. 工厂，对应的外部供应商数量  --> 和上面的可以统一；
 
-select a.toPlant, count(1)
-  from po_vendor_stats a
-where a.external = 'Y'
-group by a.toPlant; 
 
-select a.vendorCode, a.vendorName, count(1) plantCount
-  from po_vendor_stats a 
+####################
+## 1. 外部供应商、采购总金额、品类数、工厂+供应商数量
+select a1.vendorCount, a1.totalAmt, a2.matCount, a3.orderCount
+  from (
+select  count(1) vendorCount, sum(b.totalAmt) totalAmt
+  from (
+  select a.vendorCode, sum(a.totalAmt) totalAmt 
+    from po_vendor_stats a 
 where a.external = 'Y'
-group by a.vendorCode, a.vendorName; 
+group by a.vendorCode) b) a1, 
+(
+select sum(totalAmt) totalAmt, count(1) matCount
+  from po_mat_stats a ) a2, 
+(
+select sum(totalAmt) totalAmt, count(1) orderCount
+  from po_vendor_stats a
+where a.external = 'Y') a3; 
+
+## # 2. 物料的供应源分析：1 个，2 个，3 个，多余 3 个；
+
+update po_vendor_mat a
+inner join po_vendor_stats b on a.orderNum = b.orderNum
+  set a.vendorCode = b.vendorCode; 
+  
+insert into po_vendor_mat_true (matCode, vendorCode, totalAmt, totalQty) 
+select a.matCode, a.vendorCode, sum(a.totalAmt) totalAmt, sum(a.totalQty) totalQty
+  from po_vendor_mat a
+group by a.matCode, a.vendorCode; 
+
+
+select b.vendorCount, count(1) matCount, sum(b.totalAmt) totalAmt
+  from (
+select a.matCode, count(1) vendorCount, sum(a.totalAmt) totalAmt
+  from po_vendor_mat_true a 
+group by a.matCode ) b
+group by b.vendorCount; 
+
+
+
+
+
+
+
 

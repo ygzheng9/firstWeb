@@ -21,11 +21,34 @@
         "icon": "&#xe6b8;",
         "spread": true
     },
+
     {
         "title": "纪要分析",
         "href": "pages/wordCloud",
         "icon": "&#xe656;",
         "spread": true
+    },
+    {
+        "title": "入库记录",
+        "href": "",
+        "icon": "&#xe66f;",
+        "spread": false,
+        "children": [
+            {
+                "title": "入库概览",
+                "href": "pages/inbound/summary",
+                "fontFamily": "layui-icon",
+                "icon": "&#xe62e;",
+                "spread": false
+            },
+            {
+                "title": "现场环境",
+                "href": "pages/plantEnv",
+                "fontFamily": "layui-icon",
+                "icon": "&#xe62e;",
+                "spread": false
+            }
+        ]
     },
     {
         "title": "演示",

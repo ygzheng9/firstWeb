@@ -1,0 +1,155 @@
+#@okpage()
+
+#define css()
+<link rel="stylesheet" href="/assets/css/oksub.css" media="all"/>
+#end
+
+#define main()
+<div class="console console1 ok-body-scroll">
+    <div class="ok-body home">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-xs6 layui-col-md3">
+                <div class="ok-card layui-card">
+                    <div class="ok-card-body p0 clearfix cart-data">
+                        <div class="data-body">
+                            <div class="media-cont">
+                                <p class="tit">供应商</p>
+                                <h5 class="num">#number(summary.vendorCount, ",###")</h5>
+                            </div>
+                            <div class="w-img" ok-pc-in-show>
+                                <img src="/assets/images/home-01.png" alt="收入"/>
+                            </div>
+                        </div>
+                        <div id="echIncome" class="line-home-a"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-xs6 layui-col-md3">
+                <div class="ok-card layui-card">
+                    <div class="ok-card-body p0 clearfix cart-data">
+                        <div class="data-body">
+                            <div class="media-cont">
+                                <p class="tit">采购金额</p>
+                                <h5 class="num">#number(summary.totalAmt, ",###.##")</h5>
+                            </div>
+                            <div class="w-img" ok-pc-in-show>
+                                <img src="/assets/images/home-02.png" alt="商品"/>
+                            </div>
+                        </div>
+                        <div id="echGoods" class="line-home-a"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-xs6 layui-col-md3">
+                <div class="ok-card layui-card">
+                    <div class="ok-card-body p0 clearfix cart-data">
+                        <div class="data-body">
+                            <div class="media-cont">
+                                <p class="tit">料号</p>
+                                <h5 class="num">#number(summary.matCount, ",###")</h5>
+                            </div>
+                            <div class="w-img" ok-pc-in-show>
+                                <img src="/assets/images/home-03.png" alt="博客"/>
+                            </div>
+                        </div>
+                        <div id="echBlogs" class="line-home-a"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-xs6 layui-col-md3">
+                <div class="ok-card layui-card">
+                    <div class="ok-card-body p0 clearfix cart-data">
+                        <div class="data-body">
+                            <div class="media-cont">
+                                <p class="tit">单号</p>
+                                <h5 class="num">#number(summary.orderCount, ",###")</h5>
+                            </div>
+                            <div class="w-img" ok-pc-in-show>
+                                <img src="/assets/images/home-04.png" alt="用户"/>
+                            </div>
+                        </div>
+                        <div id="echUser" class="line-home-a"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <div class="ok-card-title">供应源分析</div>
+                    </div>
+                    <div class="ok-card-body map-body">
+                        <div style="height: 100%;" id="matSource">
+                            <table lay-size="sm" class="layui-table">
+                                <colgroup>
+                                    <col width="20%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th style="text-align: center;">供应商数量</th>
+                                    <th style="text-align: center;">物料数量</th>
+                                    <th style="text-align: center;">采购金额</th>
+                                    <th style="text-align: center;">物料平均采购额</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                #for(x : matSource)
+                                <tr>
+                                    <td style="text-align: center;">#(x.vendorCount)</td>
+                                    <td style="text-align: right;">#number(x.matCount, ",###")</td>
+                                    <td style="text-align: right;">#number(x.totalAmt, ",###.##")</td>
+                                    <td style="text-align: right;">#number(x.avg, ",###.##")</td>
+                                </tr>
+                                #end
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <div class="ok-card-title">今日用户访问来源</div>
+                    </div>
+                    <div class="ok-card-body map-body">
+                        <div style="height: 100%;" id="userSourceTodayChart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <div class="ok-card-title">本周用户访问来源</div>
+                    </div>
+                    <div class="ok-card-body clearfix">
+                        <div class="map-china" id="userSourceWeekChart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+#end
+
+#define js()
+#@echart()
+<script type="text/javascript" src="/assets/js/okadmin/inbound.js"></script>
+#end
+
+
+
+

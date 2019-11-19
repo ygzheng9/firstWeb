@@ -4,20 +4,6 @@ layui.use(['okUtils', 'countUp'], function() {
   var okUtils = layui.okUtils;
   var $ = layui.jquery;
 
-  /**
-   * 收入、商品、博客、用户
-   */
-  function initMediaCont() {
-    var elem_nums = $('.media-cont .num');
-    elem_nums.each(function(i, j) {
-      var ran = parseInt(Math.random() * 1900 + 100);
-      !new countUp({
-        target: j,
-        endVal: ran
-      }).start();
-    });
-  }
-
   function dataTrendOption(color) {
     color = color || '#00c292';
     return {
@@ -232,7 +218,6 @@ layui.use(['okUtils', 'countUp'], function() {
     okUtils.echartsResize([userSourceWeekChart]);
   }
 
-  // initMediaCont();
   initDataTrendChart();
   initUserActiveTodayChart();
   initUserSourceTodayChart();

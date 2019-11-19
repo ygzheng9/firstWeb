@@ -76,6 +76,9 @@ getter.
     "parcel_build": "parcel build ./src/parcel/*.* -d ../assets/js/parcel"
 ``` 
 
+## 2019/11/19
+1. QAD 中 PO 不是单据，而是(工厂，供应商)的概念；
+2. inbound 的综合分析，采购来源分析；
 
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？

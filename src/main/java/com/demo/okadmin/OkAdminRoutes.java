@@ -1,5 +1,6 @@
 package com.demo.okadmin;
 
+import com.demo.inbound.InboundController;
 import com.demo.matanalysis.MatController;
 import com.demo.matanalysis.RegionSalesController;
 import com.jfinal.config.Routes;
@@ -22,6 +23,9 @@ public class OkAdminRoutes extends Routes {
 
         // 区域销售分析
         add("/pages/sales", RegionSalesController.class, "/pages/mat");
+
+        // 入库分析
+        add("/pages/inbound", InboundController.class, "/pages/inbound");
 
 
     }
