@@ -1,0 +1,68 @@
+#@bulma()
+
+#define main()
+<div>
+    <nav class="tabs is-fullwidth">
+        <div class="container">
+            <ul>
+                <li class="tab is-active" id="tab1" onclick="openTab('tab1')"><a >1. 分供应商</a></li>
+                <li class="tab" id="tab2" onclick="openTab('tab2')"><a >2. 分物料</a></li>
+                <li class="tab" id="tab3" onclick="openTab('tab3')"><a >3. 入库明细</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="byVendor" class="content-tab" >
+            <div class="table-container">
+            <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+                <colgroup>
+                    <col width="5%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th style="text-align: center">#</th>
+                    <th style="text-align: center">订单</th>
+                    <th style="text-align: center">工厂</th>
+                    <th style="text-align: center">供应商</th>
+                    <th style="text-align: center">名称</th>
+                    <th style="text-align: center">采购金额</th>
+                </tr>
+                </thead>
+                <tbody>
+                #for(x : items)
+                <tr>
+                    <td style="text-align: center">#(for.index + 1)</td>
+                    <td><a class="drillDown" data-key="matAmtByOrderID" data-href="/pages/inbound/matAmtByOrder?o=#(x.orderNum)">#(x.orderNum)</a></td>
+                    <td>#(x.toPlant)</td>
+                    <td>#(x.vendorCode)</td>
+                    <td>#(x.vendorName)</td>
+                    <td style="text-align: right">#number(x.totalAmt, ",###.00")</td>
+                </tr>
+
+                #end
+                </tbody>
+            </table>
+            </div>
+        </div>
+        <div id="byMat" class="content-tab" style="display:none">
+            <div id="matAmtByOrderID">请选择一个订单号</div>
+        </div>
+        <div id="byInbound" class="content-tab" style="display:none">
+            <div id="itemByOrderMatID">请选择一个料号</div>
+        </div>
+    </div>
+
+</div>
+#end
+
+#define js()
+
+#@echart()
+<script type="text/javascript" src="/assets/js/inbound/plant_vendor_amt.js"></script>
+#end

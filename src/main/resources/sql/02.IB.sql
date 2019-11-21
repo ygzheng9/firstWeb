@@ -99,13 +99,7 @@ group by orderNum ) a;
 
 
 
-#### 料号 和 bom 的对应关系
-select count(1)
-from (
-select a.*, b.part_name, b.part_name_zh
-  from po_mat_stats a 
-inner join mat_info b on a.matCode = b.part_num
-) c; 
+
 
 ###  供应商 和 项目 的对应关系
 truncate table po_vendor_project; 
@@ -203,9 +197,84 @@ group by a.matCode ) b
 group by b.vendorCount; 
 
 
+select a.matCode, count(1) vendorCount, sum(a.totalAmt) totalAmt
+  from po_vendor_mat_true a 
+group by a.matCode; 
 
 
+#### 料号 和 bom 的对应关系
 
 
+ALTER TABLE po_mat_stats ADD INDEX po_mat_stats_matCode (matCode); 	
 
+ALTER TABLE mat_info ADD INDEX mat_info_part_num (part_num); 	
+
+
+select a1.matCount, a1.matAmt, a2.totalCount, a2.totalAmt
+from (
+    select count(1) matCount, sum(c.totalAmt) matAmt
+    from (
+             select a.matCode, a.totalAmt
+             from po_mat_stats a
+                      inner join mat_info b on a.matCode = b.part_num
+         ) c) a1
+   , (
+    select count(1) totalCount, sum(a.totalAmt) totalAmt
+    from po_mat_stats a) a2;
+
+
+# 2. 工厂，对应的外部供应商数量  --> 和上面的可以统一；
+select b.* , b.totalAmt / b.vendorCount vendorAvg
+  from (
+select a.toPlant, sum(a.totalAmt) totalAmt, count(distinct vendorCode) vendorCount 
+  from po_vendor_stats a
+where a.external = 'Y'
+group by a.toPlant) b 
+order by b.totalAmt desc; 
+
+
+## 根据送货工厂，看供应商
+select b.*
+  from (
+select  a.orderNum, a.toPlant, a.vendorCode, a.vendorName, sum(a.totalAmt) totalAmt
+  from po_vendor_stats a 
+where a.external = 'Y' 
+  and a.toPlant = '成都总装工厂'
+group by a.orderNum, a.vendorCode, a.vendorName) b 
+order by b.totalAmt desc;  
+  
+update po_vendor_mat a 
+   set a.unitPrice = 0; 
+   
+ update po_vendor_mat a 
+   set a.unitPrice = a.totalAmt / a.totalQty
+where a.totalQty <> 0; 
+  
+ select a.orderNum, a.matCode, a.totalAmt, a.totalQty, a.unitPrice
+   from po_vendor_mat a 
+where a.orderNum = 'DP1215Cq'; 
+
+
+select a.orderNum, a.material, a.ibDate,  a.ibOrderNum, a.receivedQuantity, a.totalAmt10, a.unitCost10
+  from po_item a 
+where a.orderNum = 'DP1215Cq'
+  and a.material = '3815999L'
+order by a.ibDate desc; 
+
+
+select b.ibDate, sum(b.totalQty) totalQty, sum(b.totalAmt) totalAmt, sum(b.totalAmt) / sum(b.totalQty) unitCost
+  from (
+select a.orderNum,
+       a.material         matCode,
+       CONCAT('20', right(a.ibDate,2), left(a.ibDate, 2), mid(a.ibDate, 4,2)) ibDate, 
+       a.ibOrderNum,
+       a.receivedQuantity totalQty,
+       a.totalAmt10       totalAmt,
+       a.unitCost10       unitCost
+from po_item a
+where a.orderNum = 'DP1215Cq'
+  and a.material = '3815999L') b
+group by b.ibDate 
+order by b.ibDate desc;
+  
 

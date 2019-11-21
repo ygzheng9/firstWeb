@@ -30,14 +30,14 @@
                     <div class="ok-card-body p0 clearfix cart-data">
                         <div class="data-body">
                             <div class="media-cont">
-                                <p class="tit">采购金额</p>
-                                <h5 class="num">#number(summary.totalAmt, ",###.##")</h5>
+                                <p class="tit">单号</p>
+                                <h5 class="num">#(summary.orderCount)</h5>
                             </div>
                             <div class="w-img" ok-pc-in-show>
-                                <img src="/assets/images/home-02.png" alt="商品"/>
+                                <img src="/assets/images/home-04.png" alt="用户"/>
                             </div>
                         </div>
-                        <div id="echGoods" class="line-home-a"></div>
+                        <div id="echUser" class="line-home-a"></div>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                         <div class="data-body">
                             <div class="media-cont">
                                 <p class="tit">料号</p>
-                                <h5 class="num">#number(summary.matCount, ",###")</h5>
+                                <h5 class="num">#(summary.matCount)</h5>
                             </div>
                             <div class="w-img" ok-pc-in-show>
                                 <img src="/assets/images/home-03.png" alt="博客"/>
@@ -64,17 +64,19 @@
                     <div class="ok-card-body p0 clearfix cart-data">
                         <div class="data-body">
                             <div class="media-cont">
-                                <p class="tit">单号</p>
-                                <h5 class="num">#number(summary.orderCount, ",###")</h5>
+                                <p class="tit">采购金额</p>
+                                <h5 class="num">#(summary.totalAmt)</h5>
                             </div>
                             <div class="w-img" ok-pc-in-show>
-                                <img src="/assets/images/home-04.png" alt="用户"/>
+                                <img src="/assets/images/home-02.png" alt="商品"/>
                             </div>
                         </div>
-                        <div id="echUser" class="line-home-a"></div>
+                        <div id="echGoods" class="line-home-a"></div>
                     </div>
                 </div>
             </div>
+
+
         </div>
 
         <div class="layui-row layui-col-space15">
@@ -111,6 +113,7 @@
                                 #end
                                 </tbody>
                             </table>
+                            <div style="height: 150px;" id="matSourceChart"></div>
                         </div>
                     </div>
                 </div>
@@ -119,10 +122,41 @@
             <div class="layui-col-md6">
                 <div class="layui-card">
                     <div class="layui-card-header">
-                        <div class="ok-card-title">今日用户访问来源</div>
+                        <div class="ok-card-title">和 BOM 对应的物料</div>
                     </div>
                     <div class="ok-card-body map-body">
-                        <div style="height: 100%;" id="userSourceTodayChart"></div>
+                        <div style="height: 100%;" id="matchedMat">
+                            <table lay-size="sm" class="layui-table">
+                                <colgroup>
+                                    <col width="20%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th style="text-align: center;">总料号</th>
+                                    <th style="text-align: center;">匹配料号</th>
+                                    <th style="text-align: center;">总金额</th>
+                                    <th style="text-align: center;">匹配金额</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                #for(x : matchedMat)
+                                <tr>
+                                    <td style="text-align: right;">#number(x.totalCount, ",###")</td>
+                                    <td style="text-align: right;">#number(x.matCount, ",###")</td>
+                                    <td style="text-align: right;">#number(x.totalAmt, ",###.##")</td>
+                                    <td style="text-align: right;">#number(x.matAmt, ",###.##")</td>
+                                </tr>
+                                #end
+                                </tbody>
+                            </table>
+
+                            <div hidden id="matchedMatData" data-matchedMat="#escape(matchedMatStr)"></div>
+                            <div style="height: 300px;" id="matchedMatChart"></div>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -132,10 +166,40 @@
             <div class="layui-col-md12">
                 <div class="layui-card">
                     <div class="layui-card-header">
-                        <div class="ok-card-title">本周用户访问来源</div>
+                        <div class="ok-card-title">收货工厂</div>
                     </div>
                     <div class="ok-card-body clearfix">
-                        <div class="map-china" id="userSourceWeekChart"></div>
+                        <table lay-size="sm" class="layui-table">
+                            <colgroup>
+                                <col width="5%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">#</th>
+                                <th style="text-align: center;">收货工厂</th>
+                                <th style="text-align: center;">采购金额</th>
+                                <th style="text-align: center;">供应商数量</th>
+                                <th style="text-align: center;">平均金额</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            #for(x : plantAmt)
+                            <tr>
+                                <td style="text-align: center;">#(for.index + 1)</td>
+                                <td style="text-align: right;"><a target="_blank"
+                                                                  href="/pages/inbound/vendorAmtByPlant?p=#(x.toPlant)">#(x.toPlant)</a>
+                                </td>
+                                <td style="text-align: right;">#number(x.totalAmt, ",###.00")</td>
+                                <td style="text-align: right;">#number(x.vendorCount, ",###")</td>
+                                <td style="text-align: right;">#number(x.vendorAvg, ",###.00")</td>
+                            </tr>
+                            #end
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -147,7 +211,8 @@
 
 #define js()
 #@echart()
-<script type="text/javascript" src="/assets/js/okadmin/inbound.js"></script>
+<script type="text/javascript" src="/assets/lib/echarts/dataTool.min.js"></script>
+<script type="text/javascript" src="/assets/js/inbound/summary.js"></script>
 #end
 
 

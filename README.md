@@ -80,6 +80,10 @@ getter.
 1. QAD 中 PO 不是单据，而是(工厂，供应商)的概念；
 2. inbound 的综合分析，采购来源分析；
 
+## 2019/11/20
+1. 把数据直接写到 hidden 里，在 js 中读出；
+
+
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？
 2. table 中的 a link，怎么显示颜色？

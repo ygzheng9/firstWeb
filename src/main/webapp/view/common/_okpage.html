@@ -15,17 +15,37 @@
 <body class="page-fill">
 #@main()
 
-<script type="text/javascript" src="/assets/lib/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="/assets/lib/lodash-4.17.4.min.js"></script>
-
-<script type=" text/javascript" src="/assets/lib/layui/layui.js"></script>
-<script type="text/javascript" src="/assets/js/laymount.js"></script>
+#@layui()
 
 #@js?()
 </body>
 </html>
-
 #end
+
+#define bulma()
+
+<!DOCTYPE html>
+<html lang="en" class="page-fill">
+<head>
+    <meta charset="UTF-8">
+    <title>供应链平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon"/>
+
+    <link rel="stylesheet" href="/assets/lib/bulma/css/bulma.min.css" media="all"/>
+
+    #@css?()
+</head>
+<body>
+#@main()
+
+#@jquery()
+
+#@js?()
+</body>
+</html>
+#end
+
 
 #define jquery()
 <script type="text/javascript" src="/assets/lib/jquery-3.4.1.min.js"></script>
@@ -42,7 +62,7 @@
 #define layui()
 #@jquery()
 <script type=" text/javascript" src="/assets/lib/layui/layui.js"></script>
-<script type="text/javascript" src="/assets/js/init_layui.js.js"></script>
+<script type="text/javascript" src="/assets/js/init_layui.js"></script>
 #end
 
 #define echart()
