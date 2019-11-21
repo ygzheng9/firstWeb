@@ -22,8 +22,8 @@ public class MatController extends Controller {
     @Inject
     private MatService bomSvc;
 
-    public void index() {
-        render("index.html");
+    public void projectPlant() {
+        render("project_plant.html");
     }
 
     public void getClientHeat() {

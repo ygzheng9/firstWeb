@@ -1,32 +1,33 @@
 [
     {
-        "title": "共用性-BOM",
-        "href": "pages/mat/reuseByBom",
+        "title": "客户项目",
+        "href": "pages/mat/projectPlant",
         "fontFamily": "ok-icon",
-        "icon": "&#xe654;",
+        "icon": "&#xe656;",
         "spread": true,
         "isCheck": true
     },
     {
-        "title": "共用性-项目",
-        "href": "pages/mat/projectMatReuse",
-        "fontFamily": "ok-icon",
-        "icon": "&#xe654;",
-        "spread": true
-    },
-    {
-        "title": "客户项目",
-        "href": "pages/mat",
-        "fontFamily": "ok-icon",
-        "icon": "&#xe6b8;",
-        "spread": true
-    },
-
-    {
-        "title": "纪要分析",
-        "href": "pages/wordCloud",
-        "icon": "&#xe656;",
-        "spread": true
+        "title": "复用性分析",
+        "href": "",
+        "icon": "&#xe7ae;",
+        "spread": false,
+        "children": [
+            {
+                "title": "BOM",
+                "href": "pages/mat/bomMatReuse",
+                "fontFamily": "ok-icon",
+                "icon": "&#xe654;",
+                "spread": true
+            },
+            {
+                "title": "项目",
+                "href": "pages/mat/projectMatReuse",
+                "fontFamily": "ok-icon",
+                "icon": "&#xe654;",
+                "spread": true
+            }
+        ]
     },
     {
         "title": "入库记录",
@@ -40,15 +41,14 @@
                 "fontFamily": "layui-icon",
                 "icon": "&#xe62e;",
                 "spread": false
-            },
-            {
-                "title": "现场环境",
-                "href": "pages/plantEnv",
-                "fontFamily": "layui-icon",
-                "icon": "&#xe62e;",
-                "spread": false
             }
         ]
+    },
+    {
+        "title": "纪要分析",
+        "href": "pages/wordCloud",
+        "icon": "&#xe656;",
+        "spread": true
     },
     {
         "title": "演示",
@@ -88,16 +88,6 @@
                 "href": "pages/member/permission",
                 "icon": "&#xe62e;",
                 "spread": false
-            },
-            {
-                "title": "演示 0",
-                "href": "pages/console",
-                "icon": "&#xe68e;"
-            },
-            {
-                "title": "演示 1",
-                "href": "pages/console1",
-                "icon": "&#xe68e;"
             }
         ]
     }

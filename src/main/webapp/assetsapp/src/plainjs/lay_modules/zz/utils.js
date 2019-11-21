@@ -8,9 +8,9 @@ layui.define(exports => {
 
     setHtml: (url, domid) => {
       $.get(url, res => {
-        // document.getElementById(domid).innerHTML = res;
+        document.getElementById(domid).innerHTML = res;
 
-        $(domid).text(res);
+        // $(domid).text(res);
       });
     },
 

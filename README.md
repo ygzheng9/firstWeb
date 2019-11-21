@@ -83,6 +83,12 @@ getter.
 ## 2019/11/20
 1. 把数据直接写到 hidden 里，在 js 中读出；
 
+## 2019/11/21
+1. bulma tabs 切换；
+2. js 在 parent 层级设定 handle 可以响应 未来新创建的 dom 对象的 事件；
+3. ajax 需要配合 getscript 而不是 script tag；
+4. 菜单项 除了 json 外， index 中有设定初始页面；
+
 
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？
