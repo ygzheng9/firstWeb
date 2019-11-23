@@ -31,8 +31,10 @@ public class _Generator {
 	 * 部分功能使用 Db + Record 模式实现，无需生成 model 的 table 在此配置
 	 */
 	private static String[] excludedTable = {
-			"project_page_view", "share_page_view", "feedback_page_view",
-			"login_log",
+		"bom_info", "bom_mat",
+		"plant_info",
+		"po_mat_stats", "po_vendor_mat", "po_vendor_mat_true", "po_vendor_project", "po_vendor_stats",
+		"vendor_info"
 	};
 
 	/**

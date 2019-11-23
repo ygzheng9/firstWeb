@@ -14,14 +14,14 @@
         "spread": false,
         "children": [
             {
-                "title": "BOM",
+                "title": "分BOM",
                 "href": "pages/mat/bomMatReuse",
                 "fontFamily": "ok-icon",
                 "icon": "&#xe654;",
                 "spread": true
             },
             {
-                "title": "项目",
+                "title": "分项目",
                 "href": "pages/mat/projectMatReuse",
                 "fontFamily": "ok-icon",
                 "icon": "&#xe654;",
@@ -30,21 +30,28 @@
         ]
     },
     {
-        "title": "入库记录",
+        "title": "采购分析",
         "href": "",
         "icon": "&#xe66f;",
         "spread": false,
         "children": [
             {
-                "title": "入库概览",
+                "title": "采购概览",
                 "href": "pages/inbound/summary",
                 "fontFamily": "layui-icon",
                 "icon": "&#xe62e;",
                 "spread": false
             },
             {
-                "title": "工厂入库",
+                "title": "工厂采购",
                 "href": "pages/inbound/plantVendor",
+                "fontFamily": "layui-icon",
+                "icon": "&#xe62e;",
+                "spread": false
+            },
+            {
+                "title": "多点采购",
+                "href": "pages/inbound/matMultiSource",
                 "fontFamily": "layui-icon",
                 "icon": "&#xe62e;",
                 "spread": false
@@ -74,25 +81,6 @@
                 "title": "现场环境",
                 "href": "pages/plantEnv",
                 "fontFamily": "layui-icon",
-                "icon": "&#xe62e;",
-                "spread": false
-            },
-            {
-                "title": "用户列表",
-                "href": "pages/member/user",
-                "fontFamily": "layui-icon",
-                "icon": "&#xe62e;",
-                "spread": false
-            },
-            {
-                "title": "角色列表",
-                "href": "pages/member/role",
-                "icon": "&#xe62e;",
-                "spread": false
-            },
-            {
-                "title": "权限列表",
-                "href": "pages/member/permission",
                 "icon": "&#xe62e;",
                 "spread": false
             }

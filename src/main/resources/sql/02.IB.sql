@@ -293,3 +293,38 @@ group by b.vendorName
 having count(1) > 1; 
 
 
+insert into vendor_Info (vendorCode, vendorName)
+  select a.vendorCode, a.vendorName 
+    from po_vendor_stats a
+group by a.vendorCode, a.vendorName; 
+
+update po_vendor_mat_true a
+  inner join vendor_info b 
+  on a.vendorCode = b.vendorCode 
+set a.vendorName = b.vendorName; 
+
+select * from po_vendor_mat_true; 
+
+
+select a1.*, a1.totalAmt / a1.totalQty unitPrice
+  from (
+select b.orderNum,  b.vendorCode, b.vendorName, b.toPlant,  
+		  CONCAT('20', right(a.ibDate,2), left(a.ibDate, 2), mid(a.ibDate, 4,2)) ibDate, 
+		  a.ibOrderNum,  a.receivedQuantity totalQty, a.totalAmt10 totalAmt
+  from po_item a 
+inner join po_vendor_stats b on a.orderNum = b.orderNum
+where a.material = '2516937-Charc' ) a1
+order by  a1.toPlant, a1.ibDate
+
+
+
+select a1.*, a1.totalAmt / a1.totalQty unitPrice
+  from (
+select a.material, b.toPlant,  
+		  sum(a.receivedQuantity) totalQty, sum(a.totalAmt10) totalAmt
+  from po_item a 
+inner join po_vendor_stats b on a.orderNum = b.orderNum
+where a.material = '2516937-Charc' 
+group by a.material, b.toPlant
+) a1
+order by  a1.totalAmt desc

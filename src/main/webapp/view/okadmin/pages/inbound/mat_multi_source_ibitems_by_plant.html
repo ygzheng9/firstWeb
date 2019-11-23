@@ -1,0 +1,54 @@
+<div>
+    <div hidden id="byPlantParam" data-params="#escape(itemsStr)"></div>
+
+    <div id="byPlantChart" style="height: 400px"></div>
+    <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+        <colgroup>
+            <col width="5%">
+            <col width="15%">
+            <col width="15%">
+            <col width="15%">
+            <col width="15%">
+            <col width="15%">
+            <col width="10%">
+            <col width="10%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th style="text-align: center">#</th>
+            <th style="text-align: center">工厂</th>
+            <th style="text-align: center">供应商</th>
+            <th style="text-align: center">名称</th>
+            <th style="text-align: center">订单</th>
+            <th style="text-align: center">料号</th>
+            <th style="text-align: center">入库日期</th>
+            <th style="text-align: center">入库单号</th>
+            <th style="text-align: center">入库数量</th>
+            <th style="text-align: center">入库金额</th>
+            <th style="text-align: center">单位成本</th>
+        </tr>
+        </thead>
+        <tbody>
+        #for(x : items)
+        <tr>
+            <td style="text-align: center">#(for.index + 1)</td>
+            <td>#(x.toPlant)</td>
+            <td>#(x.vendorCode)</td>
+            <td>#(x.vendorName)</td>
+            <td>#(x.orderNum)</td>
+            <td>#(x.matCode)</td>
+            <td>#(x.ibDate)</td>
+            <td>#(x.ibOrderNum)</td>
+            <td style="text-align: right">#number(x.totalQty, ",###")</td>
+            <td style="text-align: right">#number(x.totalAmt, ",###.00")</td>
+            <td style="text-align: right">#number(x.unitCost, ",###.00")
+            </td>
+        </tr>
+        #end
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $.getScript("/assets/js/inbound/mat_multi_source_ibitems_by_plant.js");
+</script>

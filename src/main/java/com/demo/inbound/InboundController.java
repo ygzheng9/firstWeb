@@ -56,7 +56,7 @@ public class InboundController extends Controller {
 
     public void orderAmtByPlant() {
         String plant = get("p");
-        String vendor = get("v");
+        String vendor = get("v", "");
 
         if (vendor.length() == 0) {
             List<Record> items = ibSvc.orderAmtByPlant(plant);
@@ -123,5 +123,40 @@ public class InboundController extends Controller {
         data.set("rtnCode", 0);
         data.set("items", items);
         renderJson(data);
+    }
+
+    public void matMultiSource() {
+        List<Record> items = ibSvc.matMultiSource();
+        set("items", items);
+
+        render("mat_multi_source.html");
+    }
+
+    public void matMultiSourceVendors() {
+        String mat = get("m", "");
+        List<Record> items = ibSvc.matMultiSourceVendors(mat);
+        set("items", items);
+        set("dataStr", JsonKit.toJson(items));
+
+        List<Record> ibItems = ibSvc.matMultiSourceIBItems(mat);
+        set("ibItems", ibItems);
+
+        List<Record> ibPlants = ibSvc.matMultiSourcePlants(mat);
+        set("ibPlants", ibPlants);
+
+        render("mat_multi_source_vendors.html");
+    }
+
+    public void matMultiSourceIBItemsByPlant() {
+        String mat = get("m", "");
+        String plant = get("p", "");
+        List<Record> items = ibSvc.matMultiSourceIBItemsByPlant(mat, plant);
+        set("items", items);
+        set("itemsStr", JsonKit.toJson(items));
+
+        keepPara();
+
+        render("mat_multi_source_ibitems_by_plant.html");
+
     }
 }

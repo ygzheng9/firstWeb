@@ -1,0 +1,66 @@
+#@bulma()
+
+#define main()
+<div>
+    <nav class="tabs is-fullwidth">
+        <div class="container">
+            <ul>
+                <li class="tab is-active" id="tab1"><a>1. 分物料</a></li>
+                <li class="tab" id="tab2"><a>2. 分供应商</a></li>
+                <li class="tab" id="tab3"><a>3. 入库明细</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="content-tab1" class="content-tab" >
+            <div class="table-container">
+            <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+                <colgroup>
+                    <col width="5%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="20%">
+                    <col width="">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th style="text-align: center">#</th>
+                    <th style="text-align: center">物料</th>
+                    <th style="text-align: center">供应商数量</th>
+                    <th style="text-align: center">采购金额</th>
+                    <th style="text-align: center">供应商</th>
+                </tr>
+                </thead>
+                <tbody>
+                #for(x : items)
+                <tr>
+                    <td style="text-align: center">#(for.index + 1)</td>
+                    <td><a class="drillDown" data-key="matVendorsID" data-href="/pages/inbound/matMultiSourceVendors?m=#(x.matCode)">#(x.matCode)</a></td>
+                    <td style="text-align: center">#(x.vendorCount)</td>
+                    <td style="text-align: right">#number(x.totalAmt, ",###.00")</td>
+                    <td>#(x.vendors)</td>
+                </tr>
+
+                #end
+                </tbody>
+            </table>
+            </div>
+        </div>
+        <div id="content-tab2" class="content-tab" style="display:none">
+            <div id="matVendorsID">请选择一颗物料</div>
+        </div>
+        <div id="content-tab3" class="content-tab" style="display:none">
+            <div id="plantItemsID">请选择一个工厂</div>
+        </div>
+    </div>
+
+</div>
+#end
+
+#define js()
+
+#@echart()
+<script type="text/javascript" src="/assets/lib/numeral.min.js"></script>
+<script type="text/javascript" src="/assets/js/inbound/mat_multi_source.js"></script>
+#end

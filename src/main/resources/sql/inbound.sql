@@ -36,6 +36,82 @@ group by a.matCode
 order by vendorCount;
 #end
 
+### 同一颗聊，多个供应商的情况
+#sql("matMultiSource")
+select b.*
+from (
+         select a.matCode, count(1) vendorCount, sum(a.totalAmt) totalAmt, group_concat(a.vendorName) vendors
+         from po_vendor_mat_true a
+         group by a.matCode
+         having count(1) > 1) b
+order by totalAmt desc;
+#end
+
+#sql("matMultiSourceVendors")
+select b.*, b.totalAmt / b.totalQty unitPrice
+from (
+         select a.matCode, a.vendorCode, a.vendorName, sum(a.totalAmt) totalAmt, sum(a.totalQty) totalQty
+         from po_vendor_mat_true a
+         where a.matCode = #para(0)
+         group by a.matCode, a.vendorCode, a.vendorName
+     ) b
+order by b.totalAmt desc;
+#end
+
+### 根据料号，查看入库记录明细，供应商，供货工厂
+#sql("matMultiSourceIBItems")
+select a1.*, a1.totalAmt / a1.totalQty unitPrice
+from (
+         select b.orderNum,
+                b.vendorCode,
+                b.vendorName,
+                b.toPlant,
+                CONCAT('20', right(a.ibDate, 2), left(a.ibDate, 2), mid(a.ibDate, 4, 2)) ibDate,
+                a.ibOrderNum,
+                a.receivedQuantity                                                       totalQty,
+                a.totalAmt10                                                             totalAmt
+         from po_item a
+                  inner join po_vendor_stats b on a.orderNum = b.orderNum
+         where a.material = #para(0) ) a1
+         order by a1.toPlant, a1.ibDate;
+#end
+
+### 同一颗料在不同工厂的入库
+#sql("matMultiSourcePlants")
+select a1.*, a1.totalAmt / a1.totalQty unitPrice
+from (
+         select a.material              matCode,
+                b.toPlant,
+                sum(a.receivedQuantity) totalQty,
+                sum(a.totalAmt10)       totalAmt
+         from po_item a
+                  inner join po_vendor_stats b on a.orderNum = b.orderNum
+         where a.material = #para(0)
+         group by a.material, b.toPlant
+     ) a1
+order by a1.totalAmt desc;
+#end
+
+
+### 入库明细：工厂 + 料号
+#sql("matMultiSourceIBItemsByPlant")
+select a1.*
+from (select b.toPlant,
+             b.vendorCode,
+             b.vendorName,
+             a.orderNum,
+             a.material                                                               matCode,
+             CONCAT('20', right(a.ibDate, 2), left(a.ibDate, 2), mid(a.ibDate, 4, 2)) ibDate,
+             a.ibOrderNum,
+             a.receivedQuantity                                                       totalQty,
+             a.totalAmt10                                                             totalAmt,
+             a.unitCost10                                                             unitCost
+      from po_item a
+               inner join po_vendor_stats b on a.orderNum = b.orderNum
+      where a.material = #para(0)
+        and b.toPlant =  #para(1) ) a1
+      order by a1.ibDate desc;
+#end
 
 ### 入库物料 和 bom 物料关联
 #sql("matchedMat")

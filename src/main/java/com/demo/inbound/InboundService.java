@@ -119,4 +119,25 @@ public class InboundService {
     List<Record> itemByOrderMatDay(String order, String mat) {
         return Db.template("inbound.itemByOrderMatDay", order, mat).find();
     }
+
+    List<Record> matMultiSource() {
+        return Db.template("inbound.matMultiSource").find();
+    }
+
+    List<Record> matMultiSourceVendors(String mat) {
+        return Db.template("inbound.matMultiSourceVendors", mat).find();
+    }
+
+    List<Record> matMultiSourceIBItems(String mat) {
+        return Db.template("inbound.matMultiSourceIBItems", mat).find();
+    }
+
+    List<Record> matMultiSourcePlants(String mat) {
+        return Db.template("inbound.matMultiSourcePlants", mat).find();
+    }
+
+    List<Record> matMultiSourceIBItemsByPlant(String mat, String plant) {
+        return Db.template("inbound.matMultiSourceIBItemsByPlant", mat, plant).find();
+    }
+
 }

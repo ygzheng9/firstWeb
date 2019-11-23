@@ -95,8 +95,11 @@ getter.
 3. js format number => numeral
 4. orderNum 并不是 (plant, vendor),会有重复；
 5. echart: tooltips 设置全局 axis，参数是个数组，每个元素包含完整的信息
+6. mat -> 多个供应源 -> 每个供应源总金额、占比、单价 ；每个工厂的总金额，单价 -> 工厂的入库明细
+
 
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？
 2. table 中的 a link，怎么显示颜色？
 3. 如果执行一系列的 delete/insert/update?
+4. 如何新打开个 tab；
