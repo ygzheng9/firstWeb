@@ -37,6 +37,8 @@
 			<excludes>
 				<exclude>WEB-INF</exclude>
 				<exclude>WEB-INF/web.xml</exclude>
+				<exclude>assetsapp/**</exclude>
+				<exclude>zdata/local/**</exclude>
 			</excludes>
 		</fileSet>
 		
