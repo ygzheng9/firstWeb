@@ -54,13 +54,21 @@ public class InboundController extends Controller {
         renderJson(data);
     }
 
-    public void vendorAmtByPlant() {
+    public void orderAmtByPlant() {
         String plant = get("p");
-        List<Record> items = ibSvc.vendorAmtByPlant(plant);
-        set("items", items);
+        String vendor = get("v");
 
-        render("plant_vendor_amt.html");
+        if (vendor.length() == 0) {
+            List<Record> items = ibSvc.orderAmtByPlant(plant);
+            set("items", items);
+        } else {
+            List<Record> items = ibSvc.orderAmtByPlantVendor(plant, vendor);
+            set("items", items);
+        }
+
+        render("plant_order_amt.html");
     }
+
 
     public void matAmtByOrder() {
         String order = get("o");
@@ -93,4 +101,27 @@ public class InboundController extends Controller {
         renderJson(data);
     }
 
+
+    public void plantVendor() {
+        render("plant_vendor.html");
+    }
+
+    public void plantVendorData() {
+        List<Record> items = ibSvc.plantAmt();
+
+        Kv data = new Kv();
+        data.set("rtnCode", 0);
+        data.set("items", items);
+        renderJson(data);
+    }
+
+    public void vendorAmtByPlantData() {
+        String plant = get("p");
+        List<Record> items = ibSvc.vendorAmtByPlant(plant);
+
+        Kv data = new Kv();
+        data.set("rtnCode", 0);
+        data.set("items", items);
+        renderJson(data);
+    }
 }

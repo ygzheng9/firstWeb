@@ -64,16 +64,40 @@ from (
 order by b.totalAmt desc;
 #end
 
-
-### 收货工厂，供应商，采购金额
-#sql("vendorAmtByPlant")
+### 采购订单 by plant
+### 同一个供应商，同一个工厂，会有多张采购订单！！！
+#sql("orderAmtByPlant")
 select b.*
 from (
          select a.orderNum, a.toPlant, a.vendorCode, a.vendorName, sum(a.totalAmt) totalAmt
          from po_vendor_stats a
          where a.external = 'Y'
            and a.toPlant = #para(0)
-         group by a.orderNum, a.vendorCode, a.vendorName) b
+         group by a.orderNum, a.toPlant, a.vendorCode, a.vendorName) b
+order by b.totalAmt desc;
+#end
+
+#sql("orderAmtByPlantVendor")
+select b.*
+from (
+         select a.orderNum, a.toPlant, a.vendorCode, a.vendorName, sum(a.totalAmt) totalAmt
+         from po_vendor_stats a
+         where a.external = 'Y'
+           and a.toPlant =    #para(0)
+           and a.vendorCode = #para(1)
+         group by a.orderNum, a.toPlant, a.vendorCode, a.vendorName) b
+order by b.totalAmt desc;
+#end
+
+### 收货工厂，供应商，采购金额
+#sql("vendorAmtByPlant")
+select b.*
+from (
+         select a.toPlant, a.vendorCode, a.vendorName, sum(a.totalAmt) totalAmt
+         from po_vendor_stats a
+         where a.external = 'Y'
+           and a.toPlant = #para(0)
+         group by a.toPlant, a.vendorCode, a.vendorName) b
 order by b.totalAmt desc;
 #end
 

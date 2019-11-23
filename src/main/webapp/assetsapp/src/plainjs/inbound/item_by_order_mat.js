@@ -20,6 +20,14 @@ function matSourceRatio() {
         axisPointer: {
           // 坐标轴指示器，坐标轴触发有效
           type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+        },
+        formatter: function(param) {
+          //   console.log(param);
+          return [
+            '日期：' + param[0].axisValue + '<br/>',
+            '入库量: ' + numeral(param[0].data).format('0,0') + '<br/>',
+            '采购单价：' + numeral(param[1].data).format('0,0.00')
+          ].join('');
         }
       },
       grid: {
@@ -48,8 +56,12 @@ function matSourceRatio() {
         {
           name: '入库量',
           data: vals,
-          type: 'line',
-          yAxisIndex: 0
+          type: 'bar',
+          yAxisIndex: 0,
+          itemStyle: {
+            // 柱状图颜色
+            color: '#4ad2ff'
+          }
         },
         {
           name: '单位成本',

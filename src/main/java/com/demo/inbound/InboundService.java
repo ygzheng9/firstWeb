@@ -100,6 +100,14 @@ public class InboundService {
         return Db.template("inbound.vendorAmtByPlant", plant).find();
     }
 
+    List<Record> orderAmtByPlant(String plant) {
+        return Db.template("inbound.orderAmtByPlant", plant).find();
+    }
+
+    List<Record> orderAmtByPlantVendor(String plant, String vendor) {
+        return Db.template("inbound.orderAmtByPlantVendor", plant, vendor).find();
+    }
+
     List<Record> matAmtByOrder(String orderNum) {
         return Db.template("inbound.matAmtByOrderNum", orderNum).find();
     }

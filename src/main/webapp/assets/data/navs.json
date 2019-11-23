@@ -41,6 +41,13 @@
                 "fontFamily": "layui-icon",
                 "icon": "&#xe62e;",
                 "spread": false
+            },
+            {
+                "title": "工厂入库",
+                "href": "pages/inbound/plantVendor",
+                "fontFamily": "layui-icon",
+                "icon": "&#xe62e;",
+                "spread": false
             }
         ]
     },

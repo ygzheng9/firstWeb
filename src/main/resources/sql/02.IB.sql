@@ -278,3 +278,18 @@ group by b.ibDate
 order by b.ibDate desc;
   
 
+
+select b.vendorName, count(1)
+  from (
+ select a.vendorName, a.vendorCode
+         from po_vendor_stats a
+         where a.external = 'Y'
+           and a.toPlant = '金属件子公司'
+           and  a.vendorName = '重庆美龙汽车零部件有限公司'
+         group by a.vendorName, a.vendorCode 
+         
+         ) b 
+group by b.vendorName
+having count(1) > 1; 
+
+

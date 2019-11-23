@@ -89,6 +89,12 @@ getter.
 3. ajax 需要配合 getscript 而不是 script tag；
 4. 菜单项 除了 json 外， index 中有设定初始页面；
 
+## 2019/11/22
+1. tab click 有 html 中的绑定，变成 js 中的事件绑定；
+2. js function 和 ()=>{} 对 this 是有不同的，在 jquery 的事件处理函数中，如果需要使用 this，那么使用 function () {}
+3. js format number => numeral
+4. orderNum 并不是 (plant, vendor),会有重复；
+5. echart: tooltips 设置全局 axis，参数是个数组，每个元素包含完整的信息
 
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？

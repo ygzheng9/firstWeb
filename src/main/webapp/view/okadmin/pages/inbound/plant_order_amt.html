@@ -5,9 +5,9 @@
     <nav class="tabs is-fullwidth">
         <div class="container">
             <ul>
-                <li class="tab is-active" id="tab1" onclick="openTab('tab1')"><a >1. 分供应商</a></li>
-                <li class="tab" id="tab2" onclick="openTab('tab2')"><a >2. 分物料</a></li>
-                <li class="tab" id="tab3" onclick="openTab('tab3')"><a >3. 入库明细</a></li>
+                <li class="tab is-active" id="tab1"><a>1. 分订单</a></li>
+                <li class="tab" id="tab2"><a>2. 分物料</a></li>
+                <li class="tab" id="tab3"><a>3. 入库明细</a></li>
             </ul>
         </div>
     </nav>
@@ -64,5 +64,6 @@
 #define js()
 
 #@echart()
-<script type="text/javascript" src="/assets/js/inbound/plant_vendor_amt.js"></script>
+<script type="text/javascript" src="/assets/lib/numeral.min.js"></script>
+<script type="text/javascript" src="/assets/js/inbound/plant_order_amt.js"></script>
 #end
