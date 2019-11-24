@@ -77,7 +77,8 @@
       myChart.setOption(option, true);
 
       myChart.on('click', 'series', params => {
-        window.open('/pages/inbound/matMultiSource');
+        const url = '/pages/inbound/matMultiSource';
+        window.location.href = url;
       });
     });
   }

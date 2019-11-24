@@ -142,8 +142,8 @@
 
         barChart.setOption(option);
 
-        //  series
-        barChart.on('click', 'axis', params => {
+        //
+        barChart.on('click', 'series', params => {
           if (params.data === undefined) {
             return;
           }
@@ -151,7 +151,8 @@
           const { toPlant, vendorCode } = params.value;
           const url = `/pages/inbound/orderAmtByPlant?p=${toPlant}&v=${vendorCode}`;
           //   console.log(url);
-          window.open(url);
+          //   window.open(url);
+          window.location.href = url;
         });
       });
     });

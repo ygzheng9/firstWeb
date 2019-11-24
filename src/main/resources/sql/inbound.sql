@@ -1,6 +1,6 @@
 ### 外部供应商、采购总金额、品类数、工厂+供应商数量
 #sql("summary")
-select a1.vendorCount, a1.totalAmt, a2.matCount, a3.orderCount
+select a1.vendorCount, ROUND(a1.totalAmt / 10000) totalAmt, a2.matCount, a3.orderCount
 from (
          select count(1) vendorCount, sum(b.totalAmt) totalAmt
          from (

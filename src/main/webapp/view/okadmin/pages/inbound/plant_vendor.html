@@ -1,31 +1,19 @@
 #@okpage()
 
 #define main()
-<div class="console console1 ok-body-scroll">
-    <div class="ok-body home">
-        <div class="layui-row layui-col-space15">
-
-            <div class="layui-col-md12">
-                <div class="layui-card">
-                    <div class="ok-card-body">
-                        <div style="height: 400px;" id="plantSummary"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-col-md12">
-                <div class="layui-card">
-                    <div class="ok-card-body clearfix">
-                        <div style="height: 800px; " id="vendorList"></div>
-                    </div>
-                </div>
-            </div>
+<div class="container">
+    <div class="columns is-multiline">
+        <div class="column is-full">
+            <div style="height: 400px;" id="plantSummary"></div>
+        </div>
+        <div class="column is-full">
+            <div style="height: 800px; " id="vendorList"></div>
         </div>
     </div>
 </div>
+
 #end
 
 #define js()
-#@echart()
-
 <script type="text/javascript" src="/assets/js/inbound/plant_vendor.js"></script>
 #end

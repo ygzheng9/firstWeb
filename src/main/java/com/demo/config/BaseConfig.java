@@ -102,6 +102,10 @@ public class BaseConfig extends JFinalConfig {
         //设置共享页面
         me.addSharedFunction("/view/common/_okpage.html");
 
+        me.addSharedFunction("/view/common/_bulma.html");
+        me.addSharedFunction("/view/common/_bulma_tblk.html");
+
+
         me.addSharedFunction("/view/common/_segment.html");
         me.addSharedFunction("/view/common/_pjax.html");
         me.addSharedFunction("/view/common/_turbolinks.html");

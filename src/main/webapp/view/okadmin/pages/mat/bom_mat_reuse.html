@@ -1,85 +1,91 @@
 #@okpage()
 
 #define main()
-<div class="console">
-    <div class="container is-fluid">
-        <div class="columns is-multiline is-1">
-            <div class="column is-one-quarter">
-                <div class="card">
-                    <div class="ok-card-body">
-                        <div class="img-box" ok-pc-in-show>
-                            <img src="/assets/images/home-01.png" alt="none"/>
-                        </div>
-                        <div class="cart-r">
-                            <div class="stat-text incomes-num">#(info.bomCount)</div>
-                            <div class="stat-heading">BOM数量</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="column is-one-quarter">
-                <div class="card ">
-                    <div class="ok-card-body">
-                        <div class="img-box" ok-pc-in-show>
-                            <img src="/assets/images/home-02.png" alt="none"/>
+<div class="container is-fluid">
+    <div class="columns is-multiline is-variable is-1 ">
+        <div class="column is-one-quarter">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                <img src="/assets/images/home-01.png" alt="none"/>
+                            </figure>
                         </div>
-                        <div class="cart-r">
-                            <div class="stat-text goods-num">#(info.partCount)</div>
-                            <div class="stat-heading">料号数量</div>
+                        <div class="media-content">
+                            <p class="title is-4">#(info.bomCount)</p>
+                            <p class="subtitle is-6">BOM数量</p>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="column is-one-quarter">
-                <div class="card">
-                    <div class="ok-card-body">
-                        <div class="img-box" ok-pc-in-show>
-                            <img src="/assets/images/home-03.png" alt="none"/>
-                        </div>
-                        <div class="cart-r">
-                            <div class="stat-text blogs-num">#(info.reuseCount)</div>
-                            <div class="stat-heading">复用料号数量</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="column is-one-quarter">
-                <div class="card">
-                    <div class="ok-card-body">
-                        <div class="img-box" ok-pc-in-show>
-                            <img src="/assets/images/home-04.png" alt="none"/>
-                        </div>
-                        <div class="cart-r">
-                            <div class="stat-text fans-num"><a href="/pages/mat/bomReuse" target="_blank">#(info.reuseRate)</a>
-                            </div>
-                            <div class="stat-heading">复用率</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="column is-full">
-                <div class="card">
-                    <div class="card-content">
-                        <div style="height: 400px;" id="reuse1"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="column is-full">
-                <div class="card">
-                    <div class="card-content">
-                        <div id="matlist"></div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="column is-one-quarter">
+            <div class="card ">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                <img src="/assets/images/home-02.png" alt="none"/>
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-4">#(info.partCount)</p>
+                            <p class="subtitle is-6">料号数量</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column is-one-quarter">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                <img src="/assets/images/home-03.png" alt="none"/>
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-4">#(info.reuseCount)</p>
+                            <p class="subtitle is-6">复用料号数量</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column is-one-quarter">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                <img src="/assets/images/home-04.png" alt="none"/>
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-4"><a href="/pages/mat/bomReuse">#(info.reuseRate)</a></p>
+                            <p class="subtitle is-6">复用率</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-full">
+            <div style="height: 400px;" id="reuse1"></div>
+        </div>
+        <div class="column is-full">
+            <div id="matlist"></div>
+        </div>
     </div>
 </div>
+
 #end
 
 #define js()
-#@echart()
 <script type="text/javascript" src="/assets/js/mat/mat_reuse_bom.js"></script>
 #end

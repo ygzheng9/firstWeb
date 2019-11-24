@@ -99,11 +99,14 @@ getter.
 
 
 ## 2019/11/23
+1. nav, section, footer
 0. container is-fluid
 1. columns is-multiline is-1
 2. card card-head card-head-title card-content
 2. table is-size-7
 2. has-text-centered
+2. card card-content media media-left media-content card-image
+
 
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？

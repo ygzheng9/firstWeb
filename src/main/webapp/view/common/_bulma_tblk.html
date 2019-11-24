@@ -1,0 +1,160 @@
+#define okpage()
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>集成供应链</title>
+
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon"/>
+
+    <link rel="stylesheet" href="/assets/lib/fontawesome/font-awesome.min.css" data-turbolinks-track="true">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet" data-turbolinks-track="true">
+
+    <link rel="stylesheet" href="/assets/css/okadmin.css" media="all" data-turbolinks-track="true"/>
+
+    <!-- Bulma Version 0.8.x-->
+    <link rel="stylesheet" href="/assets/lib/bulma/css/bulma.min.css" data-turbolinks-track="true"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/zz/admin.css" data-turbolinks-track="true">
+
+    <script type="text/javascript" src="/assets/lib/jquery-3.4.1.min.js" data-turbolinks-track="true"></script>
+    <script type="text/javascript" src="/assets/lib/lodash-4.17.4.min.js" data-turbolinks-track="true"></script>
+    <script type="text/javascript" src="/assets/lib/numeral.min.js" data-turbolinks-track="true"></script>
+
+    <script type=" text/javascript" src="/assets/lib/layui/layui.js" data-turbolinks-track="true"></script>
+    <script type="text/javascript" src="/assets/js/init_layui.js" data-turbolinks-track="true"></script>
+
+    <script type="text/javascript" src="/assets/lib/echarts/echarts.min.js" data-turbolinks-track="true"></script>
+    <script type="text/javascript" src="/assets/lib/echarts/echarts.theme.js" data-turbolinks-track="true"></script>
+    <script type="text/javascript" src="/assets/lib/echarts/dataTool.min.js"></script>
+
+    <script type="text/javascript" src="/assets/lib/g2/g2.min.js" data-turbolinks-track="true"></script>
+    <script type="text/javascript" src="/assets/lib/g2/data-set.min.js" data-turbolinks-track="true"></script>
+
+    <script type="text/javascript" src="/assets/lib/turbolinks/turbolinks.js" data-turbolinks-track="true"></script>
+
+    <script type="text/javascript">
+        Turbolinks.start();
+        Turbolinks.setProgressBarDelay(100);
+    </script>
+
+    <script async type="text/javascript" src="/assets/css/zz/bulma.js"></script>
+
+    #@jshead?()
+</head>
+
+<body>
+<div class="turbolinks-progress-bar"></div>
+
+<!-- START NAV -->
+<nav class="navbar is-white">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item brand-text" href="../index.html">
+                集成供应链
+            </a>
+            <div class="navbar-burger burger" data-target="navMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/pages/mat/projectPlant">
+                    客户项目
+                </a>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        复用性分析
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="/pages/mat/bomMatReuse">
+                            分BOM
+                        </a>
+                        <a class="navbar-item" href="/pages/mat/projectMatReuse">
+                            分项目
+                        </a>
+                    </div>
+                </div>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        采购分析
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="/pages/inbound/summary">
+                            采购概览
+                        </a>
+                        <a class="navbar-item" href="/pages/inbound/plantVendor">
+                            工厂采购
+                        </a>
+                        <a class="navbar-item" href="/pages/inbound/matMultiSourceSummary">
+                            多点采购
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- END NAV -->
+<div class="section">
+    <div class="container">
+        <div class="columns is-variable is-1 ">
+            <div class="column is-2 ">
+                <aside class="menu is-hidden-mobile">
+                    <p class="menu-label">
+                        基本信息
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="/pages/mat/projectPlant">客户项目</a></li>
+                        <li><a href="/pages/wordCloud">纪要分析</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        数据分析
+                    </p>
+                    <ul class="menu-list">
+                        <li>
+                            <a>复用性分析</a>
+                            <ul>
+                                <li><a href="/pages/mat/bomMatReuse">分 BOM</a></li>
+                                <li><a href="/pages/mat/projectMatReuse">分项目</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>采购分析</a>
+                            <ul>
+                                <li><a href="/pages/inbound/summary">采购概览</a></li>
+                                <li><a href="/pages/inbound/plantVendor">工厂采购</a></li>
+                                <li><a href="/pages/inbound/matMultiSourceSummary">多点采购</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="column">
+                #@main()
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <strong>Insight</strong> by <a href="https://bulma.com">ISP@IBM 2019</a>. Stop talking, get hands dirty.
+    </div>
+</footer>
+
+#@js?()
+</body>
+
+</html>
+
+#end

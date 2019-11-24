@@ -6,7 +6,7 @@ layui.use(['okUtils', 'countUp'], function() {
 
   // 顶部四个只的动态效果
   function initMediaCont() {
-    var elem_nums = $('.media-cont .num');
+    var elem_nums = $('.media-content .count-up');
     elem_nums.each(function(i, j) {
       const a = $(j).text();
 
@@ -189,91 +189,6 @@ layui.use(['okUtils', 'countUp'], function() {
     matchedMatChart.setOption(option, true);
   }
 
-  function matSourceAmtBoxplot() {
-    // 物料来源数量的金额明细， boxplot，效果不好
-
-    $.get('/pages/inbound/matSourceAmt', res => {
-      const { items } = res;
-
-      console.log(items);
-
-      const d = [items[1]];
-
-      const data = echarts.dataTool.prepareBoxplotData(d);
-
-      const option = {
-        title: [
-          {
-            text: '采购金额',
-            left: 'center'
-          }
-        ],
-        tooltip: {
-          trigger: 'item',
-          axisPointer: {
-            type: 'shadow'
-          }
-        },
-        grid: {
-          left: '10%',
-          right: '10%',
-          bottom: '15%'
-        },
-        xAxis: {
-          type: 'category',
-          name: '供应商数量',
-          data: data.axisData,
-          boundaryGap: true,
-          nameGap: 30,
-          splitArea: {
-            show: false
-          },
-          axisLabel: {
-            formatter: 'expr {value}'
-          },
-          splitLine: {
-            show: false
-          }
-        },
-        yAxis: {
-          type: 'value',
-          name: '采购金额',
-          splitArea: {
-            show: true
-          }
-        },
-        series: [
-          {
-            name: 'boxplot',
-            type: 'boxplot',
-            data: data.boxData,
-            tooltip: {
-              formatter: function(param) {
-                return [
-                  'Experiment ' + param.name + ': ',
-                  'upper: ' + param.data[5],
-                  'Q3: ' + param.data[4],
-                  'median: ' + param.data[3],
-                  'Q1: ' + param.data[2],
-                  'lower: ' + param.data[1]
-                ].join('<br/>');
-              }
-            }
-          },
-          {
-            name: 'outlier',
-            type: 'scatter',
-            data: data.outliers
-          }
-        ]
-      };
-
-      const myChart = echarts.init(document.getElementById('matSourceChart'));
-
-      myChart.setOption(option, true);
-    });
-  }
-
   function matSourceRatio() {
     // 物料来源数量的金额明细，
 
@@ -352,7 +267,8 @@ layui.use(['okUtils', 'countUp'], function() {
       myChart.setOption(option, true);
 
       myChart.on('click', 'series', params => {
-        window.open('/pages/inbound/matMultiSource');
+        const url = '/pages/inbound/matMultiSource';
+        window.location.href = url;
       });
     });
   }

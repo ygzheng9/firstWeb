@@ -48,7 +48,7 @@ public class BlogController extends Controller {
 
         // blogSvc.showlog();
         //
-        blogSvc.dumpInof();
+        // blogSvc.dumpInof();
         //
         // blogSvc.localFile();
         //
@@ -222,5 +222,9 @@ public class BlogController extends Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void bulma() {
+        render("bulma.html");
     }
 }

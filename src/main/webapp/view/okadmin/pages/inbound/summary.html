@@ -1,212 +1,222 @@
 #@okpage()
 
 #define main()
-<div class="console console1">
-    <div class="container is-fluid">
-        <div class="columns is-multiline is-1">
-            <div class="column is-one-quarter">
-                <div class="card">
-                    <div class="ok-card-body p0 clearfix cart-data">
-                        <div class="data-body">
-                            <div class="media-cont">
-                                <p class="tit">供应商</p>
-                                <h5 class="num">#number(summary.vendorCount, ",###")</h5>
-                            </div>
-                            <div class="w-img" ok-pc-in-show>
+
+<div class="container is-fluid">
+    <div class="columns is-multiline is-variable is-1 ">
+        <div class="column is-one-quarter">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
                                 <img src="/assets/images/home-01.png" alt="收入"/>
-                            </div>
+                            </figure>
                         </div>
-                        <div id="echIncome" class="line-home-a"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="column is-one-quarter">
-                <div class="card">
-                    <div class="ok-card-body p0 clearfix cart-data">
-                        <div class="data-body">
-                            <div class="media-cont">
-                                <p class="tit">单号</p>
-                                <h5 class="num">#(summary.orderCount)</h5>
-                            </div>
-                            <div class="w-img" ok-pc-in-show>
-                                <img src="/assets/images/home-04.png" alt="用户"/>
-                            </div>
-                        </div>
-                        <div id="echUser" class="line-home-a"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="column is-one-quarter">
-                <div class="card">
-                    <div class="ok-card-body p0 clearfix cart-data">
-                        <div class="data-body">
-                            <div class="media-cont">
-                                <p class="tit">料号</p>
-                                <h5 class="num">#(summary.matCount)</h5>
-                            </div>
-                            <div class="w-img" ok-pc-in-show>
-                                <img src="/assets/images/home-03.png" alt="博客"/>
-                            </div>
-                        </div>
-                        <div id="echBlogs" class="line-home-a"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="column is-one-quarter">
-                <div class="card">
-                    <div class="ok-card-body p0 clearfix cart-data">
-                        <div class="data-body">
-                            <div class="media-cont">
-                                <p class="tit">采购金额</p>
-                                <h5 class="num">#(summary.totalAmt)</h5>
-                            </div>
-                            <div class="w-img" ok-pc-in-show>
-                                <img src="/assets/images/home-02.png" alt="商品"/>
-                            </div>
-                        </div>
-                        <div id="echGoods" class="line-home-a"></div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="column is-half">
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">供应源分析</p>
-                    </header>
-                    <div class="card-content">
-                        <div id="matSource">
-                            <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7">
-                                <colgroup>
-                                    <col width="20%">
-                                    <col width="20%">
-                                    <col width="20%">
-                                    <col width="20%">
-                                </colgroup>
-                                <thead>
-                                <tr>
-                                    <th style="text-align: center;">供应商数量</th>
-                                    <th style="text-align: center;">物料数量</th>
-                                    <th style="text-align: center;">采购金额</th>
-                                    <th style="text-align: center;">物料平均采购额</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                #for(x : matSource)
-                                <tr>
-                                    <td style="text-align: center;">#(x.vendorCount)</td>
-                                    <td style="text-align: right;">#number(x.matCount, ",###")</td>
-                                    <td style="text-align: right;">#number(x.totalAmt, ",###.##")</td>
-                                    <td style="text-align: right;">#number(x.avg, ",###.##")</td>
-                                </tr>
-                                #end
-                                </tbody>
-                            </table>
-                            <div style="height: 150px;" id="matSourceChart"></div>
+                        <div class="media-content">
+                            <p class="title is-4 count-up">#number(summary.vendorCount, ",###")</p>
+                            <p class="subtitle is-6">供应商</p>
                         </div>
                     </div>
                 </div>
+                <div class="card-image">
+                    <div id="echIncome" class="line-home-a"></div>
+                </div>
             </div>
+        </div>
 
-            <div class="column is-half">
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">和 BOM 对应的物料</p>
-                    </header>
-                    <div class="card-content">
-                        <div id="matchedMat">
-                            <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7">
-                                <colgroup>
-                                    <col width="20%">
-                                    <col width="20%">
-                                    <col width="20%">
-                                    <col width="20%">
-                                </colgroup>
-                                <thead>
-                                <tr>
-                                    <th style="text-align: center;">总料号</th>
-                                    <th style="text-align: center;">匹配料号</th>
-                                    <th style="text-align: center;">总金额</th>
-                                    <th style="text-align: center;">匹配金额</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                #for(x : matchedMat)
-                                <tr>
-                                    <td style="text-align: right;">#number(x.totalCount, ",###")</td>
-                                    <td style="text-align: right;">#number(x.matCount, ",###")</td>
-                                    <td style="text-align: right;">#number(x.totalAmt, ",###.##")</td>
-                                    <td style="text-align: right;">#number(x.matAmt, ",###.##")</td>
-                                </tr>
-                                #end
-                                </tbody>
-                            </table>
-
-                            <div hidden id="matchedMatData" data-matchedMat="#escape(matchedMatStr)"></div>
-                            <div style="height: 240px;" id="matchedMatChart"></div>
-
+        <div class="column is-one-quarter">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                <img src="/assets/images/home-04.png" alt="收入"/>
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-4 count-up">#(summary.orderCount)</p>
+                            <p class="subtitle is-6">单号</p>
                         </div>
                     </div>
                 </div>
+                <div class="card-image">
+                    <div id="echUser" class="line-home-a"></div>
+                </div>
             </div>
+        </div>
 
-            <div class="column is-full">
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">收货工厂</p>
-                    </header>
-                    <div class="card-content">
-                        <div class="content">
-                            <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7">
-                                <colgroup>
-                                    <col width="5%">
-                                    <col width="20%">
-                                    <col width="20%">
-                                    <col width="20%">
-                                    <col width="20%">
-                                </colgroup>
-                                <thead>
-                                <tr>
-                                    <th style="text-align: center;">#</th>
-                                    <th style="text-align: center;">收货工厂</th>
-                                    <th style="text-align: center;">采购金额</th>
-                                    <th style="text-align: center;">供应商数量</th>
-                                    <th style="text-align: center;">平均金额</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                #for(x : plantAmt)
-                                <tr>
-                                    <td style="text-align: center;">#(for.index + 1)</td>
-                                    <td style="text-align: right;"><a target="_blank"
-                                                                      href="/pages/inbound/orderAmtByPlant?p=#(x.toPlant)">#(x.toPlant)</a>
-                                    </td>
-                                    <td style="text-align: right;">#number(x.totalAmt, ",###.00")</td>
-                                    <td style="text-align: right;">#number(x.vendorCount, ",###")</td>
-                                    <td style="text-align: right;">#number(x.vendorAvg, ",###.00")</td>
-                                </tr>
-                                #end
-                                </tbody>
-                            </table>
+        <div class="column is-one-quarter">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                <img src="/assets/images/home-03.png" alt="收入"/>
+                            </figure>
                         </div>
+                        <div class="media-content">
+                            <p class="title is-4 count-up">#(summary.matCount)</p>
+                            <p class="subtitle is-6">料号</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-image">
+                    <div id="echBlogs" class="line-home-a"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column is-one-quarter">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                <img src="/assets/images/home-02.png" alt="收入"/>
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-4 count-up">#(summary.totalAmt)</p>
+                            <p class="subtitle is-6">采购金额(万)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-image">
+                    <div id="echGoods" class="line-home-a"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column is-half">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">供应源分析</p>
+                </header>
+                <div class="card-content">
+                    <div id="matSource">
+                        <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">供应商数量</th>
+                                <th style="text-align: center;">物料数量</th>
+                                <th style="text-align: center;">采购金额</th>
+                                <th style="text-align: center;">物料平均采购额</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            #for(x : matSource)
+                            <tr>
+                                <td style="text-align: center;">#(x.vendorCount)</td>
+                                <td style="text-align: right;">#number(x.matCount, ",###")</td>
+                                <td style="text-align: right;">#number(x.totalAmt, ",###.##")</td>
+                                <td style="text-align: right;">#number(x.avg, ",###.##")</td>
+                            </tr>
+                            #end
+                            </tbody>
+                        </table>
+                        <div style="height: 150px;" id="matSourceChart"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
+        <div class="column is-half">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">和 BOM 对应的物料</p>
+                </header>
+                <div class="card-content">
+                    <div id="matchedMat">
+                        <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">总料号</th>
+                                <th style="text-align: center;">匹配料号</th>
+                                <th style="text-align: center;">总金额</th>
+                                <th style="text-align: center;">匹配金额</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            #for(x : matchedMat)
+                            <tr>
+                                <td style="text-align: right;">#number(x.totalCount, ",###")</td>
+                                <td style="text-align: right;">#number(x.matCount, ",###")</td>
+                                <td style="text-align: right;">#number(x.totalAmt, ",###.##")</td>
+                                <td style="text-align: right;">#number(x.matAmt, ",###.##")</td>
+                            </tr>
+                            #end
+                            </tbody>
+                        </table>
+
+                        <div hidden id="matchedMatData" data-matchedMat="#escape(matchedMatStr)"></div>
+                        <div style="height: 240px;" id="matchedMatChart"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column is-full">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">收货工厂</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7">
+                            <colgroup>
+                                <col width="5%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">#</th>
+                                <th style="text-align: center;">收货工厂</th>
+                                <th style="text-align: center;">采购金额</th>
+                                <th style="text-align: center;">供应商数量</th>
+                                <th style="text-align: center;">平均金额</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            #for(x : plantAmt)
+                            <tr>
+                                <td style="text-align: center;">#(for.index + 1)</td>
+                                <td style="text-align: right;"><a
+                                        href="/pages/inbound/orderAmtByPlant?p=#(x.toPlant)">#(x.toPlant)</a>
+                                </td>
+                                <td style="text-align: right;">#number(x.totalAmt, ",###.00")</td>
+                                <td style="text-align: right;">#number(x.vendorCount, ",###")</td>
+                                <td style="text-align: right;">#number(x.vendorAvg, ",###.00")</td>
+                            </tr>
+                            #end
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 #end
 
 #define js()
-#@echart()
-<script type="text/javascript" src="/assets/lib/echarts/dataTool.min.js"></script>
 <script type="text/javascript" src="/assets/js/inbound/summary.js"></script>
 #end
 

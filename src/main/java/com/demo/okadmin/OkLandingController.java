@@ -7,6 +7,8 @@ import com.jfinal.core.Controller;
  */
 public class OkLandingController extends Controller {
     public void index() {
-        render("index.html");
+        // render("index.html");
+
+        redirect("/pages/mat/projectPlant");
     }
 }
