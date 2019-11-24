@@ -39,6 +39,7 @@
         {
           type: 'treemap',
           name: '全部',
+          roam: false,
           data: treeData,
           // 距离顶部的距离
           //   top: 40,
@@ -141,14 +142,15 @@
 
         barChart.setOption(option);
 
-        barChart.on('click', 'series', params => {
+        //  series
+        barChart.on('click', 'axis', params => {
           if (params.data === undefined) {
             return;
           }
           //   console.log('click: ', params);
           const { toPlant, vendorCode } = params.value;
           const url = `/pages/inbound/orderAmtByPlant?p=${toPlant}&v=${vendorCode}`;
-          console.log(url);
+          //   console.log(url);
           window.open(url);
         });
       });

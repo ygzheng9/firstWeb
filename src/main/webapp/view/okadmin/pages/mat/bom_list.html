@@ -1,6 +1,6 @@
 <div>
-    <div style="text-align:center;font-size: 24px;">#(client)@#(plant)</div>
-    <table lay-size="sm" class="layui-table">
+    <div class="has-text-centered is-size-3">#(client)@#(plant)</div>
+    <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7">
         <colgroup>
             <col width="5%">
             <col width="20%">
@@ -26,8 +26,7 @@
             <td>#(x.client)</td>
             <td>#(x.plant)</td>
             <td>#(x.project)</td>
-            <td><a href="/pages/mat/bomItems?bomid=#(x.bomID)&client=#(x.client)&plant=#(x.plant)" target="_blank"
-                   class="layui-table-link">#(x.bomID)</a>
+            <td><a href="/pages/mat/bomItems?bomid=#(x.bomID)&client=#(x.client)&plant=#(x.plant)" target="_blank">#(x.bomID)</a>
             </td>
             <td>#(x.partCount)</td>
         </tr>

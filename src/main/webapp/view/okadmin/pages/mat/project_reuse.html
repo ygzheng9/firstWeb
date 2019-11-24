@@ -1,54 +1,51 @@
 #@okpage()
 
 #define main()
-<div class="layui-row layui-col-space15">
-    <div class="layui-col-md-offset2 layui-col-md8">
-        <div style="text-align:center;font-size: 24px;">#(title)</div>
-        <table lay-size="sm" class="layui-table">
-            <colgroup>
-                <col width="5%">
-                <col width="20%">
-                <col width="20%">
-                <col width="10%">
-                <col width="10%">
-                <col width="10%">
-                <col width="10%">
-            </colgroup>
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>客户</th>
-                <th>项目</th>
-                <th>BOM 数量</th>
-                <th>总料号</th>
-                <th>复用料号</th>
-                <th>复用率</th>
-            </tr>
-            </thead>
-            <tbody>
-            #for(x : items)
-            <tr>
-                <td>#(for.index + 1)</td>
-                <td>#(x.client)</td>
-                <td>#(x.project)</td>
-                <td>#(x.bomCount)</td>
-                <td><a href="/pages/mat/projectMatList?p=#(x.project)" target="_blank">#(x.partCount)</a></td>
-                <td>
-                    #(x.reusePartCount)
-                </td>
-                <td>
-                    #if( avg >= x.reuseRate)
-                    <span style="color: red;">#(x.reuseRate)</span>
-                    #else
-                    #(x.reuseRate)
-                    #end
-                </td>
-            </tr>
-            #end
-            </tbody>
-        </table>
-
-    </div>
+<div class="container is-fluid">
+    <div class="has-text-centered is-size-3">#(title)</div>
+    <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7">
+        <colgroup>
+            <col width="5%">
+            <col width="20%">
+            <col width="20%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>客户</th>
+            <th>项目</th>
+            <th>BOM 数量</th>
+            <th>总料号</th>
+            <th>复用料号</th>
+            <th>复用率</th>
+        </tr>
+        </thead>
+        <tbody>
+        #for(x : items)
+        <tr>
+            <td>#(for.index + 1)</td>
+            <td>#(x.client)</td>
+            <td>#(x.project)</td>
+            <td>#(x.bomCount)</td>
+            <td><a href="/pages/mat/projectMatList?p=#(x.project)">#(x.partCount)</a></td>
+            <td>
+                #(x.reusePartCount)
+            </td>
+            <td>
+                #if( avg >= x.reuseRate)
+                <span style="color: red;">#(x.reuseRate)</span>
+                #else
+                #(x.reuseRate)
+                #end
+            </td>
+        </tr>
+        #end
+        </tbody>
+    </table>
 </div>
 
 #end

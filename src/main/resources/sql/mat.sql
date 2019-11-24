@@ -21,10 +21,12 @@ order by a.project, a.bomID;
 
 ### 根据 bomid, 获取明细清单
 #sql("getBomItems")
-select *
-from bom_item a
-where a.bom_id = #para(0)
-order by a.part_num;
+select a1.*
+from (
+         select *, CONVERT(a.seq_num, SIGNED) seq
+         from bom_item a
+         where a.bom_id = #para(0) ) a1
+         order by a1.seq asc;
 #end
 
 

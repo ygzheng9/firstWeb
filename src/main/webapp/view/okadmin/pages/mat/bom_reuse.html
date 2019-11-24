@@ -1,16 +1,14 @@
 #@okpage()
 
 #define main()
-<div class="layui-row layui-col-space15">
-    <div class="layui-col-md-offset2 layui-col-md8">
-        <div style="text-align:center;font-size: 24px;">BOM 复用度分析</div>
-        <table id="bomList" lay-filter="bomList"></table>
-    </div>
+<div class="container is-fluid">
+    <div class="has-text-centered is-size-3">BOM 复用度分析</div>
+    <table id="bomList" lay-filter="bomList"
+           class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7"></table>
 </div>
 
 #end
 
 #define js()
-#@echart()
 <script type="text/javascript" src="/assets/js/mat/bom_reuse.js"></script>
 #end

@@ -98,6 +98,13 @@ getter.
 6. mat -> 多个供应源 -> 每个供应源总金额、占比、单价 ；每个工厂的总金额，单价 -> 工厂的入库明细
 
 
+## 2019/11/23
+0. container is-fluid
+1. columns is-multiline is-1
+2. card card-head card-head-title card-content
+2. table is-size-7
+2. has-text-centered
+
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？
 2. table 中的 a link，怎么显示颜色？

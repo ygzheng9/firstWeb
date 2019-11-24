@@ -51,7 +51,7 @@
             },
             {
                 "title": "多点采购",
-                "href": "pages/inbound/matMultiSource",
+                "href": "pages/inbound/matMultiSourceSummary",
                 "fontFamily": "layui-icon",
                 "icon": "&#xe62e;",
                 "spread": false

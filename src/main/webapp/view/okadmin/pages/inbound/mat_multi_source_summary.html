@@ -1,0 +1,48 @@
+#@bulma()
+
+#define main()
+<div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">供应源分析</p>
+        </header>
+        <div class="card-content">
+            <div id="matSource">
+                <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7">
+                    <colgroup>
+                        <col width="20%">
+                        <col width="20%">
+                        <col width="20%">
+                        <col width="20%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th style="text-align: center;">供应商数量</th>
+                        <th style="text-align: center;">物料数量</th>
+                        <th style="text-align: center;">采购金额</th>
+                        <th style="text-align: center;">物料平均采购额</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    #for(x : matSource)
+                    <tr>
+                        <td style="text-align: center;">#(x.vendorCount)</td>
+                        <td style="text-align: right;">#number(x.matCount, ",###")</td>
+                        <td style="text-align: right;">#number(x.totalAmt, ",###.##")</td>
+                        <td style="text-align: right;">#number(x.avg, ",###.##")</td>
+                    </tr>
+                    #end
+                    </tbody>
+                </table>
+                <div style="height: 150px;" id="matSourceChart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+#end
+
+#define js()
+
+#@echart()
+<script type="text/javascript" src="/assets/js/inbound/mat_multi_source_summary.js"></script>
+#end

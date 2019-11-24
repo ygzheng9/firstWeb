@@ -101,6 +101,9 @@ layui.use(['okUtils', 'countUp'], function() {
         x: 'left',
         data: ['匹配金额', '未匹配金额', '匹配物料', '未匹配物料']
       },
+      grid: {
+        bottom: '5%'
+      },
       series: [
         {
           name: '金额占比',
@@ -347,6 +350,10 @@ layui.use(['okUtils', 'countUp'], function() {
       const myChart = echarts.init(document.getElementById('matSourceChart'));
 
       myChart.setOption(option, true);
+
+      myChart.on('click', 'series', params => {
+        window.open('/pages/inbound/matMultiSource');
+      });
     });
   }
 

@@ -125,6 +125,14 @@ public class InboundController extends Controller {
         renderJson(data);
     }
 
+
+    public void matMultiSourceSummary() {
+        List<Record> matSource = ibSvc.matSource();
+        set("matSource", matSource);
+
+        render("mat_multi_source_summary.html");
+    }
+
     public void matMultiSource() {
         List<Record> items = ibSvc.matMultiSource();
         set("items", items);
