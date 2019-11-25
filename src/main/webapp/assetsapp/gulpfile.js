@@ -53,14 +53,6 @@ gulp.task('dev', function() {
   return gulp.watch(jsSrc, { delay: 500 }, gulp.series('compile'));
 });
 
-gulp.task('prod', function() {
-  return gulp.watch(
-    jsSrc,
-    { delay: 500 },
-    gulp.series('clean', 'build', 'js:vendor', 'css:vendor')
-  );
-});
-
 // 把所有不变动的 js 变成一个的 js，一次请求所有
 gulp.task('js:vendor', function(callback) {
   return (
@@ -106,3 +98,6 @@ gulp.task('css:vendor', function() {
     .pipe(concatCss('vendor.css'))
     .pipe(gulp.dest('../assets/js'));
 });
+
+// 最终的编译
+gulp.task('prod', gulp.series('clean', 'build', 'js:vendor', 'css:vendor'));

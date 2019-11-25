@@ -28,6 +28,14 @@
 		<fileSet>
 			<directory>${basedir}/src/main/resources</directory>
 			<outputDirectory>config</outputDirectory>
+			<!--			在服务器上的配置，和本地不一样 -->
+			<excludes>
+				<exclude>cmd/**</exclude>
+				<exclude>*.txt</exclude>
+				<exclude>*.xml</exclude>
+				<exclude>*.properties</exclude>
+				<exclude>undertow.txt</exclude>
+			</excludes>
 		</fileSet>
 		
 		<!-- src/main/webapp 全部 copy 到 webapp 目录下 -->
@@ -38,7 +46,7 @@
 				<exclude>WEB-INF</exclude>
 				<exclude>WEB-INF/web.xml</exclude>
 				<exclude>assetsapp/**</exclude>
-				<exclude>zdata/local/**</exclude>
+				<exclude>zdata/**</exclude>
 			</excludes>
 		</fileSet>
 		

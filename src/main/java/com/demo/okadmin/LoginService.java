@@ -6,11 +6,14 @@ import com.demo.model.User;
 import com.jfinal.aop.Inject;
 import com.jfinal.kit.Ret;
 import com.jfinal.kit.StrKit;
+import com.jfinal.log.Log;
 
 /**
  * @author ygzheng
  */
 public class LoginService {
+    private static Log logger = Log.getLog(LoginService.class);
+
     @Inject
     UserService userSvc;
 
@@ -23,6 +26,7 @@ public class LoginService {
     Ret login(String email, String password, boolean keepLogin) {
         User loginAccount = userSvc.checkLogin(email, password);
         if (loginAccount == null) {
+            logger.info("failed login: " + email + ":" + password);
             return Ret.fail("msg", "这没你的地方，你不属于这");
         }
 
