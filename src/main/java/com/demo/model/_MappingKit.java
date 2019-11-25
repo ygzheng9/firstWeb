@@ -17,7 +17,7 @@ public class _MappingKit {
 	
 	public static void mapping(ActiveRecordPlugin arp) {
 		arp.addMapping("blog", "id", Blog.class);
-		arp.addMapping("bom_item", "idbom_items", BomItem.class);
+		arp.addMapping("bom_item", "id", BomItem.class);
 		arp.addMapping("bom_project_mapping", "id", BomProjectMapping.class);
 		arp.addMapping("mat_info", "id", MatInfo.class);
 		arp.addMapping("po_head", "id", PoHead.class);
@@ -26,6 +26,7 @@ public class _MappingKit {
 		arp.addMapping("project_mat", "id", ProjectMat.class);
 		arp.addMapping("region_sales", "id", RegionSales.class);
 		arp.addMapping("region_sales_stats", "id", RegionSalesStats.class);
+		arp.addMapping("session", "id", Session.class);
 		arp.addMapping("user", "id", User.class);
 	}
 }

@@ -116,9 +116,23 @@ getter.
 1. gulp 把所有 vendor js concate，但是，lay.js 不能打包，猜测是因为自带的模块机制；
 1. gulp 把 css 打包；
 1. g2.js 的文件很大，用到时再引入；
+1. ajax form, 在 controller 中可以直接通过 get(name) 得到 form value;
+1. 通过 setCookie 记录登录状态，并且可以设定 cookie 的有效期；超过有效期后，该 cookie 不可用；
+1. 全局 interceptor，检查 cookie 判断登录状态；每次 http 请求，都会把 cookie 带上，无论是 a, ajax, href 都会带上 cookie；
+2. table 中的 a link，怎么显示颜色？--> 使用 bulma 覆盖掉 lay 
+4. 如何新打开个 tab； --> turbolinks 之后不需要多 tab 了，而且手机更友好； 
+1. cookie 和 用户信息：
+    1. 检查用户名/密码 时，生成 cookie id 以及 对应的用户信息；
+    2. 对应关系存入cache，以及数据库；cookie 返回给 response；
+    2. 下次请求来时，通过 interceptor 取出 cookie； 如果取不到 cookie，或 cookie 过期了，重新登录；
+    2. 根据 cookie id，从 cache 中找到对应的用户信息，把用户信息存入 resquest 中，供后续 action 使用；
+    1. 如果 cache 中没有对应关系，从数据库中加载到 cache；如果数据库中也没有，那么重新登录；
+1. cache 使用后，启动速度明显变慢，1.6s -> 6.8s
+    1. 可以 cache 任何东西，包括 action
+    1. 在 配置文件中，可以针对 key，配置不同的缓存策略；
+1. nav 右侧 navbar-end 悬浮下拉菜单；
+
 
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？
-2. table 中的 a link，怎么显示颜色？
 3. 如果执行一系列的 delete/insert/update?
-4. 如何新打开个 tab；

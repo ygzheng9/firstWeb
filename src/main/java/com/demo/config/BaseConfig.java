@@ -3,6 +3,7 @@ package com.demo.config;
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
 import com.demo.model._MappingKit;
+import com.demo.okadmin.LoginInterceptor;
 import com.demo.okadmin.OkAdminRoutes;
 import com.demo.xstart.APIRoutes;
 import com.demo.xstart.BlogController;
@@ -13,6 +14,7 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
+import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.server.undertow.UndertowServer;
 import com.jfinal.template.Engine;
 
@@ -140,12 +142,17 @@ public class BaseConfig extends JFinalConfig {
 
         arp.getEngine().setToClassPathSourceFactory();
         arp.addSqlTemplate("/sql/_all.sql");
+
+        if (ZCacheKit.useCache()) {
+            System.out.println("use cache...");
+            me.add(new EhCachePlugin());
+        }
     }
 
     @Override
     public void configInterceptor(Interceptors me) {
-        // 全局pjax拦截器
-        // me.add(new PjaxInterceptor());
+        // 全局拦截器
+        me.add(new LoginInterceptor());
     }
 
     @Override

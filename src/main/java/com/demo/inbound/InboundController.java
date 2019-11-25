@@ -16,6 +16,7 @@ public class InboundController extends Controller {
     @Inject
     private InboundService ibSvc;
 
+    // @Before(CacheInterceptor.class)
     public void summary() {
         Record summary = ibSvc.summary();
         List<Record> matSource = ibSvc.matSource();

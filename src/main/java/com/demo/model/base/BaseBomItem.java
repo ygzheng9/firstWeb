@@ -9,12 +9,12 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseBomItem<M extends BaseBomItem<M>> extends Model<M> implements IBean {
 
-	public void setIdbomItems(java.lang.Integer idbomItems) {
-		set("idbom_items", idbomItems);
+	public void setId(java.lang.Integer id) {
+		set("id", id);
 	}
 	
-	public java.lang.Integer getIdbomItems() {
-		return getInt("idbom_items");
+	public java.lang.Integer getId() {
+		return getInt("id");
 	}
 
 	public void setBomId(java.lang.String bomId) {

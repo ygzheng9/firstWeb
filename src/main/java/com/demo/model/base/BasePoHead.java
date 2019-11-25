@@ -57,4 +57,60 @@ public abstract class BasePoHead<M extends BasePoHead<M>> extends Model<M> imple
 		return getStr("batch");
 	}
 
+	public void setOrderDate(java.lang.String orderDate) {
+		set("orderDate", orderDate);
+	}
+	
+	public java.lang.String getOrderDate() {
+		return getStr("orderDate");
+	}
+
+	public void setItemCount(java.lang.Integer itemCount) {
+		set("itemCount", itemCount);
+	}
+	
+	public java.lang.Integer getItemCount() {
+		return getInt("itemCount");
+	}
+
+	public void setTotalAmt(java.math.BigDecimal totalAmt) {
+		set("totalAmt", totalAmt);
+	}
+	
+	public java.math.BigDecimal getTotalAmt() {
+		return get("totalAmt");
+	}
+
+	public void setOrderDateStr(java.lang.String orderDateStr) {
+		set("orderDateStr", orderDateStr);
+	}
+	
+	public java.lang.String getOrderDateStr() {
+		return getStr("orderDateStr");
+	}
+
+	public void setOrderMonth(java.lang.String orderMonth) {
+		set("orderMonth", orderMonth);
+	}
+	
+	public java.lang.String getOrderMonth() {
+		return getStr("orderMonth");
+	}
+
+	public void setPlantInd(java.lang.String plantInd) {
+		set("plantInd", plantInd);
+	}
+	
+	public java.lang.String getPlantInd() {
+		return getStr("plantInd");
+	}
+
+	public void setPlantName(java.lang.String plantName) {
+		set("plantName", plantName);
+	}
+	
+	public java.lang.String getPlantName() {
+		return getStr("plantName");
+	}
+
 }

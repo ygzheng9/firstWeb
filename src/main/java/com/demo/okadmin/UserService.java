@@ -1,4 +1,4 @@
-package com.demo.xstart;
+package com.demo.okadmin;
 
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.IdUtil;
@@ -85,5 +85,9 @@ public class UserService {
 
     public List<User> findAll() {
         return userDAO.findAll();
+    }
+
+    public User checkLogin(String email, String password) {
+        return userDAO.template("userAuth.checkLogin", email, password).findFirst();
     }
 }
