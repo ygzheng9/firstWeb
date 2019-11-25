@@ -21,12 +21,6 @@ nav.navbar {
     font-weight: 700;
 }
 
-.columns {
-    width: 100%;
-    height: 100%;
-    margin-left: 0;
-}
-
 .menu-label {
     color: #8F99A3;
     letter-spacing: 1.3;
@@ -50,82 +44,32 @@ nav.navbar {
     font-weight: 700;
 }
 
-.card {
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
-    margin-bottom: 2rem;
-}
+/* ==== 自定义样式 ===== */
 
-.card-header-title {
-    color: #8F99A3;
-    font-weight: 400;
-}
-
-.info-tiles {
-    margin: 1rem 0;
-}
-
-.info-tiles .subtitle {
-    font-weight: 300;
-    color: #8F99A3;
-}
-
-.hero.welcome.is-info {
-    background: #36D1DC;
-    background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);
-    background: linear-gradient(to right, #5B86E5, #36D1DC);
-}
-
-.hero.welcome .title, .hero.welcome .subtitle {
-    color: hsl(192, 17%, 99%);
-}
-
-.card .content {
-    font-size: 14px;
-}
-
-.card-footer-item {
-    font-size: 14px;
-    font-weight: 700;
-    color: #8F99A3;
-}
-
-.card-footer-item:hover {
-}
-
-.card-table .table {
-    margin-bottom: 0;
-}
-
-.events-card .card-table {
-    max-height: 250px;
-    overflow-y: scroll;
-}
-
-/* 用以显示模拟的曲线 */
 .card-image .line-home-a {
+    /* 每个 card 中的用以显示模拟的曲线 */
     height: 60px;
 }
 
-
 .columns.is-variable .column {
+    /* column 纵向间隔；默认设置了 横向 间隔后，纵向不会变 */
     padding-bottom: var(--columnGap);
 }
 
 .card {
+    /* 并排的 card 一样高，默认不一样高 */
     height: 100%;
-    display: flex;
-    flex-direction: column;
 }
 
-/*.card-block {*/
-/*    height: 100%;*/
-/*}*/
+/* 在 body 的最外层 */
+.section {
+    /* 上下左右内部边距，默认有距离，但在手机上显得四周间隔大 */
+    padding: 0rem;
+    /* 和 footer 之间的距离，默认 section 底部会盖过 footer 顶部 */
+    margin-bottom: 1.5rem;
+}
 
-/* 保持在页面的底部，不成功 */
-/*.footer {*/
-/*    !*position: absolute;*!*/
-/*    left: 0;*/
-/*    bottom: 0;*/
-/*    width: 100%;*/
-/*    overflow: hidden;*/
-/*}*/
+.footer {
+    /* 文字下方的空白，默认是 6rem */
+    padding-bottom: 3rem;
+}

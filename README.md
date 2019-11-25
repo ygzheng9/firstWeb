@@ -108,6 +108,15 @@ getter.
 2. card card-content media media-left media-content card-image
 
 
+## 2019/11/25
+1. 去掉没有主动使用到的 css
+2. section foot 的默认 margin 会相互重叠
+1. card margin 默认就挺好 
+1. 一个 columns 自动换行，和 多个 columns，没有差别
+1. gulp 把所有 vendor js concate，但是，lay.js 不能打包，猜测是因为自带的模块机制；
+1. gulp 把 css 打包；
+1. g2.js 的文件很大，用到时再引入；
+
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？
 2. table 中的 a link，怎么显示颜色？
