@@ -14,8 +14,8 @@ public class OkLandingController extends Controller {
 
     public void index() {
         // render("index.html");
-
-        redirect("/pages/mat/projectPlant");
+        // redirect("/pages/mat/projectPlant");
+        forwardAction("/pages/mat/projectPlant");
     }
 
     @Clear(LoginInterceptor.class)

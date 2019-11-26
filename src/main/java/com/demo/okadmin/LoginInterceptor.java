@@ -27,6 +27,9 @@ public class LoginInterceptor implements Interceptor {
                 // 已经登录过, 把当前用户存入 request 中，供后续 action 使用
                 c.set(LoginService.loginAccountCacheName, loginAccount);
 
+                // 把 actionKey 写入 response，供前端做菜单高亮设置
+                c.set("actionKey", inv.getActionKey());
+
                 inv.invoke();
 
                 return;

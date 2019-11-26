@@ -16,4 +16,10 @@ document.addEventListener('turbolinks:load', function() {
     burger.classList.toggle('is-active');
     menu.classList.toggle('is-active');
   });
+
+  //   //   console.log('turbolinks:load....');
+
+  //   console.log(window.location.href);
+
+  //   $('');
 });

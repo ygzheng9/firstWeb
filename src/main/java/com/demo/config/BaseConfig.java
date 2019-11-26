@@ -124,6 +124,12 @@ public class BaseConfig extends JFinalConfig {
     @Override
     public void configPlugin(Plugins me) {
         DruidPlugin druidPlugin = getDruidPlugin();
+
+        if (defaultConfig.getBoolean("devMode", false)) {
+            //打印完整sql语句，核心语句就这一句
+            druidPlugin.addFilter(new MyDruidFilter());
+        }
+
         // 加强数据库安全
         wallFilter = new WallFilter();
         wallFilter.setDbType("mysql");

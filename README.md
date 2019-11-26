@@ -133,6 +133,11 @@ getter.
 1. nav 右侧 navbar-end 悬浮下拉菜单；
 
 
+## 2019/11/27
+1. redirect -> forwardAction
+2. druid filter to print sql with paramaters; 
+
+
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？
 3. 如果执行一系列的 delete/insert/update?
