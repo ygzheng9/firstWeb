@@ -36,6 +36,7 @@
 
 <body>
 <div class="turbolinks-progress-bar"></div>
+<div id="selectedMenu" hidden data-menu="#(actionKey)"></div>
 
 <!-- START NAV -->
 <nav class="navbar is-white">
@@ -61,7 +62,7 @@
                         复用性分析
                     </a>
 
-                    <div class="navbar-dropdown">
+                    <div class="navbar-dropdown is-boxed">
                         <a class="navbar-item" href="/pages/mat/bomMatReuse">
                             分BOM
                         </a>
@@ -76,7 +77,7 @@
                         采购分析
                     </a>
 
-                    <div class="navbar-dropdown">
+                    <div class="navbar-dropdown is-boxed">
                         <a class="navbar-item" href="/pages/inbound/summary">
                             采购概览
                         </a>
@@ -152,6 +153,8 @@
         <strong>Insight</strong> by <a href="https://bulma.com">ISP@IBM 2019</a>. Get hands dirty.
     </div>
 </footer>
+
+<script src="/assets/js/selectMenu.js"></script>
 
 #@js?()
 </body>

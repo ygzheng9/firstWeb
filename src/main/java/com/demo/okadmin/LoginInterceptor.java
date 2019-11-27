@@ -43,6 +43,7 @@ public class LoginInterceptor implements Interceptor {
             String queryString = inv.getController().getRequest().getQueryString();
             if (StrKit.isBlank(queryString)) {
                 inv.getController().redirect("/login?returnUrl=" + inv.getActionKey());
+
             } else {
                 inv.getController().redirect("/login?returnUrl=" + inv.getActionKey() + "?" + queryString);
             }

@@ -39,8 +39,6 @@ nav.navbar {
 }
 
 .menu-list a.is-active {
-    background-color: transparent;
-    color: #276cda;
     font-weight: 700;
 }
 

@@ -1,5 +1,5 @@
-layui.use(['zzUtils'], () => {
-  const { zzUtils } = layui;
+layui.use(['layer', 'zzUtils'], () => {
+  const { layer, zzUtils } = layui;
   //   tools.echo('called from mat_reuse1');
 
   const myChart = echarts.init(document.getElementById('reuse1'));
@@ -79,6 +79,16 @@ layui.use(['zzUtils'], () => {
 
     myChart.setOption(option, true);
     myChart.on('click', 'series', params => {
+      const matCount = levelSizeRaw[params.dataIndex];
+      if (matCount > 300) {
+        layer.msg(`你不是认真的吧，明细有 ${matCount} 条，真的看得过来么？`, {
+          icon: 3,
+          time: 2500,
+          anim: 1
+        });
+        return;
+      }
+
       const count = params.name;
       const url = '/pages/mat/projectMatByReuseCount?count=' + count;
       zzUtils.setHtml(url, 'matlist');

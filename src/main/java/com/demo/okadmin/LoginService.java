@@ -21,7 +21,7 @@ public class LoginService {
     static final String loginAccountCacheName = "loginAccount";
 
     // "jfinalId" 仅用于 cookie 名称，其它地方如 cache 中全部用的 "sessionId" 来做 key
-    static final String sessionIdName = "jfinalId";
+    static final String sessionIdName = "x-team";
 
     Ret login(String email, String password, boolean keepLogin) {
         User loginAccount = userSvc.checkLogin(email, password);
@@ -31,7 +31,7 @@ public class LoginService {
         }
 
         // 如果用户勾选保持登录，暂定过期时间为 7 天，否则为 120 分钟，单位为秒
-        long liveSeconds = keepLogin ? 7 * 24 * 60 * 60 : 120 * 60;
+        long liveSeconds = keepLogin ? 3 * 24 * 60 * 60 : 120 * 60;
         // 传递给控制层的 cookie
         int maxAgeInSeconds = (int) (keepLogin ? liveSeconds : -1);
         // expireAt 用于设置 session 的过期时间点，需要转换成毫秒

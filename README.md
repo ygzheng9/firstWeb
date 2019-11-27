@@ -136,6 +136,17 @@ getter.
 ## 2019/11/27
 1. redirect -> forwardAction
 2. druid filter to print sql with paramaters; 
+3. 在 layout 中增加菜单选中的 js 代码，在 interceptor 中设置 actionKey，写入 html 的 hidden，从 js 读取；
+4. 一颗料多个供应商时，查出单价最高/最低，以及单价差异；
+5. zhihu:
+    1. navbar container nav-menu, navbar container nav-tabs
+    1. section container tile box media
+    1. tile 纵向排列 is-vertical 有边框 is-parent
+    1. 多个 media 之间，会自动有细灰线
+    1. section 默认顶部空隙大；card 默认底部间隔小
+    1. card card-header card-content
+    1. fa fa-fire 设置颜色 color:red 设置与左边字体间距 margin-left
+6. 查看明细时，如果超过 300, 则给出提示；
 
 
 ## TODO

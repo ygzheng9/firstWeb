@@ -1,0 +1,40 @@
+body {
+    /* 默认是白色 fff，这里有一点灰度 */
+    background: #f8f8f8;
+}
+
+.tag.is-lightblue {
+    color: #2d84cc;
+    background: #ebf3fb;
+}
+
+.ml-10 {
+    /* 增加与左侧字的间隔 */
+    margin-left: 1rem;
+}
+
+.lh-20 {
+    /* 默认两行间隔 1rem 作为列表，标题时，显得比较挤 */
+    line-height: 2rem;
+}
+
+.card {
+    /* 默认的间距小 */
+    margin-bottom: 1rem;
+}
+
+.section {
+    /* 默认的间距大 */
+    padding-top: 1rem;
+}
+
+.fa-15 {
+    /* 默认是 1rem，视觉上偏小 */
+    font-size: 1.5rem;
+}
+
+.fa.fa-fire {
+    font-size: 1.2rem;
+    color: red;
+    margin-left: 1rem;
+}

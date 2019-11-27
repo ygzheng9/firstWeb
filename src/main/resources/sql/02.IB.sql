@@ -197,9 +197,28 @@ group by a.matCode ) b
 group by b.vendorCount; 
 
 
-select a.matCode, count(1) vendorCount, sum(a.totalAmt) totalAmt
+###   同一颗聊，有多个供应商的情况下，最高价和最低价 的差异比例 > 20%
+
+select f.matCode, f.minPrice, f.maxPrice, f.diffPrice, f.diffRate
+  from (
+select e.matCode, e.minPrice, e.maxPrice, e.maxPrice - e.minPrice diffPrice, (e.maxPrice - e.minPrice) * 100 / e.minPrice diffRate
+  from ( 
+select d.matCode, min(d.unitPrice) minPrice, max(d.unitPrice) maxPrice
+  from ( 
+select b.matCode, b.vendorCode, (b.totalAmt / b.totalQty) unitPrice 
+  from po_vendor_mat_true b 
+inner join ( 
+select a.matCode, count(1) 
   from po_vendor_mat_true a 
-group by a.matCode; 
+group by a.matCode
+having count(1) > 1 ) c on b.matCode = c.matCode ) d 
+group by d.matCode ) e ) f
+
+
+
+
+
+
 
 
 #### 料号 和 bom 的对应关系
@@ -327,4 +346,27 @@ inner join po_vendor_stats b on a.orderNum = b.orderNum
 where a.material = '2516937-Charc' 
 group by a.material, b.toPlant
 ) a1
-order by  a1.totalAmt desc
+order by  a1.totalAmt desc; 
+
+
+
+####### 供应商相同，同一个工厂，订单号不同
+
+select * 
+  from (
+ select a.toPlant, a.vendorCode, count(1) vendorCount
+   from po_vendor_stats a
+group by a.toPlant, a.vendorCode ) b 
+where b.vendorCount > 3; 
+
+
+select *
+  from po_vendor_stats a
+where a.vendorCode = 'DP2001A'
+   and a.toPlant = '面套工厂'
+
+
+
+
+
+

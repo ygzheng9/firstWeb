@@ -16,10 +16,13 @@
                 <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7">
                 <colgroup>
                     <col width="5%">
+                    <col width="15%">
                     <col width="10%">
                     <col width="10%">
-                    <col width="20%">
-                    <col width="">
+                    <col width="5%">
+                    <col width="5%">
+                    <col width="5%">
+                    <col>
                 </colgroup>
                 <thead>
                 <tr>
@@ -27,6 +30,9 @@
                     <th style="text-align: center">物料</th>
                     <th style="text-align: center">供应商数量</th>
                     <th style="text-align: center">采购金额</th>
+                    <th style="text-align: center">最高价</th>
+                    <th style="text-align: center">最低价</th>
+                    <th style="text-align: center">差异%</th>
                     <th style="text-align: center">供应商</th>
                 </tr>
                 </thead>
@@ -37,7 +43,10 @@
                     <td><a class="drillDown" data-key="matVendorsID" data-href="/pages/inbound/matMultiSourceVendors?m=#(x.matCode)">#(x.matCode)</a></td>
                     <td style="text-align: center">#(x.vendorCount)</td>
                     <td style="text-align: right">#number(x.totalAmt, ",###.00")</td>
-                    <td>#(x.vendors)</td>
+                    <td style="text-align: right">#number(x.maxPrice, ",###.00")</td>
+                    <td style="text-align: right">#number(x.minPrice, ",###.00")</td>
+                    <td style="text-align: right">#number(x.diffRate, ",###.00")</td>
+                    <td style="text-align: left">#(x.vendors)</td>
                 </tr>
 
                 #end

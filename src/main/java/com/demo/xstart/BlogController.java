@@ -47,18 +47,13 @@ public class BlogController extends Controller {
     public void index(){
         System.out.println("index render.....");
 
-        // blogSvc.showlog();
-        //
-        // blogSvc.dumpInof();
-        //
-        // blogSvc.localFile();
-        //
-        // userSvc.loadFile();
-
-        // bomSvc.loadMapping();
-
         render("list.html");
 
+    }
+
+    public void zhihu() {
+        set("replayCount", 3);
+        render("zhihu.html");
     }
 
     @ActionKey("/pjax_one")

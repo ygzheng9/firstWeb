@@ -38,12 +38,40 @@ order by vendorCount;
 
 ### 同一颗聊，多个供应商的情况
 #sql("matMultiSource")
-select b.*
+select b.matCode,
+       b.vendorCount,
+       b.totalAmt,
+       b.vendors,
+       cc.maxPrice,
+       cc.minPrice,
+       cc.diffPrice,
+       cc.diffRate
 from (
          select a.matCode, count(1) vendorCount, sum(a.totalAmt) totalAmt, group_concat(a.vendorName) vendors
          from po_vendor_mat_true a
          group by a.matCode
          having count(1) > 1) b
+         inner join (
+    select f.matCode, f.minPrice, f.maxPrice, f.diffPrice, f.diffRate
+    from (
+             select e.matCode,
+                    e.minPrice,
+                    e.maxPrice,
+                    e.maxPrice - e.minPrice                      diffPrice,
+                    (e.maxPrice - e.minPrice) * 100 / e.minPrice diffRate
+             from (
+                      select d.matCode, min(d.unitPrice) minPrice, max(d.unitPrice) maxPrice
+                      from (
+                               select b.matCode, b.vendorCode, (b.totalAmt / b.totalQty) unitPrice
+                               from po_vendor_mat_true b
+                                        inner join (
+                                   select a.matCode, count(1)
+                                   from po_vendor_mat_true a
+                                   group by a.matCode
+                                   having count(1) > 1) c on b.matCode = c.matCode) d
+                      group by d.matCode) e) f
+    where f.diffRate >= 10
+) cc on b.matCode = cc.matCode
 order by totalAmt desc;
 #end
 

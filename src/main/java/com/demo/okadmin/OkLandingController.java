@@ -44,6 +44,7 @@ public class OkLandingController extends Controller {
         // cookie 登录未成功，证明该 cookie 已经没有用处，删之
         removeCookie(LoginService.sessionIdName);
 
-        redirect("/login");
+        // redirect("/login");
+        forwardAction("/login");
     }
 }
