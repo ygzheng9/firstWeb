@@ -98,41 +98,6 @@ from po_vendor_mat
 group by orderNum ) a; 
 
 
-
-
-
-###  供应商 和 项目 的对应关系
-truncate table po_vendor_project; 
-
-## (工厂+供应商) 对应的 项目
-truncate table po_vendor_project; 
-
-insert into po_vendor_project (orderNum, project, totalAmt)
- select a.orderNum, b.project, sum(a.totalAmt) totalAmt
-   from  po_vendor_mat a 
-inner join (
-select a.partNum, group_concat(a.project) project
-  from project_mat a
-  group by a.partNum ) b on a.matCode = b.partNum 
-group by a.orderNum , b.project; 
-
-## 供应商 对应的 项目
-select count(1)
-from (
-select b.vendorCode, b.vendorName, a.project, sum(a.totalAmt) totalAmt
-  from po_vendor_project a 
-inner join po_vendor_stats b on a.orderNum = b.orderNum and b.external = 'Y'
-group by b.vendorCode, b.vendorName, a.project) c ; 
-
-
-select b.vendorCode, b.vendorName, sum(a.totalAmt) totalAmt
-  from po_vendor_project a 
-inner join po_vendor_stats b on a.orderNum = b.orderNum and b.external = 'Y'
-group by b.vendorCode, b.vendorName; 
-
-select * from po_vendor_project; 
-
-
 select * from po_vendor_stats 
  where upper(left(vendorCode, 2)) = 'BS' || upper(left(vendorCode, 2)) = 'IS'; 
  
@@ -146,8 +111,6 @@ ALTER TABLE po_vendor_mat ADD INDEX po_vendor_mat_vendorCode (vendorCode);
 
 ALTER TABLE project_mat ADD INDEX project_mat_partNum (partNum); 	
 								
-select * from po_vendor_project; 
-
 
 ## 
 # 1. 外部供应商、采购总金额、品类数、工厂+供应商数量
@@ -213,15 +176,6 @@ select a.matCode, count(1)
 group by a.matCode
 having count(1) > 1 ) c on b.matCode = c.matCode ) d 
 group by d.matCode ) e ) f
-
-
-
-
-
-
-
-
-#### 料号 和 bom 的对应关系
 
 
 ALTER TABLE po_mat_stats ADD INDEX po_mat_stats_matCode (matCode); 	
@@ -363,10 +317,63 @@ where b.vendorCount > 3;
 select *
   from po_vendor_stats a
 where a.vendorCode = 'DP2001A'
-   and a.toPlant = '面套工厂'
+  and a.toPlant = '面套工厂';
 
 
+#### 料号 和 bom 的对应关系
+select a.*
+from bom_mat a
+where a.partNum = '2430307';
+
+select b.*
+from bom_project_mapping b
+where b.bomID = 'K426_FS';
 
 
+select a.partNum, b.bomID, b.project, b.client, b.plant
+from bom_mat a
+         inner join bom_project_mapping b on a.bomID = b.bomID
+where a.partNum = '2430307';
+
+########   供应商 项目 对应关系
+ALTER TABLE po_vendor_mat_true ADD INDEX po_vendor_mat_true_matCode (matCode); 	
+ALTER TABLE bom_mat ADD INDEX bom_mat_partNum (partNum); 	
+
+insert into po_vendor_project (vendorCode, vendorName, project, totalMat, totalAmt)  
+ select a.vendorCode, a.vendorName, c.project, count(1) totalMat, sum(a.totalAmt) totalAmt
+   from po_vendor_mat_true a 
+inner join bom_mat b on a.matCode = b.partNum 
+inner join bom_project_mapping c on b.bomID = c.bomID
+group by a.vendorCode, a.vendorName, c.project; 
+
+truncate table po_vendor_project; 
+
+
+select * from po_vendor_project; 
+
+###  供应商分析
+## 1. 供应商采购金额，供应商供应的物料数量，供应商的送货工厂（两种不同的结算方式）；供应商对应的项目信息
+
+
+select a1.vendorCode, a1.vendorName, a1.totalAmt, (@csum := @csum + a1.totalAmt ) csum
+ from (
+select b.vendorCode, b.vendorName, b.totalAmt
+  from (
+select a.vendorCode, a.vendorName, sum(a.totalAmt) totalAmt
+   from po_vendor_stats a 
+where a.external = 'Y'
+group by a.vendorCode, a.vendorName) b 
+where b.totalAmt <> 0
+order by b.totalAmt desc ) a1, (select @csum := 0) csum;  
+
+
+select a1.vendorCode, a1.vendorName, a1.toPlant, a1.totalAmt
+  from (
+select a.vendorCode, a.vendorName, a.toPlant, sum(a.totalAmt) totalAmt
+  from po_vendor_stats a 
+where a.external = 'Y'
+  and a.vendorCode = 'DP4404H'
+group by a.vendorCode, a.vendorName, a.toPlant ) a1 
+order by a1.totalAmt desc; 
 
 

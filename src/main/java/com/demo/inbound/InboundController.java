@@ -153,6 +153,9 @@ public class InboundController extends Controller {
         List<Record> ibPlants = ibSvc.matMultiSourcePlants(mat);
         set("ibPlants", ibPlants);
 
+        List<Record> ibBoms = ibSvc.bomByMat(mat);
+        set("ibBoms", ibBoms);
+
         render("mat_multi_source_vendors.html");
     }
 
@@ -166,6 +169,40 @@ public class InboundController extends Controller {
         keepPara();
 
         render("mat_multi_source_ibitems_by_plant.html");
+    }
 
+    public void amtByVendor() {
+        List<Record> items = ibSvc.amtByVendor();
+        set("items", items);
+        set("itemsData", JsonKit.toJson(items));
+
+        List<Record> grades = ibSvc.countByGrade(items);
+        set("grades", grades);
+
+        render("amt_by_vendor.html");
+    }
+
+    public void drillByGrade() {
+        Integer grade = getInt("g");
+        List<Record> items = ibSvc.drillByGrade(grade);
+        set("items", items);
+
+        render("amt_by_vendor_by_grade.html");
+    }
+
+    public void amtByVendorPlant() {
+        String vendor = get("v");
+        List<Record> items = ibSvc.amtByVendorPlant(vendor);
+        set("items", items);
+        set("vendorCode", "");
+        set("vendorName", "");
+
+        if (items.size() > 0) {
+            Record r = items.get(0);
+            set("vendorCode", r.get("vendorCode"));
+            set("vendorName", r.get("vendorName"));
+        }
+
+        render("amt_by_vendor_plant.html");
     }
 }

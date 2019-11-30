@@ -55,6 +55,13 @@
                 "fontFamily": "layui-icon",
                 "icon": "&#xe62e;",
                 "spread": false
+            },
+            {
+                "title": "供应商分析",
+                "href": "pages/inbound/matByVendor",
+                "fontFamily": "layui-icon",
+                "icon": "&#xe62e;",
+                "spread": false
             }
         ]
     },

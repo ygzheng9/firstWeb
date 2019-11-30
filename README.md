@@ -148,6 +148,16 @@ getter.
     1. fa fa-fire 设置颜色 color:red 设置与左边字体间距 margin-left
 6. 查看明细时，如果超过 300, 则给出提示；
 
+## 2019/11/30
+1. 采购分析-按供应商：
+    1. 80-20 入库金额+累积占比；
+    2. 列表：每个 10% 的供应商数量；
+    2. 列表：供应商清单，采购金额，送货工厂数量；
+    2. 列表+弹出：送货工厂列表；
+1. mysql 中可以通过 @cumsum 的方式，实现累加；在 8.0 中有 window function 可直接实现；
+1. java 中通过 loop 实现：逐项累加，全部求和，求累加比例，按累加比例分组；
+1. multiMap 用以实现 count(1) group by grade；
+1. layer 弹出层很好用 open({content: res})；     
 
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？

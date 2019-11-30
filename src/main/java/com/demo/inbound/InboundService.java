@@ -1,17 +1,25 @@
 package com.demo.inbound;
 
+import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multiset;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * @author ygzheng
  */
 public class InboundService {
+    // 全局数据，只加载一次
+    private List<Record> amtByVendorData = null;
+
     Record summary() {
         return Db.template("inbound.summary").findFirst();
     }
@@ -140,4 +148,100 @@ public class InboundService {
         return Db.template("inbound.matMultiSourceIBItemsByPlant", mat, plant).find();
     }
 
+    List<Record> bomByMat(String matCode) {
+        return Db.template("inbound.bomByMat", matCode).find();
+    }
+
+    List<Record> amtByVendor() {
+        if (amtByVendorData == null) {
+            amtByVendorData = amtByVendorGrade(Db.template("inbound.amtByVendor").find());
+        }
+
+        return amtByVendorData;
+    }
+
+    private List<Record> amtByVendorGrade(List<Record> items) {
+        // 计算汇总金额
+        Double total = 0.0;
+        for (Record r : items) {
+            total += r.getDouble("totalAmt");
+
+            r.set("cumAmt", total);
+        }
+
+        // 计算累计比例
+        for (Record r : items) {
+            Double pect = r.getDouble("cumAmt") * 100.0 / total;
+            r.set("pect", pect);
+        }
+
+        // 累计比例分组
+        ImmutableList<Double> grades = ImmutableList.of(10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 1000.0);
+        int j = 0;
+        for (int i = 0; i < grades.size(); i++) {
+            Double g = grades.get(i);
+            /// int label = g.intValue();
+            int label = (i + 1) * 10;
+
+            while (j < items.size()) {
+                Record r = items.get(j);
+
+                if (r.getDouble("pect") < g) {
+                    r.set("grade", label);
+
+                    j++;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        return items;
+    }
+
+    List<Record> countByGrade(List<Record> items) {
+        Multiset<Integer> countMap = HashMultiset.create();
+        for (Record r : items) {
+            countMap.add(r.getInt("grade"));
+        }
+
+        List<Record> results = new ArrayList<>();
+        for (Multiset.Entry entry : countMap.entrySet()) {
+            Record r = new Record();
+            r.set("grade", entry.getElement());
+            r.set("count", entry.getCount());
+
+            results.add(r);
+        }
+
+        Collections.sort(results, Comparator.comparingInt(a -> a.getInt("grade")));
+
+        Integer total = 0;
+        for (Record r : results) {
+            total += r.getInt("count");
+        }
+
+        for (Record r : results) {
+            r.set("pect", r.getInt("count") * 100.0 / total);
+        }
+
+        return results;
+    }
+
+    List<Record> drillByGrade(int grade) {
+        List<Record> results = new ArrayList<>();
+
+        for (Record r : amtByVendorData) {
+            if (r.getInt("grade") == grade) {
+                results.add(r);
+            }
+        }
+
+        return results;
+    }
+
+    List<Record> amtByVendorPlant(String vendor) {
+        List<Record> items = Db.template("inbound.amtByVendorPlant", vendor).find();
+        return items;
+    }
 }

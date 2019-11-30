@@ -252,3 +252,38 @@ from (
          group by b.ibDate
          order by b.ibDate desc;
 #end
+
+
+### 料号 对应的 bom 及项目
+#sql("bomByMat")
+select a.partNum matCode, b.bomID, b.project, b.client, b.plant
+from bom_mat a
+         inner join bom_project_mapping b on a.bomID = b.bomID
+where a.partNum = #para(0)
+order by b.client, b.project, b.bomID;
+#end
+
+
+### 供应商的采购金额
+#sql("amtByVendor")
+select a1.vendorCode, a1.vendorName, a1.totalAmt, a1.plantCount
+from (
+         select a.vendorCode, a.vendorName, sum(a.totalAmt) totalAmt, count(distinct toPlant) plantCount
+         from po_vendor_stats a
+         where a.external = 'Y'
+         group by a.vendorCode, a.vendorName) a1
+where a1.totalAmt <> 0
+order by a1.totalAmt desc;
+#end
+
+### 根据供应商编码，查找所有工厂送货金额
+#sql("amtByVendorPlant")
+select a1.vendorCode, a1.vendorName, a1.toPlant, a1.totalAmt
+from (
+         select a.vendorCode, a.vendorName, a.toPlant, sum(a.totalAmt) totalAmt
+         from po_vendor_stats a
+         where a.external = 'Y'
+           and a.vendorCode = #para(0)
+         group by a.vendorCode, a.vendorName, a.toPlant) a1
+order by a1.totalAmt desc;
+#end
