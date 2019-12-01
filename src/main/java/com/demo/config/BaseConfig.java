@@ -3,8 +3,10 @@ package com.demo.config;
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
 import com.demo.model._MappingKit;
+import com.demo.okadmin.AuthInterceptor;
 import com.demo.okadmin.LoginInterceptor;
 import com.demo.okadmin.OkAdminRoutes;
+import com.demo.okadmin.PermissionDirective;
 import com.demo.xstart.APIRoutes;
 import com.demo.xstart.BlogController;
 import com.jfinal.config.*;
@@ -101,6 +103,9 @@ public class BaseConfig extends JFinalConfig {
      */
     @Override
     public void configEngine(Engine me) {
+        // 添加角色、权限指令
+        me.addDirective("permission", PermissionDirective.class);
+
         //设置共享页面
         me.addSharedFunction("/view/common/_okpage.html");
 
@@ -159,6 +164,8 @@ public class BaseConfig extends JFinalConfig {
     public void configInterceptor(Interceptors me) {
         // 全局拦截器
         me.add(new LoginInterceptor());
+        me.add(new AuthInterceptor());
+
     }
 
     @Override

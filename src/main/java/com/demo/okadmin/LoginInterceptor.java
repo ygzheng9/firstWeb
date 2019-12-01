@@ -24,7 +24,8 @@ public class LoginInterceptor implements Interceptor {
         if (sessionId != null) {
             loginAccount = loginSrv.getUserBySessionId(sessionId);
             if (loginAccount != null) {
-                // 已经登录过, 把当前用户存入 request 中，供后续 action 使用
+                // 已经登录过, 把当前用户存入 request 中，供后续 action 使用，
+                // 在 directive 中也可以使用，参见 PermissionDirective
                 c.set(LoginService.loginAccountCacheName, loginAccount);
 
                 // 把 actionKey 写入 response，供前端做菜单高亮设置

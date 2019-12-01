@@ -30,7 +30,7 @@ public class LoginService {
             return Ret.fail("msg", "这没你的地方，你不属于这");
         }
 
-        // 如果用户勾选保持登录，暂定过期时间为 7 天，否则为 120 分钟，单位为秒
+        // 如果用户勾选保持登录，暂定过期时间为 3 天，单位为秒
         long liveSeconds = keepLogin ? 3 * 24 * 60 * 60 : 120 * 60;
         // 传递给控制层的 cookie
         int maxAgeInSeconds = (int) (keepLogin ? liveSeconds : -1);
@@ -46,6 +46,7 @@ public class LoginService {
         if (!session.save()) {
             return Ret.fail("msg", "保存 session 到数据库失败，请联系管理员");
         }
+        userSvc.loadAllSession();
 
         loginAccount.removeSensitiveInfo();
         ZCacheKit.put(loginAccountCacheName, sessionId, loginAccount);
@@ -71,7 +72,8 @@ public class LoginService {
         }
 
         // cache 中没有，从 db 中找，并且保存到 cache 中
-        Session session = new Session().dao().findById(sessionId);
+        /// new Session().dao().findById(sessionId);
+        Session session = userSvc.fromSessionPool(sessionId);
         if (session == null) {
             // session 不存在
             return null;
@@ -83,7 +85,8 @@ public class LoginService {
             return null;
         }
 
-        User loginAccount = new User().dao().findById(session.getAccountId());
+        ///  new User().dao().findById(session.getAccountId());
+        User loginAccount = userSvc.fromUserPool(session.getAccountId());
         // 找到 loginAccount 并且 是正常状态 才允许登录
         if (loginAccount != null) {
             // 移除 password 与 salt 属性值

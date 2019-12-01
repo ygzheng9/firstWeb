@@ -8,22 +8,20 @@ import com.jfinal.kit.Ret;
 /**
  * @author ygzheng
  */
+
+@Clear({LoginInterceptor.class, AuthInterceptor.class})
 public class OkLandingController extends Controller {
     @Inject
     LoginService loginSvc;
 
     public void index() {
-        // render("index.html");
-        // redirect("/pages/mat/projectPlant");
         forwardAction("/pages/mat/projectPlant");
     }
 
-    @Clear(LoginInterceptor.class)
     public void login() {
         render("login.html");
     }
 
-    @Clear(LoginInterceptor.class)
     public void doLogin() {
         Ret ret = loginSvc.login(getPara("email"), getPara("password"), true);
         if (ret.isOk()) {
@@ -38,13 +36,10 @@ public class OkLandingController extends Controller {
         renderJson(ret);
     }
 
-
-    @Clear(LoginInterceptor.class)
     public void logout() {
-        // cookie 登录未成功，证明该 cookie 已经没有用处，删之
+        // 退出后，删除 cookie
         removeCookie(LoginService.sessionIdName);
 
-        // redirect("/login");
         forwardAction("/login");
     }
 }

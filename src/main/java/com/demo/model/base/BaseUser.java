@@ -65,12 +65,12 @@ public abstract class BaseUser<M extends BaseUser<M>> extends Model<M> implement
 		return getInt("status");
 	}
 
-	public void setRole(java.lang.Integer role) {
+	public void setRole(java.lang.String role) {
 		set("role", role);
 	}
 	
-	public java.lang.Integer getRole() {
-		return getInt("role");
+	public java.lang.String getRole() {
+		return getStr("role");
 	}
 
 	public void setPhone(java.lang.String phone) {

@@ -34,7 +34,8 @@ public class _Generator {
 		"bom_info", "bom_mat",
 		"plant_info",
 		"po_mat_stats", "po_vendor_mat", "po_vendor_mat_true", "po_vendor_project", "po_vendor_stats",
-		"vendor_info"
+		"vendor_info",
+		"z_resources"
 	};
 
 	/**

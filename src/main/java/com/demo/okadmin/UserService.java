@@ -2,20 +2,117 @@ package com.demo.okadmin;
 
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.IdUtil;
+import com.demo.model.Session;
 import com.demo.model.User;
 import com.demo.model.UserList;
+import com.google.common.base.Splitter;
 import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.Ret;
 import com.jfinal.log.Log;
+import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * @author ygzheng
+ */
 public class UserService {
     private static Log log = Log.getLog(UserService.class);
 
     private User userDAO = new User().dao();
+    private Session sessionDAO = new Session().dao();
+
+    private List<User> allUsers = null;
+    private List<Session> allSession = null;
+    private Map<String, List<String>> allResources = null;
+
+    private void loadAllUsers() {
+        allUsers = userDAO.findAll();
+    }
+
+    void loadAllSession() {
+        allSession = sessionDAO.findAll();
+    }
+
+    User fromUserPool(String userID) {
+        // 从全局变量中，返回一个对象
+        if (allUsers == null) {
+            loadAllUsers();
+        }
+
+        for (User u : allUsers) {
+            if (u.getStr("id").compareTo(userID) == 0) {
+                return new User().put(u);
+            }
+        }
+
+        return null;
+    }
+
+    Session fromSessionPool(String sessionID) {
+        if (allSession == null) {
+            loadAllSession();
+        }
+
+        for (Session a : allSession) {
+            if (a.getStr("id").compareTo(sessionID) == 0) {
+                return new Session().put(a);
+            }
+        }
+
+        return null;
+    }
+
+    void loadAllResources() {
+        List<Record> resources = Db.template("userAuth.allResources").find();
+        allResources = new HashMap<>();
+
+        // 固定格式：z_resources.permissions 空格 分割
+        Splitter splter = Splitter.on(" ");
+
+        for (Record r : resources) {
+            String key = r.get("key");
+            String s = r.get("permissions");
+            List<String> fields = splter.splitToList(s);
+
+            allResources.put(key, fields);
+        }
+    }
+
+    public Boolean hasPermission(User u, String actionKey) {
+        if (allResources == null) {
+            loadAllResources();
+        }
+
+        List<String> perms = allResources.get(actionKey);
+        if (perms == null) {
+            // 约定：没有配置表示不需要做权限控制
+            return true;
+        }
+
+        // 固定格式：user.role 中 空格 分割；
+        Splitter splter = Splitter.on(" ");
+        String roles = u.getRole();
+        if (roles == null) {
+            roles = "";
+        }
+        List<String> fields = splter.splitToList(roles);
+
+        for (String p : perms) {
+            for (String r : fields) {
+                if (p.compareToIgnoreCase(r) == 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     public void loadFile() {
         // 批量从文件中读取记录，然后插入到数据库中，供后续使用；

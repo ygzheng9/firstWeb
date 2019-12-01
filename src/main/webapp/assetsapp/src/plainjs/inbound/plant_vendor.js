@@ -142,8 +142,33 @@
 
         barChart.setOption(option);
 
-        //
-        barChart.on('click', 'series', params => {
+        barChart.getZr().off('click');
+        barChart.getZr().on('click', params => {
+          const point = [params.offsetX, params.offsetY];
+          if (barChart.containPixel({ seriesIndex: 0 }, point)) {
+            const t1 = barChart.convertFromPixel({ seriesIndex: 0 }, point);
+            // console.log('fromPixel: ', t1);
+            // const t2 = barChart.convertToPixel({ seriesIndex: 0 }, point);
+            // console.log('toPixel: ', t2);
+
+            const xIndex = t1[1];
+
+            // console.log('xIndex: ', xIndex);
+
+            const op = barChart.getOption();
+            let entry = op.dataset[0].source[xIndex];
+            // console.log('entry: ', entry);
+
+            const { toPlant, vendorCode } = entry;
+            const url = `/pages/inbound/orderAmtByPlant?p=${toPlant}&v=${vendorCode}`;
+            // console.log(url);
+            // window.open(url);
+            window.location.href = url;
+          }
+        });
+
+        // 当数值很小时，点不中，所以不能用这个方法
+        barChart.on('click_old', 'series', params => {
           if (params.data === undefined) {
             return;
           }

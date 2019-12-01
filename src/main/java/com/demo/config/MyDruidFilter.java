@@ -18,6 +18,12 @@ public class MyDruidFilter extends FilterAdapter {
     public void statement_close(FilterChain chain, StatementProxy statement) throws SQLException {
         super.statement_close(chain, statement);
         Map<Integer, JdbcParameter> lParameters = statement.getParameters();
+
+        // 如果没有 #para，那么就不需要打印
+        if (lParameters.size() == 0) {
+            return;
+        }
+
         String lSql = statement.getBatchSql();
         if (StrKit.notBlank(lSql)) {
             for (Map.Entry<Integer, JdbcParameter> lEntry : lParameters.entrySet()) {

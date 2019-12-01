@@ -157,8 +157,25 @@ getter.
 1. mysql 中可以通过 @cumsum 的方式，实现累加；在 8.0 中有 window function 可直接实现；
 1. java 中通过 loop 实现：逐项累加，全部求和，求累加比例，按累加比例分组；
 1. multiMap 用以实现 count(1) group by grade；
-1. layer 弹出层很好用 open({content: res})；     
+1. layer 弹出层很好用 open({content: res})；
 
+## 2019/12/01
+1. druidFilter: 如果没有参数，就不再打印语句（jfinal 默认会打印语句）；
+1. user/session: 增加全局数据
+    1. loginInterceptor 中，先从全局数据中拿，如果全局数据为空，则加载全局数据； 
+    2. 登录时，创建 session，刷新全局数据；
+1. 权限控制
+    1. 页面权限控制：控制显示不显示；
+    1. url 权限控制，控制 actionKey 的访问权限； 
+    1. 资源 -> 所需角色 <- 用户
+1. 自定义指令 Directive
+1. Interceptor 进行 url 权限检查；
+1. LandingPage 中，不需要 Interceptor 做拦截控制：检查用户登录与否，检查用户权限；           
+1. echart 中 click
+    1. on series 只能在点击数值时触发，当数值很小时，点不到；
+    2. getZr().on 可以在某一列时触发，通过 convertFromPixel 获取 series 的 index；
+    
+     
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？
 3. 如果执行一系列的 delete/insert/update?
