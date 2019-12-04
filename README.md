@@ -175,6 +175,19 @@ getter.
     1. on series 只能在点击数值时触发，当数值很小时，点不到；
     2. getZr().on 可以在某一列时触发，通过 convertFromPixel 获取 series 的 index；
     
+## 2019/12/04
+1. upgrade to mysql 8.0 
+    1. docker new image
+    1. .yml
+        1. volumes: mapping host folders to docker image 
+        2. ports: mapping docker image port to host 
+    2. docker-compose exec db /bin/bash 
+    2. mysqldump -h host -P port -u user -p --databases dbname > /xshare/1.sql
+    2. mysql -u user -p < /xshare/1.sql  
+1. jfinal work with mysql 8
+    1. pom new dependencies; 
+    2. druid with new connector class; 
+    3. default.properties: connect string;        
      
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？

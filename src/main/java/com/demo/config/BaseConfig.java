@@ -121,7 +121,7 @@ public class BaseConfig extends JFinalConfig {
     public static DruidPlugin getDruidPlugin() {
         loadConfig();
         //配置数据库连接池
-        DruidPlugin dp = new DruidPlugin(defaultConfig.get("jdbcUrl"), defaultConfig.get("user"), defaultConfig.get("password"));
+        DruidPlugin dp = new DruidPlugin(defaultConfig.get("jdbcUrl"), defaultConfig.get("user"), defaultConfig.get("password"), "com.mysql.cj.jdbc.Driver");
         return dp;
     }
 
