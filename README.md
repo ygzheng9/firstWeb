@@ -187,7 +187,16 @@ getter.
 1. jfinal work with mysql 8
     1. pom new dependencies; 
     2. druid with new connector class; 
-    3. default.properties: connect string;        
+    3. default.properties: connect string; 
+1. force layout
+    1. nodes, categories, links
+    1. 节点大小，label 位置，拖动：nodes: name, symbolSize, label, draggable,     
+    1. 选中高亮：focusNodeAdjacency, emphasis       
+    1. label 显示位置：label.normal.position
+    1. legend 显示位置，显示的文字：回调函数 formatter
+2. cord 
+    1. 元素个数不能太多，60 已经不少了；
+    1. 元素可以有大小，类型体现在不同的颜色；
      
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？

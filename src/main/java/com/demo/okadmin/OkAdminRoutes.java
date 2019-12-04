@@ -27,6 +27,8 @@ public class OkAdminRoutes extends Routes {
         // 入库分析
         add("/pages/inbound", InboundController.class, "/pages/inbound");
 
+        // 关系图分析
+        add("/pages/relation", RelationController.class, "/pages/relation");
 
     }
 }

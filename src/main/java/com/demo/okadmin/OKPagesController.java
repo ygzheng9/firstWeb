@@ -34,6 +34,11 @@ public class OKPagesController extends Controller {
         render("plant_env.html");
     }
 
+    public void relation() {
+        render("relation.html");
+    }
+
+
     public void helloReact() {
         render("hello_react.html");
     }

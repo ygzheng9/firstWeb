@@ -10,3 +10,7 @@
 #include("user_auth.sql")
 #end
 
+
+#namespace("relation")
+#include("relation.sql")
+#end

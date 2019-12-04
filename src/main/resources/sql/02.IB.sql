@@ -3,6 +3,7 @@
 ###  YF 的 采购订单号 不是单据号，而是 供应商+工厂 的编号，每次采购都是这个号，QAD 报表也是在查询期间一个这样的号；
 ### 每次送货有唯一的送货单号；
 
+use cqyfas; 
 
 ###  按 （工厂 + 供应商）看采购金额
 ### 采购订单规则：供应商编码 + 工厂标记
@@ -353,7 +354,6 @@ select * from po_vendor_project;
 
 ###  供应商分析
 ## 1. 供应商采购金额，供应商供应的物料数量，供应商的送货工厂（两种不同的结算方式）；供应商对应的项目信息
-
 
 select a1.vendorCode, a1.vendorName, a1.totalAmt, (@csum := @csum + a1.totalAmt ) csum
  from (
