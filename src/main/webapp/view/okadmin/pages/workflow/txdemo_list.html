@@ -1,0 +1,53 @@
+#@okpage()
+
+#define main()
+<div>
+    <div class="has-text-centered is-size-3"></div>
+    <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7">
+        <colgroup>
+            <col width="5%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>公司</th>
+            <th>业务</th>
+            <th>单据号</th>
+            <th>项目</th>
+            <th>金额</th>
+            <th>事由</th>
+            <th>提交人</th>
+            <th>提交日期</th>
+            <th>审批单号</th>
+            <th>状态</th>
+        </tr>
+        </thead>
+        <tbody>
+        #for(x : items)
+        <tr>
+            <td>#(for.index + 1)</td>
+            <td>#(x.bizUnit)</td>
+            <td>#(x.bizType)</td>
+            <td><a href="/pages/workflow/txDemo/show?id=#(x.id)"> #(x.bizNum) </a> </td>
+            <td>#(x.projectCode)</td>
+            <td>#(x.bizAmt)</td>
+            <td>#(x.remark)</td>
+            <td>#(x.submitUser)</td>
+            <td>#(x.submitDate)</td>
+            <td>#(x.wkInsNum)</td>
+            <td>#(x.status)</td>
+        </tr>
+        #end
+        </tbody>
+    </table>
+</div>
+#end

@@ -60,7 +60,7 @@
           focusNodeAdjacency: true,
           emphasis: {
             lineStyle: {
-              width: 10
+              width: 3
             }
           },
           label: {

@@ -197,6 +197,15 @@ getter.
 2. cord 
     1. 元素个数不能太多，60 已经不少了；
     1. 元素可以有大小，类型体现在不同的颜色；
+    
+## 2019/12/05
+1. js 中获取 form 数据，通过 json 发送给后台；
+1. axios: 默认都是 json，所以 jfinal 中需要 JsonKit.parse(getRawData(), WkFormDemo.class); 不能直接 getModel/getBean   
+1. select 选中 option
+    1. select 紧跟着一个 input   
+    2. js 中 通过比对 input 和 option 设置选中与否
+1. 开始：审批流        
+     
      
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？

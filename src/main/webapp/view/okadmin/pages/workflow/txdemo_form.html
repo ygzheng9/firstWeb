@@ -1,0 +1,91 @@
+#@okpage()
+
+#define main()
+
+<div class="title">#(title)</div>
+
+<form id="txFormDemo">
+    <input type="hidden" name="id" value=#(item.id)>
+    <div class="field">
+        <label class="label">组织</label>
+        <div class="control">
+            <div class="select">
+                <select name="bizUnit">
+                    <option>华东公司</option>
+                    <option>华北公司</option>
+                    <option>华南公司</option>
+                </select>
+                <input type="hidden" value="#(item.bizUnit)">
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">业务类型</label>
+        <div class="control">
+            <div class="select">
+                <select name="bizType">
+                    <option>销售订单</option>
+                    <option>业务报账</option>
+                </select>
+                <input type="hidden" value="#(item.bizType)">
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">单据号</label>
+        <div class="control">
+            <input class="input" name="bizNum" type="text" placeholder="Text input" value=#(item.bizNum)>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">费用科目</label>
+        <div class="control">
+            <div class="select">
+                <select name="acctGroup">
+                    <option>预算科目A</option>
+                    <option>预算科目B</option>
+                </select>
+                <input type="hidden" value="#(item.acctGroup)">
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">项目号</label>
+        <div class="control">
+            <input class="input" name="projectCode" type="text" placeholder="Text input" value=#(item.bizNum)>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">申请金额</label>
+        <div class="control">
+            <input class="input" name="bizAmt" type="number" placeholder="Text input" value=#(item.bizAmt)>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">业务事由</label>
+        <div class="control">
+            <textarea class="textarea" name="remark" placeholder="Textarea">#(item.remark)</textarea>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">申请人</label>
+        <div class="control">
+            <input class="input" name="createUser" type="text" placeholder="Text input" value="#(item.createUser)">
+        </div>
+    </div>
+
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-link" id="saveForm">保存</button>
+        </div>
+        <div class="control">
+            <button class="button is-link" id="submitForm">提交</button>
+        </div>
+        <div class="control">
+            <button class="button is-link is-light">关闭</button>
+        </div>
+    </div>
+</form>
+
+<script src="/assets/js/workflow/txDemo_form.js"></script>
+#end

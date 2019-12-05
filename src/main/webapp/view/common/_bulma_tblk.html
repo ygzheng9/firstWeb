@@ -16,9 +16,10 @@
 
     <link rel="stylesheet" type="text/css" href="/assets/css/zz/admin.css" data-turbolinks-track="true">
 
-    <!--    使用到的第三方 js -->
+    <!--    使用到的第三方 js 打包成一个文件 -->
     <script type="text/javascript" src="/assets/js/vendor.js" data-turbolinks-track="true"></script>
 
+    <!--    启动 turbolinks -->
     <script type="text/javascript">
         Turbolinks.start();
         Turbolinks.setProgressBarDelay(100);
@@ -150,6 +151,19 @@
                         </li>
                     </ul>
                     #permission("admin")
+                    <p class="menu-label">
+                        审批流
+                    </p>
+                    <ul class="menu-list">
+                        <li>
+                            <a>单据</a>
+                            <ul>
+                                <li><a href="/pages/workflow/txDemo/newEntry">新建</a></li>
+                                <li><a href="/pages/workflow/txDemo/list">列表</a></li>
+                                <li><a href="/pages/plantEnv">工厂大屏</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                     <p class="menu-label">
                         试验场
                     </p>

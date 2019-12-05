@@ -39,8 +39,8 @@ select a.vendorName, b.plant, b.client, sum(a.totalAmt) amt
     group by a.vendorName, b.plant, b.client; 
 
 
+select * from po_vendor_plant_client; 
 
 
 
-
-
+                            po_vendor_plant_clientbom_info

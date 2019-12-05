@@ -10,7 +10,10 @@
 #include("user_auth.sql")
 #end
 
-
 #namespace("relation")
 #include("relation.sql")
+#end
+
+#namespace("workflow")
+#include("workflow.sql")
 #end

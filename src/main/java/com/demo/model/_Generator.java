@@ -33,7 +33,8 @@ public class _Generator {
 	private static String[] excludedTable = {
 		"bom_info", "bom_mat",
 		"plant_info",
-		"po_mat_stats", "po_vendor_mat", "po_vendor_mat_true", "po_vendor_project", "po_vendor_stats",
+		"po_mat_stats", "po_vendor_mat", "po_vendor_mat_true", "po_vendor_plant_client",
+		"po_vendor_project", "po_vendor_stats",
 		"vendor_info",
 		"z_resources"
 	};

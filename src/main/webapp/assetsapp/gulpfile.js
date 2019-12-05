@@ -76,6 +76,10 @@ gulp.task('js:vendor', function(callback) {
         // '../assets/lib/g2/g2.min.js',
         // '../assets/lib/g2/data-set.min.js',
 
+        '../assets/lib/axios.min.js',
+
+        '../assets/lib/fontawesome/all.js',
+
         '../assets/lib/turbolinks/turbolinks.js'
       ])
       .pipe(sourcemaps.init())
