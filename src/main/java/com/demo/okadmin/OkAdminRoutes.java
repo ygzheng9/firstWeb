@@ -3,6 +3,7 @@ package com.demo.okadmin;
 import com.demo.inbound.InboundController;
 import com.demo.matanalysis.MatController;
 import com.demo.matanalysis.RegionSalesController;
+import com.demo.workflow.EngineController;
 import com.demo.workflow.TxDemoController;
 import com.jfinal.config.Routes;
 
@@ -32,7 +33,9 @@ public class OkAdminRoutes extends Routes {
         add("/pages/relation", RelationController.class, "/pages/relation");
 
         // 审批流
+        add("/pages/workflow/engine", EngineController.class, "/pages/workflow");
         add("/pages/workflow/txDemo", TxDemoController.class, "/pages/workflow");
+
 
     }
 }

@@ -161,4 +161,12 @@ public abstract class BaseWkFormDemo<M extends BaseWkFormDemo<M>> extends Model<
 		return getStr("status");
 	}
 
+	public void setActionKey(java.lang.String actionKey) {
+		set("actionKey", actionKey);
+	}
+	
+	public java.lang.String getActionKey() {
+		return getStr("actionKey");
+	}
+
 }

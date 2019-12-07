@@ -1,0 +1,64 @@
+#@okpage()
+
+#define main()
+<div class="table-container">
+    <div>
+        <div class="has-text-centered is-size-3">审批流</div>
+        <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7" id="tblList">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>公司</th>
+                <th>业务</th>
+                <th>单据号</th>
+                <th>项目</th>
+                <th>金额</th>
+                <th>事由</th>
+                <th>提交人</th>
+                <th>提交日期</th>
+
+                <th>审批人</th>
+                <th>到达时间</th>
+                <th>审批意见</th>
+                <th>审批状态</th>
+                <th>处理时间</th>
+                <th>完结</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            #for(x : items)
+            <tr>
+                <td>#(for.index + 1)</td>
+                <td>#(x.bizUnit)</td>
+                <td>#(x.actionKey)</td>
+                <td><a href="/pages/workflow/txDemo/show?id=#(x.bizID)"> #(x.bizNum) </a></td>
+                <td>#(x.projectCode)</td>
+                <td>#(x.submitAmt)</td>
+                <td>#(x.submitRemark)</td>
+                <td>#(x.submitUser)</td>
+                <td>#(x.submitDate)</td>
+
+                <td>#(x.approver)</td>
+                <td>#(x.startDate)</td>
+                <td>#(x.approverComment)</td>
+                <td>#(x.status)</td>
+                <td>#(x.endTime)</td>
+                <td>#(x.isFinished)</td>
+                <td>
+                    #if(x.isFinished == "N")
+                    <div class="buttons are-small">
+                        <button class="button btnApprove" data-params="#(x.id)">同意</button>
+                        <button class="button btnReject" data-params="#(x.id)">拒绝</button>
+                    </div>
+                    #end
+                </td>
+            </tr>
+            #end
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="/assets/js/workflow/instance_list.js"></script>
+#end

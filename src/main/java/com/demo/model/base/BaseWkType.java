@@ -25,14 +25,6 @@ public abstract class BaseWkType<M extends BaseWkType<M>> extends Model<M> imple
 		return getStr("actionKey");
 	}
 
-	public void setBizUnit(java.lang.String bizUnit) {
-		set("bizUnit", bizUnit);
-	}
-	
-	public java.lang.String getBizUnit() {
-		return getStr("bizUnit");
-	}
-
 	public void setSeqNo(java.lang.String seqNo) {
 		set("seqNo", seqNo);
 	}

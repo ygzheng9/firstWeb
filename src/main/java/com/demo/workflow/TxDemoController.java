@@ -16,7 +16,6 @@ public class TxDemoController extends Controller {
     @Inject
     TxDemoService txSvc;
 
-
     public void newEntry() {
         WkFormDemo item = new WkFormDemo();
 
@@ -37,13 +36,17 @@ public class TxDemoController extends Controller {
     }
 
     public void submit() {
+        // 启动审批流
         WkFormDemo demo = JsonKit.parse(getRawData(), WkFormDemo.class);
 
-        if (!txSvc.save(demo)) {
-            renderJson(Ret.fail("msg", "保存失败"));
+        String msg = txSvc.submitForApproval(demo);
+
+        if (msg.length() == 0) {
+            renderJson(Ret.fail("msg", msg));
             return;
         }
 
+        renderJson(Ret.ok("msg", "提交成功"));
     }
 
     public void list() {
@@ -54,7 +57,7 @@ public class TxDemoController extends Controller {
     }
 
     public void show() {
-        Integer id = getInt("id");
+        String id = get("id");
         WkFormDemo item = txSvc.findbyID(id);
 
         set("item", item);

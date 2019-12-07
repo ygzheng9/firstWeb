@@ -7,12 +7,20 @@ import java.math.BigDecimal;
  * 审批流能处理的单据
  */
 public interface IFlowTx {
+    String TYPE_SALES_ORDER = "SalesOrder";
+    String TYPE_EXPENSE = "Expense";
+
     /**
      * @return 提交人
      */
     String getSubmitUser();
 
     String getSubmitDate();
+
+    /**
+     * @return 业务单据在 db 中的 id，这个 id 必须是 string(eg. uuid)
+     */
+    String getId();
 
     /**
      * @return 业务单元
@@ -23,6 +31,11 @@ public interface IFlowTx {
      * @return 业务类型
      */
     String getBizType();
+
+    /**
+     * @return 审批流类型 ID
+     */
+    String getActionKey();
 
     /**
      * @return 业务单据号

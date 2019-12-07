@@ -43,4 +43,3 @@ select * from po_vendor_plant_client;
 
 
 
-                            po_vendor_plant_clientbom_info

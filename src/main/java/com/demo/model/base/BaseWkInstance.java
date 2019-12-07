@@ -17,12 +17,28 @@ public abstract class BaseWkInstance<M extends BaseWkInstance<M>> extends Model<
 		return getStr("id");
 	}
 
+	public void setBizID(java.lang.String bizID) {
+		set("bizID", bizID);
+	}
+	
+	public java.lang.String getBizID() {
+		return getStr("bizID");
+	}
+
 	public void setBizUnit(java.lang.String bizUnit) {
 		set("bizUnit", bizUnit);
 	}
 	
 	public java.lang.String getBizUnit() {
 		return getStr("bizUnit");
+	}
+
+	public void setBizType(java.lang.String bizType) {
+		set("bizType", bizType);
+	}
+	
+	public java.lang.String getBizType() {
+		return getStr("bizType");
 	}
 
 	public void setBizNum(java.lang.String bizNum) {
@@ -127,6 +143,14 @@ public abstract class BaseWkInstance<M extends BaseWkInstance<M>> extends Model<
 	
 	public java.lang.String getEndTime() {
 		return getStr("endTime");
+	}
+
+	public void setIsFinished(java.lang.String isFinished) {
+		set("isFinished", isFinished);
+	}
+	
+	public java.lang.String getIsFinished() {
+		return getStr("isFinished");
 	}
 
 }
