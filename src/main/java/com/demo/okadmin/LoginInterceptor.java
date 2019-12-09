@@ -30,6 +30,7 @@ public class LoginInterceptor implements Interceptor {
 
                 // 把 actionKey 写入 response，供前端做菜单高亮设置
                 c.set("actionKey", inv.getActionKey());
+                c.set("controllerKey", c.getControllerKey());
 
                 inv.invoke();
 

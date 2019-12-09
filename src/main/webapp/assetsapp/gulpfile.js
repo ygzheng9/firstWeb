@@ -61,12 +61,7 @@ gulp.task('js:vendor', function(callback) {
         '../assets/lib/jquery-3.4.1.min.js',
         '../assets/lib/lodash-4.17.4.min.js',
         '../assets/lib/numeral.min.js',
-
         '../assets/lib/jquery.form.min.js',
-
-        // layui 不能 catcate，否则 js 找不到
-        // '../assets/lib/layui/layui.js',
-        // '../assets/js/init_layui.js',
 
         '../assets/lib/echarts/echarts.min.js',
         '../assets/lib/echarts/echarts.theme.js',

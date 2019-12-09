@@ -1,5 +1,5 @@
 (() => {
-  $('#tblList .btnApprove').on('click', function() {
+  $(document).on('click', '#tblList .btnApprove', function() {
     const self = $(this);
     const params = self.attr('data-params');
     const url = `/pages/workflow/engine/doApprove?id=${params}`;
@@ -11,7 +11,7 @@
     return false;
   });
 
-  $('#tblList .btnReject').on('click', function() {
+  $(document).on('click', '#tblList .btnReject', function() {
     const self = $(this);
     const params = self.attr('data-params');
     const url = `/pages/workflow/engine/doReject?id=${params}`;

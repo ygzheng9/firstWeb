@@ -12,32 +12,27 @@
     <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon"/>
 
     <!--    使用到的第三方 css -->
-    <link rel="stylesheet" href="/assets/js/vendor.css" data-turbolinks-track="true"/>
+    <link rel="stylesheet" href="/assets/js/vendor.css"/>
 
-    <link rel="stylesheet" type="text/css" href="/assets/css/zz/admin.css" data-turbolinks-track="true">
+    <link rel="stylesheet" type="text/css" href="/assets/css/zz/admin.css">
 
     <!--    使用到的第三方 js 打包成一个文件 -->
-    <script type="text/javascript" src="/assets/js/vendor.js" data-turbolinks-track="true"></script>
-
-    <!--    启动 turbolinks -->
-    <script type="text/javascript">
-        Turbolinks.start();
-        Turbolinks.setProgressBarDelay(100);
-    </script>
+    <script type="text/javascript" src="/assets/js/vendor.js"></script>
 
     <!--    layui 不能 catcat，只能单独引用 -->
-    <script type="text/javascript" src="/assets/lib/layui/layui.js" data-turbolinks-track="true"></script>
-    <script type="text/javascript" src="/assets/js/init_layui.js" data-turbolinks-track="true"></script>
+    <script type="text/javascript" src="/assets/lib/layui/layui.js"></script>
 
-    <!--    加载 bulma 的菜单折叠功能 -->
-    <script async type="text/javascript" src="/assets/js/init_bulma.js" data-turbolinks-track="true"></script>
+    <!--    初始化，全局函数 -->
+    <script type="text/javascript" src="/assets/js/xui.js"></script>
 
     #@jshead?()
 </head>
 
 <body>
 <div class="turbolinks-progress-bar"></div>
-<div id="selectedMenu" hidden data-menu="#(actionKey)"></div>
+<div id="landingPageID" hidden></div>
+
+<div id="actionKeyID" hidden data-menu="#(actionKey)"></div>
 
 <!-- START NAV -->
 <nav class="navbar is-white">
@@ -46,7 +41,7 @@
             <a class="navbar-item brand-text" href="../index.html">
                 集成供应链
             </a>
-            <div class="navbar-burger burger" data-target="navMenu">
+            <div class="navbar-burger burger" data-target="navMenu" id="burgerDom">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -197,8 +192,6 @@
         <strong>Insight</strong> by <a href="https://bulma.com">ISP@IBM 2019</a>. Get hands dirty.
     </div>
 </footer>
-
-<script src="/assets/js/selectMenu.js"></script>
 
 #@js?()
 </body>

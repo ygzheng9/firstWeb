@@ -163,7 +163,8 @@
             const url = `/pages/inbound/orderAmtByPlant?p=${toPlant}&v=${vendorCode}`;
             // console.log(url);
             // window.open(url);
-            window.location.href = url;
+            // window.location.href = url;
+            Turbolinks.visit(url);
           }
         });
 
@@ -177,7 +178,8 @@
           const url = `/pages/inbound/orderAmtByPlant?p=${toPlant}&v=${vendorCode}`;
           //   console.log(url);
           //   window.open(url);
-          window.location.href = url;
+          //   window.location.href = url;
+          Turbolinks.visit(url);
         });
       });
     });

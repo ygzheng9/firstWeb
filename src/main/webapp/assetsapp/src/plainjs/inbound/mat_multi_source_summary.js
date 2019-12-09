@@ -78,7 +78,8 @@
 
       myChart.on('click', 'series', params => {
         const url = '/pages/inbound/matMultiSource';
-        window.location.href = url;
+        // window.location.href = url;
+        Turbolinks.visit(url);
       });
     });
   }

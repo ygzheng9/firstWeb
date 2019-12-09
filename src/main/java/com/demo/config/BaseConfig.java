@@ -106,9 +106,14 @@ public class BaseConfig extends JFinalConfig {
         // 添加角色、权限指令
         me.addDirective("permission", PermissionDirective.class);
 
+        // 未完成
+        /// me.addDirective("pageJs", PageJsDirective.class);
+
         //设置共享页面
         me.addSharedFunction("/view/common/_okpage.html");
         me.addSharedFunction("/view/common/_bulma_tblk.html");
+
+        me.setDevMode(defaultConfig.getBoolean("devMode", false));
 
         // me.addSharedFunction("/view/common/_pjax.html");
         // me.addSharedFunction("/view/common/_turbolinks.html");
@@ -150,6 +155,8 @@ public class BaseConfig extends JFinalConfig {
         arp.getEngine().setToClassPathSourceFactory();
         arp.addSqlTemplate("/sql/_all.sql");
 
+        arp.setDevMode(defaultConfig.getBoolean("devMode", false));
+
         if (ZCacheKit.useCache()) {
             System.out.println("use cache...");
             me.add(new EhCachePlugin());
@@ -161,7 +168,6 @@ public class BaseConfig extends JFinalConfig {
         // 全局拦截器
         me.add(new LoginInterceptor());
         me.add(new AuthInterceptor());
-
     }
 
     @Override
