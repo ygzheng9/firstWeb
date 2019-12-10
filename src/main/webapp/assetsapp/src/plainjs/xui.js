@@ -4,29 +4,29 @@
   function inner() {
     // pure id
     // #leftMenu -> leftMenu;
-    function getPureID(domID) {
-      if (domID === undefined || domID.length === 0) {
+    function getPureID(domId) {
+      if (domId === undefined || domId.length === 0) {
         return '';
       }
 
-      if (domID.charAt[0] === '#') {
-        return domID.substring(1, domID.length - 1);
+      if (domId.charAt[0] === '#') {
+        return domId.substring(1, domId.length - 1);
       }
 
-      return domID;
+      return domId;
     }
 
     // 返回带 # 的 id；
-    function getJqueryID(domID) {
-      if (domID === undefined || domID.length === 0) {
+    function getJqueryID(domId) {
+      if (domId === undefined || domId.length === 0) {
         return '';
       }
 
-      if (domID.charAt[0] === '#') {
-        return domID;
+      if (domId.charAt[0] === '#') {
+        return domId;
       }
 
-      return '#' + domID;
+      return '#' + domId;
     }
 
     // 顶部导航，屏幕变窄后，item 隐藏，在右边出现面包条
@@ -42,9 +42,9 @@
 
     // 左侧菜单, 点击第一级，显示/隐藏 第二级
     // 使用： initMenu('#leftMenu');
-    function initMenu(domID) {
+    function initMenu(domId) {
       // 显示/隐藏 下一级菜单
-      const topLevels = document.querySelectorAll(`${domID} p.menu-label`);
+      const topLevels = document.querySelectorAll(`${domId} p.menu-label`);
       topLevels.forEach(el => {
         el.addEventListener('click', e => {
           el.nextElementSibling.classList.toggle('is-hidden');
@@ -52,7 +52,7 @@
       });
 
       // 菜单项的选中，菜单项都是 a
-      const items = document.querySelectorAll(`${domID} ul.menu-list li a`);
+      const items = document.querySelectorAll(`${domId} ul.menu-list li a`);
       items.forEach(el => {
         el.addEventListener('click', () => {
           // 清除之前选中
@@ -162,8 +162,8 @@
     }
 
     // helper: onClick
-    function onClick(domID, handler) {
-      document.getElementById(domID).addEventListener('click', handler);
+    function onClick(domId, handler) {
+      document.getElementById(domId).addEventListener('click', handler);
     }
 
     // 检查是否有重复 id
@@ -240,12 +240,62 @@
       Turbolinks.setProgressBarDelay(100);
     }
 
-    // 对 Turbolinks:load 事件函数的包装，通过设置 data-inited，保证 Idempotent 等幂性(执行 n 次和执行一次的结果相同)
-    function tbIdemWrapper(domID, fn) {
-      return function() {
-        const d = document.getElementById(domID);
+    function visit(url) {
+      TurboLinks.visit(url);
+    }
 
-        console.log('trying: ' + domID);
+    // turbolinks:load 所有的事件
+    // {domId, fn}
+    const tbLoadTable = [];
+    function tbAddLoad(domId, fn) {
+      if (domId === undefined || fn === undefined) {
+        console.log('tbAddLoad wrong params, must be (domId, fn)');
+        return;
+      }
+
+      for (let i = 0; i < tbLoadTable.length; i++) {
+        const a = tbLoadTable[i];
+        if (a.domId === domId) {
+          console.log('WARNING: dulpication domId, override. ', domId);
+          break;
+        }
+      }
+
+      // 手工执行一次
+      fn();
+
+      // 加入到 list 中，之后 turbolinks 每次 load 都会执行；
+      tbLoadTable.push({ domId, fn });
+    }
+
+    function tbFireLoad() {
+      const items = tbLoadTable;
+      for (let i = 0; i < items.length; i++) {
+        const { domId, fn } = items[i];
+
+        const d = document.getElementById(domId);
+
+        console.log('trying: ' + domId);
+
+        // 没有目标dom
+        if (d == null || d === undefined) continue;
+
+        // 有目标dom，但是已经被初始化过了；
+        if (d.hasAttribute('data-inited')) continue;
+
+        // 执行初始化，并且设置 flag，放置重复执行
+        console.log('trying: ' + domId + ' ---> matched.');
+        d.setAttribute('data-inited', 'true');
+        fn();
+      }
+    }
+
+    // 对 Turbolinks:load 事件函数的包装，通过设置 data-inited，保证 Idempotent 等幂性(执行 n 次和执行一次的结果相同)
+    function tbIdemWrapper(domId, fn) {
+      return function() {
+        const d = document.getElementById(domId);
+
+        console.log('trying: ' + domId);
 
         // 没有目标dom
         if (d == null || d === undefined) return;
@@ -253,7 +303,7 @@
         // 有目标dom，但是已经被初始化过了；
         if (d.hasAttribute('data-inited')) return;
 
-        console.log('trying: ' + domID + ' ---> matched.');
+        console.log('trying: ' + domId + ' ---> matched.');
 
         fn();
 
@@ -383,6 +433,7 @@
       getPureID,
 
       initBulmaBurger,
+
       initMenu,
       selectMenu,
       toggleLeftMenu,
@@ -407,7 +458,11 @@
       initSelectOptions,
 
       tbIdemWrapper,
-      tbLoad
+      tbLoad,
+
+      tbFireLoad,
+      tbAddLoad,
+      visit
     };
   }
 
@@ -419,13 +474,14 @@
   xui.initTurboLinks();
   xui.initLayui();
 
-  // 每个页面加载都会执行，所以回调函数，需要 判断是否是当前页面；
-  // cache 和 fresh 会执行两次，所以回调函数，需要 等幂（执行一次和 n 次，结果一样）；
-  document.addEventListener(
-    'turbolinks:load',
-    xui.tbIdemWrapper('landingPageID', function() {
-      xui.initBulmaBurger();
-      xui.highligtMenu();
-    })
-  );
+  // 只有这一个地方注册事件，其它页面如果要注册，那么使用 tbAddLoad，增加到 table 中
+  document.addEventListener('turbolinks:load', xui.tbFireLoad);
+
+  xui.tbAddLoad('landingPageID', function() {
+    xui.initBulmaBurger();
+    xui.highligtMenu();
+  });
+
+  // 感觉这里是个 bug，因为在 tbAddLoad 中已经执行过一次了，但是没有效果，所有这里有执行一次；
+  xui.initBulmaBurger();
 })(window);

@@ -36,6 +36,8 @@ public class OkAdminRoutes extends Routes {
         add("/pages/workflow/engine", EngineController.class, "/pages/workflow");
         add("/pages/workflow/txDemo", TxDemoController.class, "/pages/workflow");
 
+        // stimulus
+        add("/st", StimulusController.class, "/pages/stimulus");
 
     }
 }

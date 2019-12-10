@@ -85,5 +85,5 @@
     });
   }
 
-  xui.tbLoad('vendorPlantDiv', drawChart);
+  xui.tbAddLoad('vendorPlantDiv', drawChart);
 })();

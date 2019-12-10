@@ -86,5 +86,5 @@
     });
   }
 
-  xui.tbLoad('clientVendorID', drawChart);
+  xui.tbAddLoad('clientVendorID', drawChart);
 })();

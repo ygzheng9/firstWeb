@@ -54,5 +54,5 @@
   }
 
   // 如果只是 绑定事件，可以放到 load 中，但是其实不需要加入到 load 事件中，使用 delegation 做一次绑定就好了；
-  xui.tbLoad('txFormDemo', init);
+  xui.tbAddLoad('txFormDemo', init);
 })();

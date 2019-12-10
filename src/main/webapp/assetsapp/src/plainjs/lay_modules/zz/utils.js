@@ -1,5 +1,5 @@
 layui.define(exports => {
-  var output = {
+  var inner = {
     getUniq: (list, name) => {
       let a = list.map(i => i[name]);
       a = _.uniq(a);
@@ -54,5 +54,5 @@ layui.define(exports => {
     }
   };
 
-  exports('zzUtils', output);
+  exports('zzUtils', inner);
 });

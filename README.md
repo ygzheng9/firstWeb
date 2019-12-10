@@ -220,6 +220,23 @@ getter.
         1. 被绑定函数，必须是 Idemponent 等幂的，也即：重复执行，不改变结果； -> 需要判断是否已经执行过了；
         2. 后续新增加的 js，统一使用 defer，保证作为首页刷新时，dom 都已经完成加载；       
      
+## 2019/12/10
+1. turbolinks: 
+    1. 把所有需要放到 turbolinks:load 中的 fn，注册到全局的 table [{domId, fn}]中，只注册一个 load function；
+    2. 在 load function 中做遍历；
+    3. 要做到 等幂性：判断 fn 是否已经执行过了，如果没有，才执行，并设置 执行过 的标记；     
+    
+2. stimulus：
+    1. install -> easy. 和 webpack 无缝集成；
+    2. 使用方便：只需要一个 startup.js，其中设定 controller 的路径； 
+    3. 几个概念：
+        1. balaController.hehe
+        2. balaController#doit
+        3. static targets = ['hehe', 'wowo']
+        4. this.heheTarget, this.heheTargets 
+        5. this.data.get/set/has
+        6. this.element  --> dom    
+     
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？已完结状态，btn 不可点击，否则，可点击；
 3. 如果执行一系列的 delete/insert/update?

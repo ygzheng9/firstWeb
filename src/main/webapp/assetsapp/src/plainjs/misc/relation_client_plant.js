@@ -92,5 +92,5 @@
     });
   }
 
-  xui.tbLoad('clientPlantDiv', drawChart);
+  xui.tbAddLoad('clientPlantDiv', drawChart);
 })();
