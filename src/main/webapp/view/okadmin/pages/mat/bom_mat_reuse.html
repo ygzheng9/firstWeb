@@ -2,7 +2,7 @@
 
 #define main()
 
-<div class="container is-fluid">
+<div class="container is-fluid" data-controller="mat--reuse-bom">
     <div class="columns is-multiline is-variable is-1 ">
         <div class="column is-one-quarter">
             <div class="card">
@@ -76,7 +76,7 @@
             </div>
         </div>
         <div class="column is-full">
-            <div style="height: 400px;" id="reuse1"></div>
+            <div style="height: 400px;" id="bomreuse"></div>
         </div>
         <div class="column is-full">
             <div id="matlist"></div>
@@ -84,8 +84,4 @@
     </div>
 </div>
 
-#end
-
-#define js()
-<script type="text/javascript" src="/assets/js/mat/mat_reuse_bom.js"></script>
 #end

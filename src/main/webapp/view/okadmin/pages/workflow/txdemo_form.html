@@ -4,7 +4,7 @@
 
 <div class="title">#(title)</div>
 
-<form id="txFormDemo">
+<form id="txFormDemo" data-controller="workflow--txdemo-form">
     <input type="hidden" name="id" value=#(item.id)>
     <div class="field">
         <label class="label">组织</label>
@@ -87,8 +87,4 @@
     </div>
 </form>
 
-#end
-
-#define jshead()
-<script defer src="/assets/js/workflow/txDemo_form.js"></script>
 #end

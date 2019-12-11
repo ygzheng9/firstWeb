@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ['name', 'balabala', 'slide'];
 
   connect() {
-    console.log('Stimulus connected!');
+    // console.log('Stimulus connected!');
   }
 
   initialize() {
@@ -15,7 +15,7 @@ export default class extends Controller {
 
     const index = parseInt(this.data.get('index'));
     this.showSlide(index);
-    console.log('Stimulus initialized!');
+    // console.log('Stimulus initialized!');
   }
 
   greet() {

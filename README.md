@@ -236,7 +236,67 @@ getter.
         4. this.heheTarget, this.heheTargets 
         5. this.data.get/set/has
         6. this.element  --> dom    
+
+3. 命名规范
+    1. data-controller="relation-vendor-plant"  ==> 是横线分隔
+    2. data-controller="relation--vendor-plant"  ==> 如果是 两个横杠，对应的 目录/文件
+    3. this.bomListTarget.innerHTML ==> 这里的 this 必须是 class，也即，是 class 的 fn，而不能是 fn 中定义的 fn；        
      
+     
+## 2019/12/11
+1. stimulus
+    1. 主要烦恼
+        1. 配置要简单，充分利用 turbolinks 的功能；
+        1. html 和 js 要关联在一起，作为一个整体（html 和对应的操作 js）；--> vue, react 都是这个路线
+        1. html 和 js 代码段，要容易复用；--> 或者 copy，或者 变成同用函数；
+        1. 命名规范
+            1. 文件名，目录约定；
+            1. 代码规范：camelCase, hello_world, helloWorld, hello-world, etc. 
+    1. 和 Turbolinks 无缝集成，避免 turbolinks:load 重复调用/不调用 的问题； 
+    2. 使用简单，在 webpack 下只需要一个 bootstrap.js 文件，设置 controller 路径即可；
+    3. html 中使用 data-controller 来关联 页面相关的 js --> 不再需要在 html 中使用 script 中包含页面相关的 js；
+        1. dom 的初始化    --> controller.connect
+        2. dom 的事件绑定  --> data-event="click->pie#eat"
+        3. dom 的访问     --> 
+            1. data-target="pie#place", 
+            2. static targets=['place'], this.placeTarget, this.placeTargets
+            3. this.pieTarget.innerHTML 
+        4. data 属性     
+            1. data-pie-size
+            1. this.data.get('size') / set('size')
+            1. this.element.getAttribut('data-pie-size')
+    3. controller lifecycle
+        1. initialize: initial class properties; 初始化类中的属性，不涉及 dom 操作；
+        2. connect: dom operation，操作 dom；
+        3. unconnect: clean up resources，清除资源，比如：timmer；
+    1. controller scope 作用域
+        1. 在 html 中，data-controller 所包含的 html segment 就是 controller 的 scope
+        1. 在 html 中，标注了 data-target 的 dom，在 controller 中可直接访问，而不需要 document.getElementById() 
+        1. 当然，controller 中可以使用任何 jquery 代码操作 dom，包括那些不在 scope 内的 dom 都可以；
+    3. 遵循 name convention，在规则下组织代码 ==> 类比：制定交通规则后，交通更顺畅
+        1. html
+            1. data-controller="holiday--amazing-pie", 
+            2. data-target="holiday--amazing-pie.size"
+            3. data-event="click->holiday--amazing-pie#slice"
+        2. js
+            1. ./controllers/holiday/amazing_pie_controller.js
+            2. static targets = ['pie']
+            3. this.pieTarget   --> 第一个匹配的 data-target 的 dom 
+            3. this.pieTargets  --> 所有匹配 data-target 的 doms
+            4. this.data.get/set/has 
+            4. this.element / this.application
+            4. this 指的是 js 中 class，只能在 class 的函数中使用，如果在 函数中，又定义了函数，那么 this 就变了；
+            
+1. upgrade to stimulus
+    1. 右上角显示/隐藏菜单的功能；   -> 
+    1. 根据 actionKey 高亮菜单；   -> this.xxTarget.classList.toggle('hightlight')
+    1. 初始化 dom；               -> 初始化代码，放到 controller.connet() 中执行
+    1. dom click event binding； -> data-event="click->pie#eat"
+    1. echarts 绘图；             -> controller.connect() 执行
+    1. click and load url async  -> this.detailsTarget.innerHTML = html
+    1. tab component
+    
+       
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？已完结状态，btn 不可点击，否则，可点击；
 3. 如果执行一系列的 delete/insert/update?

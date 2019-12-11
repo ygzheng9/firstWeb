@@ -2,7 +2,7 @@
 
 #define main()
 
-<div class="layui-row layui-col-space15">
+<div class="layui-row layui-col-space15" data-controller="misc--word-cloud">
     <div class="layui-col-md12">
         <div id="mountNode" style="height:600px;">
             <i class="layui-icon layui-icon-loading" style="font-size: 30px; color: #1E9FFF;"></i>
@@ -26,18 +26,3 @@
 
 #end
 
-
-#define jshead()
-#@g2()
-#end
-
-#define js()
-### 使用 g2
-<script src="/assets/js/misc/word_cloud.js"></script>
-
-#--
-### 使用 echart
-<script src="/assets/lib/echarts/echarts-wordcloud.js"></script>
-<script src="/assets/js/misc/word_cloud2.js"></script>
---#
-#end

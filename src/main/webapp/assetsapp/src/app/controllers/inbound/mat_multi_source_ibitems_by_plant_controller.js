@@ -1,5 +1,16 @@
-(function() {
-  function renderChart() {
+import { Controller } from 'stimulus';
+
+import $ from 'jquery';
+import echarts from 'echarts';
+
+import numeral from 'numeral';
+
+export default class extends Controller {
+  connect() {
+    this.startup();
+  }
+
+  startup() {
     // 订单+物料 入库明细
 
     const raw = $('#byPlantParam').attr('data-params');
@@ -71,6 +82,4 @@
     const myChart = echarts.init(document.getElementById('byPlantChart'));
     myChart.setOption(option, true);
   }
-
-  renderChart();
-})();
+}

@@ -1,5 +1,16 @@
-(function() {
-  function drawChart() {
+import { Controller } from 'stimulus';
+
+import $ from 'jquery';
+import echarts from 'echarts';
+
+import numeral from 'numeral';
+
+export default class extends Controller {
+  connect() {
+    this.startup();
+  }
+
+  startup() {
     const domid = $('#byVendors');
     const raw = domid.attr('data-params');
     const items = JSON.parse(raw);
@@ -91,6 +102,4 @@
 
     myChart.setOption(option, true);
   }
-
-  drawChart();
-})();
+}

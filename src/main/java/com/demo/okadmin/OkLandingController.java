@@ -15,7 +15,7 @@ public class OkLandingController extends Controller {
     LoginService loginSvc;
 
     public void index() {
-        forwardAction("/pages/mat/projectPlant");
+        forwardAction("/pages/relation/vendorPlant");
     }
 
     public void login() {

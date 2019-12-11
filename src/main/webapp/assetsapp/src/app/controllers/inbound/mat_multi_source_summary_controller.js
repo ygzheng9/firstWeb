@@ -1,5 +1,14 @@
-(function() {
-  function matSourceRatio() {
+import { Controller } from 'stimulus';
+
+import $ from 'jquery';
+import echarts from 'echarts';
+
+export default class extends Controller {
+  connect() {
+    this.startup();
+  }
+
+  startup() {
     // 物料来源数量的金额明细，
 
     $.get('/pages/inbound/matSourceRatio', res => {
@@ -83,6 +92,4 @@
       });
     });
   }
-
-  matSourceRatio();
-})();
+}

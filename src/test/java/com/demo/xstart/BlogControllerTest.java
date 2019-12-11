@@ -65,8 +65,8 @@ public class BlogControllerTest {
 
         Connection conn =null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(url,user,password);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(url, user, password);
 
             DatabaseMetaData dbMeta = conn.getMetaData();
 

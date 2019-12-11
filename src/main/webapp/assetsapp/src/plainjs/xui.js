@@ -471,17 +471,18 @@
   window.xui = inner();
 
   // 立即执行
-  xui.initTurboLinks();
+  //   xui.initTurboLinks();
   xui.initLayui();
 
+  //  迁移到 stimulus 中，使用起来更简单
   // 只有这一个地方注册事件，其它页面如果要注册，那么使用 tbAddLoad，增加到 table 中
-  document.addEventListener('turbolinks:load', xui.tbFireLoad);
+  //   document.addEventListener('turbolinks:load', xui.tbFireLoad);
 
-  xui.tbAddLoad('landingPageID', function() {
-    xui.initBulmaBurger();
-    xui.highligtMenu();
-  });
+  //   xui.tbAddLoad('landingPageID', function() {
+  //     // xui.initBulmaBurger();
+  //     // xui.highligtMenu();
+  //   });
 
   // 感觉这里是个 bug，因为在 tbAddLoad 中已经执行过一次了，但是没有效果，所有这里有执行一次；
-  xui.initBulmaBurger();
+  //   xui.initBulmaBurger();
 })(window);

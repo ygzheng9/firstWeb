@@ -73,9 +73,7 @@ gulp.task('js:vendor', function(callback) {
 
         '../assets/lib/axios.min.js',
 
-        '../assets/lib/fontawesome/all.js',
-
-        '../assets/lib/turbolinks/turbolinks.js'
+        '../assets/lib/fontawesome/all.js'
       ])
       .pipe(sourcemaps.init())
       // getBundleName creates a cache busting name

@@ -1,7 +1,7 @@
 #@okpage()
 
 #define main()
-<div>
+<div data-controller="inbound--mat-multi-source">
     <nav class="tabs is-fullwidth">
         <ul>
             <li class="tab is-active" id="tab1"><a>1. 分物料</a></li>
@@ -11,17 +11,17 @@
     </nav>
 
     <div class="is-size-7">
-        <div id="content-tab1" class="content-tab" >
+        <div id="content-tab1" class="content-tab">
             <div class="table-container">
                 <table class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7">
-                <colgroup>
-                    <col width="5%">
-                    <col width="15%">
-                    <col width="10%">
-                    <col width="10%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="15%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="5%">
+                        <col width="5%">
+                        <col width="5%">
                     <col>
                 </colgroup>
                 <thead>
@@ -63,8 +63,4 @@
     </div>
 
 </div>
-#end
-
-#define js()
-<script type="text/javascript" src="/assets/js/inbound/mat_multi_source.js"></script>
 #end

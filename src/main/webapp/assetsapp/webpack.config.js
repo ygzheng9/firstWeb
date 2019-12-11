@@ -74,11 +74,14 @@ module.exports = {
     }
   },
   externals: {
-    // 使用 import jquery，但是 jquery 不会被打包，需要直接在 html 中 <script src="jquery.js" />
-    jquery: 'jQuery',
-    lodash: 'lodash',
-    react: 'React',
-    'react-dom': 'ReactDOM'
+    // 使用 import $ from 'jquery'，但是 jquery 不会被打包，需要直接在 html 中 <script src="jquery.js" />
+    // jquery: 'jQuery',
+    // lodash: '_',
+    // axios: 'axios',
+    // echarts: 'echarts',
+    // numeral: 'numeral'
+    // react: 'React',
+    // 'react-dom': 'ReactDOM'
   },
   plugins: [
     // Automatically load modules instead of having to import or require them everywhere.
@@ -87,4 +90,9 @@ module.exports = {
     //   $: 'jquery'
     // })
   ]
+  //   optimization: {
+  //     splitChunks: {
+  //       chunks: 'all'
+  //     }
+  //   }
 };
