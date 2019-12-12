@@ -1,8 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+const CompressionPlugin = require('compression-webpack-plugin');
 
 // 2019/11/10
 // 对 js 的打包 webpack 其实很简单
@@ -29,15 +28,8 @@ console.log('output: ', output);
 console.log('=====================');
 
 module.exports = {
-  // 通过 命令行 传入，而不是在配置文件中指定
-  // mode: "development",
-  // devtool: "inline-source-map",
-  // watch: true,
-  watchOptions: {
-    aggregateTimeout: 500,
-    poll: 500,
-    ignored: ['node_modules', 'src/plainjs']
-  },
+  mode: 'production',
+  devtool: false,
   //   entry: {
   //     'js/hello': __dirname + '/src/bundle/hello.tsx'
   //   },
@@ -87,7 +79,22 @@ module.exports = {
     // 'react-dom': 'ReactDOM'
   },
   plugins: [
-    new BundleAnalyzerPlugin(),
+    new CompressionPlugin({
+      filename: '[path].br[query]',
+      algorithm: 'brotliCompress',
+      test: /\.(js|css|html|svg)$/,
+      compressionOptions: { level: 11 },
+      threshold: 10240,
+      minRatio: 0.8,
+      deleteOriginalAssets: false
+    }),
+    new CompressionPlugin({
+      filename: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.(js|css|html|svg)$/,
+      threshold: 10240,
+      minRatio: 0.8
+    }),
     new webpack.DllReferencePlugin({
       context: __dirname,
       manifest: require(output + '/vendor.manifest.json')

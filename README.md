@@ -295,6 +295,15 @@ getter.
     1. echarts 绘图；             -> controller.connect() 执行
     1. click and load url async  -> this.detailsTarget.innerHTML = html
     1. tab component
+
+## 2019/12/12    
+1. nginx 
+    1. 做静态资源，启用 gzip
+    2. brotli 很难配置；
+1. webpack
+    1. compress 成 gzip，br
+    2. dll     
+       
     
        
 ## TODO
