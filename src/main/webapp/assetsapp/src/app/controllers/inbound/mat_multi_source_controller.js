@@ -1,13 +1,24 @@
 import { Controller } from 'stimulus';
 
-import $ from 'jquery';
+import axios from 'axios';
+
+import dom from '../zzdom';
+
+import { forEach } from 'ramda';
 
 export default class extends Controller {
-  connect() {
-    this.startup();
-  }
+  connect() {}
 
-  startup() {
+  openTab(tabid) {
+    // 所有的 tab 都不选中
+    forEach(dom.removeClass('is-active'), document.querySelectorAll('.tab'));
+
+    // 隐藏所有的 content
+    forEach(dom.setDisplay('none'), document.querySelectorAll('.content-tab'));
+
+    // 当前的 tab 选中，对应的 content 显示
+    dom.addClass('is-active')(document.getElementById(tabid));
+
     // tab 切换
     const tabConfig = {
       tab1: 'content-tab1',
@@ -15,44 +26,35 @@ export default class extends Controller {
       tab3: 'content-tab3'
     };
 
-    function openTab(tabid) {
-      // 所有的 tab 都不选中
-      $('.tab').removeClass('is-active');
+    const tabContent = tabConfig[tabid];
+    dom.setDisplay('block')(document.getElementById(tabContent));
+  }
 
-      // 隐藏所有的 content
-      $('.content-tab').css('display', 'none');
+  clicktab(evt) {
+    const self = evt.currentTarget;
+    const tabid = self.getAttribute('id');
 
-      // 当前的 tab 选中，对应的 content 显示
-      $(`#${tabid}`).addClass('is-active');
+    this.openTab(tabid);
+  }
 
-      const tabContent = tabConfig[tabid];
+  drilldown(evt) {
+    const self = evt.currentTarget;
 
-      $(`#${tabContent}`).css('display', 'block');
-    }
+    const url = self.dataset['href'];
+    const k = self.dataset['key'];
 
-    $('.tab').on('click', function() {
-      const self = $(this);
-      const tabid = self.attr('id');
+    const param = {
+      matVendorsID: 'tab2',
+      plantItemsID: 'tab3'
+    };
 
-      openTab(tabid);
-    });
+    axios
+      .get(url)
+      .then(res => res.data)
+      .then(html => {
+        dom.setHtml(html)(document.getElementById(k));
 
-    // 拦截点击
-    $('.content-tab').on('click', 'a.drillDown', function() {
-      const self = $(this);
-
-      const url = self.attr('data-href');
-      const k = self.attr('data-key');
-      // console.log(k, url);
-
-      const param = {
-        matVendorsID: 'tab2',
-        plantItemsID: 'tab3'
-      };
-
-      $(`#${k}`).load(url, () => {
-        openTab(param[k]);
+        this.openTab(param[k]);
       });
-    });
   }
 }

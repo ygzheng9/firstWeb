@@ -30,9 +30,12 @@ export default class extends Controller {
           return;
         }
 
-        $.get(url, res => {
-          drillByGradeDom.html(res);
-        });
+        axios
+          .get(url)
+          .then(res => res.data)
+          .then(res => {
+            drillByGradeDom.html(res);
+          });
 
         return false;
       });
@@ -43,16 +46,19 @@ export default class extends Controller {
         const self = $(this);
         const url = self.attr('data-href');
 
-        $.get(url, res => {
-          plantListDom.html(res);
+        axios
+          .get(url)
+          .then(res => res.data)
+          .then(res => {
+            plantListDom.html(res);
 
-          layer.open({
-            type: 1,
-            title: '工厂明细',
-            area: ['800px', '450px'],
-            content: res
+            layer.open({
+              type: 1,
+              title: '工厂明细',
+              area: ['800px', '450px'],
+              content: res
+            });
           });
-        });
 
         return false;
       });

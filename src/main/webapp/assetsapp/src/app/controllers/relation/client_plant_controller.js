@@ -2,7 +2,8 @@ import { Controller } from 'stimulus';
 
 import axios from 'axios';
 import echarts from 'echarts';
-import _ from 'lodash';
+
+import { whereEq, find } from 'ramda';
 
 export default class extends Controller {
   connect() {
@@ -52,7 +53,8 @@ export default class extends Controller {
               return a.name;
             }),
             formatter: function(name) {
-              const i = _.find(categories, i => i.name === name);
+              const i = find(whereEq({ name: name }))(categories);
+
               if (i !== undefined) {
                 return i.label;
               }

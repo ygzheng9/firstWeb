@@ -1,17 +1,16 @@
 import { Controller } from 'stimulus';
 
 import axios from 'axios';
-import $ from 'jquery';
+
+import zzdom from '../zzdom';
 
 export default class extends Controller {
-  static targets = ['clientPlantHeat', 'bomList'];
-
   connect() {
-    this.startup();
+    zzdom.initSelectOptions('txFormDemo');
   }
 
-  startup() {
-    xui.initSelectOptions('#txFormDemo');
+  submit(evt) {
+    evt.preventDefault();
 
     const cfg = [
       {
@@ -25,38 +24,21 @@ export default class extends Controller {
         target: '/pages/workflow/engine/list'
       }
     ];
+    const self = evt.currentTarget;
+    const parma = self.dataset['params'];
+    const { url, target } = cfg[parma];
+    // console.log(url, target);
 
-    function clickButton(idx) {
-      let data = xui.getFormData('#txFormDemo');
-      // console.log(data);
+    let data = zzdom.getFormData('txFormDemo');
+    //   console.log(data);
 
-      const { url, target } = cfg[idx];
-      axios
-        .post(url, data)
-        .then(function(response) {
-          // console.log(response);
-          // window.location.href = target;
-          Turbolinks.visit(target);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    }
-
-    $('#saveForm').on('click', function(e) {
-      e.preventDefault();
-
-      clickButton(0);
-
-      return false;
-    });
-
-    $('#submitForm').on('click', function(e) {
-      e.preventDefault();
-
-      clickButton(1);
-
-      return false;
-    });
+    axios
+      .post(url, data)
+      .then(_res => {
+        Turbolinks.visit(target);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 }

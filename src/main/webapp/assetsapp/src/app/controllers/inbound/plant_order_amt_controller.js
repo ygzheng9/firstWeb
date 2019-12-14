@@ -1,6 +1,7 @@
 import { Controller } from 'stimulus';
 
 import $ from 'jquery';
+import axios from 'axios';
 
 export default class extends Controller {
   connect() {
@@ -20,9 +21,13 @@ export default class extends Controller {
         itemByOrderMatID: 'tab3'
       };
 
-      $(`#${k}`).load(url, () => {
-        openTab(param[k]);
-      });
+      axios
+        .get(url)
+        .then(res => res.data)
+        .then(html => {
+          $(`#${k}`).html(html);
+          openTab(param[k]);
+        });
     });
 
     // tab 切换

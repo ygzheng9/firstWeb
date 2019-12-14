@@ -4,10 +4,9 @@
 <div data-controller="inbound--mat-multi-source">
     <nav class="tabs is-fullwidth">
         <ul>
-            <li class="tab is-active" id="tab1" data-action="click->inbound--mat-multi-source#clicktab"><a>1. 分物料</a>
-            </li>
-            <li class="tab" id="tab2" data-action="click->inbound--mat-multi-source#clicktab"><a>2. 分供应商</a></li>
-            <li class="tab" id="tab3" data-action="click->inbound--mat-multi-source#clicktab"><a>3. 入库明细</a></li>
+            <li class="tab is-active" id="tab1"><a>1. 分物料</a></li>
+            <li class="tab" id="tab2"><a>2. 分供应商</a></li>
+            <li class="tab" id="tab3"><a>3. 入库明细</a></li>
         </ul>
     </nav>
 
@@ -41,12 +40,8 @@
                 #for(x : items)
                 <tr>
                     <td style="text-align: center">#(for.index + 1)</td>
-                    <td><a data-action="click->inbound--mat-multi-source#drilldown"
-                           data-key="matVendorsID"
-                           data-href="/pages/inbound/matMultiSourceVendors?m=#(x.matCode)">#(x.matCode)</a></td>
-                    <td style="text-align: center">
-                        #(x.vendorCount)
-                    </td>
+                    <td><a class="drillDown" data-key="matVendorsID" data-href="/pages/inbound/matMultiSourceVendors?m=#(x.matCode)">#(x.matCode)</a></td>
+                    <td style="text-align: center">#(x.vendorCount)</td>
                     <td style="text-align: right">#number(x.totalAmt, ",###.00")</td>
                     <td style="text-align: right">#number(x.maxPrice, ",###.00")</td>
                     <td style="text-align: right">#number(x.minPrice, ",###.00")</td>

@@ -8,18 +8,7 @@ const output = __dirname + '/../assets/js/bundle';
 module.exports = {
   entry: {
     // 第三方库
-    vendor: [
-      'jquery',
-      'lodash',
-      'axios',
-      'echarts',
-      'numeral',
-      'react',
-      'react-dom',
-      '@antv/g2',
-      '@antv/data-set',
-      'zeu'
-    ]
+    vendor: ['react', 'react-dom', '@antv/g2', '@antv/data-set', 'zeu']
   },
   output: {
     path: output,

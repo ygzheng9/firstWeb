@@ -70,13 +70,13 @@ module.exports = {
   },
   externals: {
     // 使用 import $ from 'jquery'，但是 jquery 不会被打包，需要直接在 html 中 <script src="jquery.js" />
-    // jquery: 'jQuery',
-    // lodash: '_',
-    // axios: 'axios',
-    // echarts: 'echarts',
-    // numeral: 'numeral'
-    // react: 'React',
-    // 'react-dom': 'ReactDOM'
+    jquery: 'jQuery',
+    lodash: '_',
+    axios: 'axios',
+    echarts: 'echarts',
+    numeral: 'numeral',
+    react: 'React',
+    'react-dom': 'ReactDOM'
   },
   plugins: [
     new CompressionPlugin({

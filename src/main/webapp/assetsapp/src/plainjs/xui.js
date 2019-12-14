@@ -140,9 +140,12 @@
 
         // 设置 handleClick 事件
         el.addEventListener('click', () => {
-          $.get(url).then(html => {
-            $(selfTarget).html(html);
-          });
+          axios
+            .get(url)
+            .then(res => res.data)
+            .then(html => {
+              $(selfTarget).html(html);
+            });
         });
       });
     }
@@ -387,13 +390,13 @@
     }
 
     function setHtml(url, domid) {
-      $.get(url, res => {
-        // 直接赋值
-        document.getElementById(domid).innerHTML = res;
-
-        // jquery 是函数
-        // $(domid).text(res);
-      });
+      axios
+        .get(url)
+        .then(res => res.data)
+        .then(res => {
+          // 直接赋值
+          document.getElementById(domid).innerHTML = res;
+        });
     }
 
     /**

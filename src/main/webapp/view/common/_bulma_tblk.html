@@ -16,16 +16,53 @@
 
     <link rel="stylesheet" type="text/css" href="/assets/css/zz/admin.css">
 
+    <script type="text/javascript" src="/assets/lib/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/assets/lib/lodash-4.17.4.min.js"></script>
+    <script type="text/javascript" src="/assets/lib/numeral.min.js"></script>
+    <script type="text/javascript" src="/assets/lib/axios.min.js"></script>
+
+    <script type="text/javascript" src="/assets/lib/echarts/echarts.min.js"></script>
+
     <!--    使用到的第三方 js 打包成一个文件 -->
     <script type="text/javascript" src="/assets/js/bundle/vendor.dll.js"></script>
 
+    <script src="/assets/js/bundle/stimulus_app.js"></script>
+
     <!--    layui 不能 catcat，只能单独引用 -->
     <script type="text/javascript" src="/assets/lib/layui/layui.js"></script>
+    <script>
+        // layui 的 配置
+        function initLayui() {
+            //config的设置是全局的
+            layui
+                .config({
+                    // 这里是 url，不是本地路径
+                    base: '/assets/js/lay_modules/'
+                })
+                .extend({
+                    // 设定模块别名，在 use 时使用
+                    // key 和 模块文件 exports 的名字保持一致
+                    okTab: 'okmodules/okTab',
+                    countUp: 'okmodules/countUp',
+                    okUtils: 'okmodules/okUtils',
+                    okGVerify: 'okmodules/okGVerify',
+                    qrcode: 'okmodules/qrcode',
+                    jQqrcode: 'okmodules/jQqrcode',
+                    okAddlink: 'okmodules/okAddlink',
+                    okLayer: 'okmodules/okLayer',
+                    okMock: 'okmodules/okMock',
+
+                    zzUtils: 'zz/utils'
+                });
+        }
+
+        initLayui();
+    </script>
 
     <!--    初始化，全局函数 -->
-    <script defer type="text/javascript" src="/assets/js/xui.js"></script>
+    <!--    <script defer type="text/javascript" src="/assets/js/xui.js"></script>-->
 
-    <script src="/assets/js/bundle/stimulus_app.js"></script>
+
 </head>
 
 <body>

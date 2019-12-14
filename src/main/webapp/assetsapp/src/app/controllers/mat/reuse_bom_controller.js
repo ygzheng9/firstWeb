@@ -2,7 +2,10 @@ import { Controller } from 'stimulus';
 
 import axios from 'axios';
 import echarts from 'echarts';
-import $ from 'jquery';
+
+import { pluck, map } from 'ramda';
+
+import zzdom from '../zzdom';
 
 export default class extends Controller {
   connect() {
@@ -12,7 +15,7 @@ export default class extends Controller {
   startup() {
     layui.use(['layer'], () => {
       const { layer } = layui;
-      const myChart = echarts.init(document.getElementById('bomreuse'));
+      const myChart = echarts.init(zzdom.byId('bomreuse'));
 
       axios
         .get('/pages/mat/reuseByBomData')
@@ -21,8 +24,8 @@ export default class extends Controller {
           // console.log(res);
           const items = res.items;
 
-          const levels = items.map(i => i.repeatedCnt);
-          const levelSizeRaw = items.map(i => i.size);
+          const levels = pluck('repeatedCnt')(items);
+          const levelSizeRaw = pluck('size')(items);
           const levelSize = levelSizeRaw.map(i => {
             let j = i;
             if (i === 1) {
@@ -109,7 +112,8 @@ export default class extends Controller {
 
             const count = params.name;
             const url = '/pages/mat/bomMatByReuse?count=' + count;
-            xui.setHtml(url, 'matlist');
+
+            zzdom.setHtmlUrl(url)(zzdom.byId('matlist'));
           });
         });
     });

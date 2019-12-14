@@ -2,7 +2,7 @@ import { Controller } from 'stimulus';
 
 import axios from 'axios';
 import echarts from 'echarts';
-import $ from 'jquery';
+import zzdom from '../zzdom';
 
 export default class extends Controller {
   connect() {
@@ -109,7 +109,7 @@ export default class extends Controller {
 
             const count = params.name;
             const url = '/pages/mat/projectMatByReuseCount?count=' + count;
-            xui.setHtml(url, 'matlist');
+            zzdom.setHtmlUrl(url)(zzdom.byId('matlist'));
           });
         });
     });

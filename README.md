@@ -302,8 +302,17 @@ getter.
     2. brotli 很难配置；
 1. webpack
     1. compress 成 gzip，br
-    2. dll     
-       
+    2. dll
+    
+## 2019/12/14
+1. webpack
+    1. jquery, lodash, numeric, axios 放到 externals 中，不使用 webpack 打包；         
+2. ramda
+    1. 转换 + 数据 
+    2. 转换 可以组合 
+    3. compose(uniq, map(prop('name')))(items)      
+3. zzdom init
+         
     
        
 ## TODO

@@ -2,7 +2,10 @@ import { Controller } from 'stimulus';
 
 import axios from 'axios';
 import echarts from 'echarts';
-import _ from 'lodash';
+
+import { compose, map, uniq, find, whereEq } from 'ramda';
+
+import dom from '../zzdom';
 
 export default class extends Controller {
   static targets = ['clientPlantHeat', 'bomList'];
@@ -12,8 +15,6 @@ export default class extends Controller {
   }
 
   drawChart() {
-    const { getUniq } = xui;
-
     const heatChart = echarts.init(this.clientPlantHeatTarget);
 
     let plants = [];
@@ -24,13 +25,23 @@ export default class extends Controller {
       .then(res => res.data)
       .then(res => {
         const { items } = res;
-        plants = getUniq(items, 'plant');
-        clients = getUniq(items, 'client');
+
+        plants = compose(
+          uniq,
+          map(i => i.plant)
+        )(items);
+
+        clients = compose(
+          uniq,
+          map(i => i.client)
+        )(items);
 
         const results = [];
         for (let i = 0; i < plants.length; i++) {
           for (let j = 0; j < clients.length; j++) {
-            const v = _.find(items, { plant: plants[i], client: clients[j] });
+            const v = find(whereEq({ plant: plants[i], client: clients[j] }))(
+              items
+            );
 
             let cnt = 0;
             if (v !== undefined) {
@@ -128,7 +139,9 @@ export default class extends Controller {
       axios
         .get(url)
         .then(res => res.data)
-        .then(html => (targetDom.innerHTML = html));
+        .then(html => {
+          dom.setHtml(html)(targetDom);
+        });
     }
   }
 }
