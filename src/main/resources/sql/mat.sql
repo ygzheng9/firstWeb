@@ -197,12 +197,15 @@ order by a.client, a.reuseRate desc;
 
 ### part 在 project 之间的共用次数统计
 #sql("projectMatReuseStats")
-select b.reuseCount, count(1) size
+select a1.reuseCount, a1.size
 from (
-         select a.partNum, count(1) reuseCount
-         from project_mat a
-         group by a.partNum) b
-group by b.reuseCount;
+         select b.reuseCount, count(1) size
+         from (
+                  select a.partNum, count(1) reuseCount
+                  from project_mat a
+                  group by a.partNum) b
+         group by b.reuseCount) a1
+order by a1.size desc;
 #end
 
 ### 根据 part 的共用次数，查询 part 清单

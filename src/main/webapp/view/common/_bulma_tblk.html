@@ -12,14 +12,51 @@
     <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon"/>
 
     <!--    使用到的第三方 css -->
-    <link rel="stylesheet" href="/assets/js/vendor.css"/>
+    <!--    <link rel="stylesheet" href="/assets/js/vendor.css"/>-->
+
+    <link rel="stylesheet" href="/assets/css/okadmin.css"/>
+    <link rel="stylesheet" href="/assets/lib/fontawesome/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/lib/bulma/css/bulma.min.css"/>
 
     <link rel="stylesheet" type="text/css" href="/assets/css/zz/admin.css">
+
+    <link rel="stylesheet" type="text/css"
+          href="/assets/lib/bulma-extensions/bulma-divider/dist/css/bulma-divider.min.css">
+
+    <link rel="stylesheet" type="text/css"
+          href="/assets/lib/bulma-extensions/bulma-badge/dist/css/bulma-badge.min.css">
+
+    <link rel="stylesheet" type="text/css"
+          href="/assets/lib/bulma-extensions/bulma-accordion/dist/css/bulma-accordion.min.css">
+
+    <link rel="stylesheet" type="text/css"
+          href="/assets/lib/bulma-extensions/bulma-quickview/dist/css/bulma-quickview.min.css">
+
+    <link rel="stylesheet" type="text/css"
+          href="/assets/lib/bulma-extensions/bulma-calendar/dist/css/bulma-calendar.min.css">
+
+    <link rel="stylesheet" type="text/css"
+          href="/assets/lib/bulma-extensions/bulma-steps/dist/css/bulma-steps.min.css">
+
 
     <script type="text/javascript" src="/assets/lib/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/assets/lib/lodash-4.17.4.min.js"></script>
     <script type="text/javascript" src="/assets/lib/numeral.min.js"></script>
     <script type="text/javascript" src="/assets/lib/axios.min.js"></script>
+
+
+    <script type="text/javascript"
+            src="/assets/lib/bulma-extensions/bulma-calendar/dist/js/bulma-calendar.min.js"></script>
+
+    <script type="text/javascript"
+            src="/assets/lib/bulma-extensions/bulma-accordion/dist/js/bulma-accordion.min.js"></script>
+
+    <script type="text/javascript"
+            src="/assets/lib/bulma-extensions/bulma-quickview/dist/js/bulma-quickview.min.js"></script>
+
+    <script type="text/javascript"
+            src="/assets/lib/bulma-extensions/bulma-steps/dist/js/bulma-steps.min.js"></script>
+
 
     <script type="text/javascript" src="/assets/lib/echarts/echarts.min.js"></script>
 
@@ -208,6 +245,13 @@
                             <a>审批流</a>
                             <ul>
                                 <li><a href="/pages/workflow/engine/list">列表</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>工作日志</a>
+                            <ul>
+                                <li><a href="/pages/workday/list">列表</a></li>
+                                <li><a href="/pages/workday/new">新增</a></li>
                             </ul>
                         </li>
                     </ul>
