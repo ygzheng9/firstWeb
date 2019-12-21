@@ -49,14 +49,6 @@ public abstract class BaseWkType<M extends BaseWkType<M>> extends Model<M> imple
 		return getInt("lowAmt");
 	}
 
-	public void setParamType(java.lang.String paramType) {
-		set("paramType", paramType);
-	}
-	
-	public java.lang.String getParamType() {
-		return getStr("paramType");
-	}
-
 	public void setCalcRule(java.lang.String calcRule) {
 		set("calcRule", calcRule);
 	}

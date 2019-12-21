@@ -313,6 +313,21 @@ getter.
     3. compose(uniq, map(prop('name')))(items)      
 3. zzdom init
          
+         
+## 2019/12/21
+1. bulma calendar 
+    1. calendar 和 all 的 css 中有重复，需要手工修改；
+    2. calendar 在 js 中需要使用 js 的 Date 对象，而不是 string；      
+2. sql template 
+    1. 所有的 #para(x) 都不能有 单引号或双引号，因为生成的是 sql 中的 ?，是否需要引号有 db engine 自动判定；
+    2. druid plugin 打印出来的 sql，都是没有 引号的，但是实际上是有的；
+3. html
+    1. 下拉框：每一项 Option 比对 value 属性，设置 selected 属性；
+    2. checkbox：对选项，进行 for 循环，在循环内部判断（每一项的 value 属性），设置 checked 属性；   
+    3. textarea：不是设置 value 属性，而是设置 innerHTML 属性；注意 html 中的空格/换行；
+    4. calendar：在 html 设置 value 即可；
+    5. date range：需要通过 js 来进行初始值设置；
+    6. 根据 id，设置标题：新增/修改；
     
        
 ## TODO

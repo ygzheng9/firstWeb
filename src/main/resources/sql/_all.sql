@@ -17,3 +17,7 @@
 #namespace("workflow")
 #include("workflow.sql")
 #end
+
+#namespace("workday")
+#include("workday.sql")
+#end

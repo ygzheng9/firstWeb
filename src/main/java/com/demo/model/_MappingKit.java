@@ -28,6 +28,7 @@ public class _MappingKit {
 		arp.addMapping("region_sales_stats", "id", RegionSalesStats.class);
 		arp.addMapping("session", "id", Session.class);
 		arp.addMapping("user", "id", User.class);
+		arp.addMapping("ut_entry", "id", UtEntry.class);
 		arp.addMapping("wk_form_demo", "id", WkFormDemo.class);
 		arp.addMapping("wk_instance", "id", WkInstance.class);
 		arp.addMapping("wk_instance_step", "id", WkInstanceStep.class);

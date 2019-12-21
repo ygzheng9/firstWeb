@@ -1,12 +1,72 @@
 package com.demo.workday;
 
+import com.demo.model.UtEntry;
+import com.jfinal.aop.Inject;
 import com.jfinal.core.Controller;
+import com.jfinal.kit.JsonKit;
+import com.jfinal.kit.Ret;
+import com.jfinal.log.Log;
+
+import java.util.List;
 
 /**
  * @author ygzheng
  */
 public class WorkdayController extends Controller {
+    private static Log log = Log.getLog(WorkdayController.class);
+
+    @Inject
+    WorkdayService workdaySvc;
+
     public void list() {
         render("list.html");
     }
+
+    public void search() {
+        render("search_main.html");
+    }
+
+    public void doSearch() {
+        List<UtEntry> items = workdaySvc.search(getRawData());
+        set("items", items);
+        render("search_items.html");
+    }
+
+    public void newEntry() {
+        // 设置初始值
+        UtEntry entry = new UtEntry();
+        entry.setId("");
+        entry.setOnSite("现场");
+        entry.setDetails("");
+
+        set("entry", entry);
+
+        render("entry.html");
+    }
+
+    public void openEntry() {
+        String id = get("id");
+
+        renderEntry(id);
+    }
+
+    public void renderEntry(String id) {
+        UtEntry entry = workdaySvc.findById(id);
+        set("entry", entry);
+        render("entry.html");
+    }
+
+    public void saveEntry() {
+        UtEntry entry = JsonKit.parse(getRawData(), UtEntry.class);
+        log.info(entry.toJson());
+
+        String id = workdaySvc.saveEntry(entry);
+        if (id.length() == 0) {
+            renderJson(Ret.fail("msg", "保存失败"));
+            return;
+        }
+        renderJson(Ret.ok("id", id));
+    }
+
+
 }

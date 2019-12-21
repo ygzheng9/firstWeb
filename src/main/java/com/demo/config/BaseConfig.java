@@ -103,6 +103,8 @@ public class BaseConfig extends JFinalConfig {
      */
     @Override
     public void configEngine(Engine me) {
+        me.setDevMode(defaultConfig.getBoolean("devMode", false));
+
         // 添加角色、权限指令
         me.addDirective("permission", PermissionDirective.class);
 
@@ -112,11 +114,6 @@ public class BaseConfig extends JFinalConfig {
         //设置共享页面
         me.addSharedFunction("/view/common/_okpage.html");
         me.addSharedFunction("/view/common/_bulma_tblk.html");
-
-        me.setDevMode(defaultConfig.getBoolean("devMode", false));
-
-        // me.addSharedFunction("/view/common/_pjax.html");
-        // me.addSharedFunction("/view/common/_turbolinks.html");
     }
 
     public static DruidPlugin getDruidPlugin() {
@@ -145,17 +142,17 @@ public class BaseConfig extends JFinalConfig {
         me.add(druidPlugin);
 
         ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
+        /// arp.setDevMode(defaultConfig.getBoolean("devMode", false));
+        arp.setDevMode(true);
+
         arp.setTransactionLevel(Connection.TRANSACTION_READ_COMMITTED);
         _MappingKit.mapping(arp);
-        // 强制指定复合主键的次序，避免不同的开发环境生成在 _MappingKit 中的复合主键次序不相同
-        arp.setPrimaryKey("document", "mainMenu,subMenu");
+
         me.add(arp);
         arp.setShowSql(defaultConfig.getBoolean("devMode", false));
 
         arp.getEngine().setToClassPathSourceFactory();
         arp.addSqlTemplate("/sql/_all.sql");
-
-        arp.setDevMode(defaultConfig.getBoolean("devMode", false));
 
         if (ZCacheKit.useCache()) {
             System.out.println("use cache...");

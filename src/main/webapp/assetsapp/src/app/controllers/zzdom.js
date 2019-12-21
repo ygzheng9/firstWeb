@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { prop, forEach } from 'ramda';
+import moment from 'moment';
 
 const byId = id => document.getElementById(id);
 const bySelector = selector => document.querySelectorAll(selector);
@@ -52,6 +53,8 @@ const getFormData = formId => {
   const extractItem = item => {
     //文本表单的值不为空才处理
     if (item.value && $.trim(item.value) !== '') {
+      item.value = $.trim(item.value);
+
       if (!data[item.name]) {
         data[item.name] = item.value;
       } else {
@@ -105,12 +108,55 @@ const setHtmlUrl = url => dom => {
     .then(html => setHtml(html)(dom));
 };
 
+// 进入到新的页面
+const visit = url => {
+  Turbolinks.visit(url);
+};
+
+const dateFormat = 'YYYY-MM-DD';
+// range 固定格式: "2019-11-21 - 2019-12-22"
+const splitRange = range => {
+  let rangeStart = '';
+  let rangeEnd = '';
+
+  if (range === undefined || range.length === 0) {
+    return { rangeStart, rangeEnd };
+  }
+
+  rangeStart = range.substring(0, 10);
+  rangeEnd = range.substring(13);
+
+  return { rangeStart, rangeEnd };
+};
+
+// 返回从今天开始，过去的 n_months，默认过去 1 个月
+const genRange = n_months => {
+  if (n_months === undefined) {
+    n_months = 1;
+  }
+
+  const start = moment()
+    .add(-1 * n_months, 'months')
+    .toDate();
+
+  const end = moment()
+    .add(1, 'days')
+    .toDate();
+
+  return { start, end };
+};
+
 export default {
   byId,
   bySelector,
 
   getFormData,
   initSelectOptions,
+
+  visit,
+  dateFormat,
+  splitRange,
+  genRange,
 
   removeClass,
   addClass,

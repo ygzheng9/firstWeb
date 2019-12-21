@@ -1,0 +1,26 @@
+#@okpage()
+
+#define main()
+
+<div data-controller="workday--search">
+    <form id="workdaySearch">
+        <div class="field is-horizontal">
+            <div class="field">
+                <input class="input" type="text" placeholder="Name" name="userName">
+            </div>
+            <div class="field">
+                <input class="input" type="text" placeholder="code" name="projectCode">
+            </div>
+            <div class="field">
+                <input type="date" name="bizDate">
+            </div>
+            <button class="button" data-action="workday--search#search">查找</button>
+            <a class="button is-primary" href="/pages/workday/newEntry">记一笔</a>
+        </div>
+    </form>
+
+    <div id="result" data-target="workday--search.result">
+    </div>
+
+</div>
+#end

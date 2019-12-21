@@ -1,0 +1,133 @@
+#@okpage()
+
+#define main()
+<h2 class="title is-2 has-text-centered">工作日志
+    <span class="is-size-5">#(entry.id == "" ? "新增" : "修改")</span>
+</h2>
+<form id="workdayEntry" data-controller="workday--entry">
+    <input type="input" hidden name="id" value="#(entry.id)">
+    <div class="field is-horizontal">
+        <div class="field-label is-normal">
+            <label class="label">记录人</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <p class="control is-expanded has-icons-left">
+                    <input class="input" type="text" placeholder="姓名" name="userName" value="#(entry.userName)">
+                    <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="field is-horizontal">
+        <div class="field-label is-normal">
+            <label class="label">日期</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input type="date" name="bizDate" value="#(entry.bizDate)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="field is-horizontal">
+        <div class="field-label is-normal">
+            <label class="label">项目</label>
+        </div>
+        <div class="field-body">
+            <div class="field is-narrow">
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select name="projectCode" value="#(entry.projectCode)">
+                            #for(x : ["Business development", "Marketing", "Sales"])
+                            <option #(entry.projectCode== x ?
+                            "selected" : "")
+                            value="#(x)" >#(x)</option>
+                            #end
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="field is-narrow">
+                <p class="control">
+                    <input class="input" type="number" placeholder="小时数" name="claimHours"
+                           value="#(entry.claimHours)">
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">地点</label>
+        </div>
+        <div class="field-body">
+            <div class="field is-narrow">
+                <div class="control">
+                    #for(x : ["现场", "远程"])
+                    <input class="is-checkradio" id="onSite#(for.index + 1)" type="radio" name="onSite"
+                           value="#(x)" #(entry.onSite== x ? "checked" : "")>
+                    <label for="onSite#(for.index + 1)">#(x)</label>
+                    #end
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="field is-horizontal">
+        <div class="field-label is-normal">
+            <label class="label">工作事项</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input class="input" type="text" name="memo" placeholder="工作概要"
+                           value="#(entry.memo)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="field is-horizontal">
+        <div class="field-label is-normal">
+            <label class="label">详细信息</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <textarea class="textarea" name="details"
+                              placeholder="具体工作">#(entry.details)</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <!-- Left empty for spacing -->
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" data-action="workday--entry#saveEntry">
+                        保存
+                    </button>
+                    <button class="button is-primary" data-action="workday--entry#newEntry">
+                        记一笔
+                    </button>
+                    <button class="button" data-action="workday--entry#cancel">
+                        列表
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+#end

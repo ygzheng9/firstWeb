@@ -71,3 +71,13 @@ nav.navbar {
     /* 文字下方的空白，默认是 6rem */
     padding-bottom: 3rem;
 }
+
+
+/* bulma datepicker 和 extension.all 有冲突 */
+.datepicker {
+    display: block;
+}
+
+.datepicker.is-active {
+    display: block;
+}
