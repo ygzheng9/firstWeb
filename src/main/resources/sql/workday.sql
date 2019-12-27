@@ -18,4 +18,11 @@ where 1 = 1
 order by a.bizDate, a.userName, a.projectCode;
 #end
 
+#sql("dictionary")
+select a.*
+  from z_dictionary a
+where category = #para(0)
+order by a.value desc;
+#end
+
 ###@formatter:on

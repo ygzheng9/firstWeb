@@ -329,6 +329,25 @@ getter.
     5. date range：需要通过 js 来进行初始值设置；
     6. 根据 id，设置标题：新增/修改；
     
+    
+## 2019-12-26
+1. 弹出窗口传递信息： page1 --> layer.open(page2)  --> page2 关闭  --> 返回 page1
+    1. page1, page2 都是 enjoy 渲染；
+    2. page1 给 page2 传参数：页面中拼接 querystring，或 js 中读取 dom 数据，手工 post；
+    3. page2 打开时，要么 enjoy 渲染；要么 js 读取约定好的 dom，做客户端的初始化；
+    4. page2 操作的结果，需要 js 保存到 page1 的 dom 中（也就是当前页面中，但是不是 page2, 因为 page2 关闭后，会从 dom 中删除）；
+    5. layer 判断关闭动作是 "确认"（区别与"取消"），从约定好的 dom 中读取 json string，反序列化成 js object，在给相应的 input 赋值；
+    6. page2 选择操作要保存的信息，需要后台输出成 string，保存在 data-values 属性中，通过 getAttribute 一次性读取；
+2. 总结：
+    1. 两个 html： page1, page2; 
+    2. 对应的两个 js;
+    3. 后台两个 action：render(page1), render(page2);
+    4. page1: js 读取 dom1 属性，拼接 url，post；
+    5. 后台：解析参数，render page2; 
+    6. page2: js 绑定事件，把当前选中结果信息保存在 dom2 中（需要后台先把数据 render 到当前的 data-values 属性上）；
+    7. page1：在 page2 关闭后，从 dom2 取出信息，设置到对应的 dom1 上；         
+     
+    
        
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？已完结状态，btn 不可点击，否则，可点击；

@@ -6,6 +6,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.Ret;
 import com.jfinal.log.Log;
+import com.jfinal.plugin.activerecord.Record;
 
 import java.util.List;
 
@@ -68,5 +69,13 @@ public class WorkdayController extends Controller {
         renderJson(Ret.ok("id", id));
     }
 
+    public void projectList() {
+        String pCode = get("s");
 
+        List<Record> items = workdaySvc.getProject();
+        set("items", items);
+        set("code", pCode);
+
+        render("project_list.html");
+    }
 }

@@ -1,0 +1,25 @@
+<div class="has-text-centered is-size-3">项目列表</div>
+<table id="projectList" class="table is-striped is-narrow is-hoverable is-fullwidth is-size-7"
+       data-controller="workday--project-list"
+>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>项目</th>
+        <th>名称</th>
+        <th>备注</th>
+    </tr>
+    </thead>
+    <tbody>
+    #for(x : items)
+    <tr data-action="click->workday--project-list#onSelect" data-outputs="#escape(x.valueStr)"
+        class="#(code == x.value ? 'is-selected' : '')"
+    >
+        <td>#(for.index + 1)</td>
+        <td>#(x.value)</td>
+        <td>#(x.displayName)</td>
+        <td>#(x.remark)</td>
+    </tr>
+    #end
+    </tbody>
+</table>

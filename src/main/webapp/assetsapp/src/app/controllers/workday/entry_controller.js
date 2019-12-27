@@ -60,4 +60,32 @@ export default class extends Controller {
     const target = '/pages/workday/search';
     zzdom.visit(target);
   }
+
+  projectList(evt) {
+    evt.preventDefault();
+
+    const pcode = document.getElementById('projectCode').value;
+    const url = `/pages/workday/projectList?s=${pcode}`;
+
+    axios
+      .get(url)
+      .then(res => res.data)
+      .then(res => {
+        layer.open({
+          //   type: 1,
+          //   title: '在线调试',
+          area: ['800px', '400px'],
+          content: res,
+          yes: function(index, layero) {
+            const s = document.getElementById('projectList-outputs').innerHTML;
+            const a = JSON.parse(s);
+            console.log(a);
+
+            document.getElementById('projectCode').value = a.value;
+
+            layer.close(index);
+          }
+        });
+      });
+  }
 }

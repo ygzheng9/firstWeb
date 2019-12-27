@@ -40,6 +40,7 @@
             <label class="label">项目</label>
         </div>
         <div class="field-body">
+            #--
             <div class="field is-narrow">
                 <div class="control">
                     <div class="select is-fullwidth">
@@ -53,6 +54,20 @@
                     </div>
                 </div>
             </div>
+            --#
+            <div class="field is-narrow has-addons">
+                <div class="control">
+                    <input class="input" placeholder="项目号" id="projectCode" name="projectCode"
+                           value="#(entry.projectCode)">
+                </div>
+                <div class="control">
+                    <button class="button" data-action="workday--entry#projectList">
+                        项目
+                    </button>
+                </div>
+            </div>
+
+
             <div class="field is-narrow">
                 <p class="control">
                     <input class="input" type="number" placeholder="小时数" name="claimHours"
@@ -126,6 +141,11 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="projectListHidden" hidden>
+        <div id="projectList-params"></div>
+        <div id="projectList-outputs"></div>
     </div>
 
 </form>
