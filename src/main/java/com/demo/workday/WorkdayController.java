@@ -4,6 +4,7 @@ import com.demo.model.UtEntry;
 import com.jfinal.aop.Inject;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.JsonKit;
+import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
 import com.jfinal.log.Log;
 import com.jfinal.plugin.activerecord.Record;
@@ -18,6 +19,10 @@ public class WorkdayController extends Controller {
 
     @Inject
     WorkdayService workdaySvc;
+
+    public void empty() {
+        render("empty.html");
+    }
 
     public void list() {
         render("list.html");
@@ -76,6 +81,16 @@ public class WorkdayController extends Controller {
         set("items", items);
         set("code", pCode);
 
-        render("project_list.html");
+        // render("project_list.html");
+
+        Kv param = new Kv();
+        param.set("items", items);
+        param.set("code", pCode);
+
+        String html = renderToString("project_list.html", param);
+        Kv kv = new Kv();
+        kv.set("count", items.size());
+        kv.set("html", html);
+        renderJson(kv);
     }
 }

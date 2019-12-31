@@ -138,6 +138,14 @@
                     <button class="button" data-action="workday--entry#cancel">
                         列表
                     </button>
+
+                    <button class="button" data-action="workday--entry#openModal">
+                        弹出框
+                    </button>
+
+                    <button class="button" data-action="workday--entry#bulmaModal">
+                        bulma
+                    </button>
                 </div>
             </div>
         </div>
@@ -147,6 +155,25 @@
         <div id="projectList-params"></div>
         <div id="projectList-outputs"></div>
     </div>
+
+    <div class="modal" data-target="workday--entry.simpleModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Modal title</p>
+                <button class="delete" data-action="workday--entry#closeModal"></button>
+            </header>
+            <section class="modal-card-body">
+                <div data-target="workday--entry.projectSelections"></div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success">Save changes</button>
+                <button class="button" data-action="workday--entry#closeModal">Cancel</button>
+            </footer>
+        </div>
+        <button class="modal-close is-large" data-action="workday--entry#closeModal"></button>
+    </div>
+
 
 </form>
 

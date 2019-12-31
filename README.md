@@ -347,7 +347,14 @@ getter.
     6. page2: js 绑定事件，把当前选中结果信息保存在 dom2 中（需要后台先把数据 render 到当前的 data-values 属性上）；
     7. page1：在 page2 关闭后，从 dom2 取出信息，设置到对应的 dom1 上；         
      
-    
+## 2019-12-31
+1. modal: 
+    1. bulma 中通过设置 class 可以是弹出 modal，所有逻辑都是在 宿主html 中，包括弹出框的信息，
+    2. 弹出框的如果有 event，都是在和 宿主html 的 js 在一起的；
+    3. 弹出框里的内容，可以通过 ajax 从后台获取 segment，插入到 宿主dom 中，做 modal 显示；      
+2. ajax: 
+    1. 获取返回的类型：html or json；response.header.content-type
+    2. jfinal 中通过 renderToString 把结果保存在 string 中，再作为 json 的属性(和其它属性一起)，返回给前端；   
        
 ## TODO
 1. enjoy 中根据属性，设置 class 属性？已完结状态，btn 不可点击，否则，可点击；
