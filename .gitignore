@@ -41,3 +41,8 @@ src/main/webapp/assets/js/
 src/main/webapp/assets/lib/
 
 
+/src/main/webapp/assets/data/les-miserables.gexf
+/src/main/webapp/assets/data/les-miserables_mod.gexf.gephi
+/src/main/webapp/assets/data/les-miserables_orig.gexf
+/src/main/webapp/assets/data/mod.gexf
+/src/main/webapp/assets/data/mod.gexf.csv
