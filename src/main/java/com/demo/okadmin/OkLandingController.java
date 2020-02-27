@@ -42,4 +42,8 @@ public class OkLandingController extends Controller {
 
         forwardAction("/login");
     }
+
+    public void overview() {
+        render("overview.html");
+    }
 }

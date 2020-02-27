@@ -24,6 +24,10 @@ public class WorkdayController extends Controller {
         render("empty.html");
     }
 
+    public void validation() {
+        render("validation.html");
+    }
+
     public void list() {
         render("list.html");
     }
